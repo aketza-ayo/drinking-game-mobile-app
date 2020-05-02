@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "1011947195328",
+    "firebase_url": "https://drinking-game-4587c.firebaseio.com",
+    "project_id": "drinking-game-4587c",
+    "storage_bucket": "drinking-game-4587c.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1011947195328:android:1ec85095e53eee79631625",
+        "android_client_info": {
+          "package_name": "com.devapp.drinkinggame"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1011947195328-n4fmm6r980kha9dqda84ln9mvslrjsrr.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDDMaCN-qLbBLuw0JaRXpkqNV-1mn4yqCU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1011947195328-n4fmm6r980kha9dqda84ln9mvslrjsrr.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
