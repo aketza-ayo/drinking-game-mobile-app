@@ -22,8 +22,8 @@
 
     <ImageView
         android:id="@+id/viewDeck"
-        android:layout_width="319dp"
-        android:layout_height="477dp"
+        android:layout_width="300dp"
+        android:layout_height="457dp"
         app:layout_constraintBottom_toBottomOf="@+id/nav_host_fragment"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.333"
@@ -36,9 +36,9 @@
         android:id="@+id/textCardCounter"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginLeft="16dp"
-        android:layout_marginTop="68dp"
+        android:layout_marginStart="28dp"
+        android:layout_marginLeft="28dp"
+        android:layout_marginTop="60dp"
         android:text="Cards left:  52"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -47,9 +47,9 @@
         android:id="@+id/textTip"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginLeft="16dp"
-        android:layout_marginTop="2dp"
+        android:layout_marginStart="28dp"
+        android:layout_marginLeft="28dp"
+        android:layout_marginTop="8dp"
         android:text="Draw a card to continue..."
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/viewDeck" />

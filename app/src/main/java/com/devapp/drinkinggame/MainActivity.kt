@@ -1,13 +1,13 @@
 package com.devapp.drinkinggame
 
+import android.content.Intent
 import android.os.Bundle
-import android.util.DisplayMetrics
 import android.util.Log.d
 import android.view.Menu
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.Toolbar
 import com.google.firebase.analytics.FirebaseAnalytics
-import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.content_main.*
 
 
@@ -18,33 +18,34 @@ class MainActivity : AppCompatActivity() {
     var mutableDeck = CardsData().getAllCards()
     private  var showLogOnlyOnce = true
 
-    override fun onCreateOptionsMenu(menu: Menu): Boolean {
-        // Inflate the menu; this adds items to the action bar if it is present.
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.menu_main, menu)
-        return true
+        return super.onCreateOptionsMenu(menu)
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        return when (item.itemId) {
-            R.id.action_settings -> true
-            else -> super.onOptionsItemSelected(item)
+        when(item.itemId){
+            R.id.action_rules_management-> openRulesActivity()
+            else ->  super.onOptionsItemSelected(item)
         }
+
+        return true
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+        val toolbar = findViewById<Toolbar>(R.id.toolbar)
         setSupportActionBar(toolbar)
+
         firebaseAnalytics = FirebaseAnalytics.getInstance(this)
 
         viewDeck.setOnClickListener {
 
             if(mutableDeck.isEmpty()){
                 mutableDeck = CardsData().getAllCards()
-                displayCardInViewAndToolbarIfNeded(Card("back_red","card_back_red.png","Click to play again"))
+                displayCardInViewAndToolbar(Card("back_red","card_back_red.png","Click to play again"))
                 textCardCounter.setText("Cards left: ${mutableDeck.size}")
                 textTip.setText("Click to play again")
 
@@ -56,36 +57,23 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    private fun openRulesActivity(){
+        val intent = Intent(this, RulesActivity::class.java)
+        startActivity(intent)
+    }
+
     private fun unfoldCardFromDeckAndDisplayInformation(){
         var card = mutableDeck.shuffled().take(1).get(0)
         mutableDeck.remove(card)
 
         d("drinking-game","size of the deck: ${mutableDeck.size} and unfolded card is: $card" )
-        displayCardInViewAndToolbarIfNeded(card)
+        displayCardInViewAndToolbar(card)
         textCardCounter.setText("Cards left: ${mutableDeck.size}")
 
-        if("Drinking Game" == toolbar.title){
-            textTip.setText(card.tooltip)
-        }
+
     }
 
-    private fun getPhoneHeight(): Int{
-
-        var displayMetrics = DisplayMetrics();
-        windowManager.defaultDisplay.getMetrics(displayMetrics);
-
-        var width = displayMetrics.widthPixels;
-        var height = displayMetrics.heightPixels;
-
-
-        if(showLogOnlyOnce) {
-            d("drinking-game", "Display metrics {width: $width , height: $height}")
-            showLogOnlyOnce = false
-        }
-        return height
-    }
-
-    private fun displayCardInViewAndToolbarIfNeded(card: Card){
+    private fun displayCardInViewAndToolbar(card: Card){
         when (card.name) {
              "AC"-> viewDeck.setImageResource(R.drawable.ac)
              "AD"-> viewDeck.setImageResource(R.drawable.ad)
@@ -143,9 +131,6 @@ class MainActivity : AppCompatActivity() {
             else ->  viewDeck.setImageResource(R.drawable.card_back_red)
 
         }
-
-        if(getPhoneHeight() <= 1800){
-            toolbar.setTitle(card.tooltip)
-        }
+        textTip.setText(card.tooltip)
     }
 }
