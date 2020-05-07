@@ -49,6 +49,7 @@
                 android:layout_marginTop="8dp"
                 android:layout_marginEnd="8dp"
                 android:layout_marginRight="8dp"
+                android:hint="Enter rule for ace"
                 app:counterEnabled="true"
                 app:counterMaxLength="45"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -72,6 +73,7 @@
                 android:layout_marginTop="8dp"
                 android:layout_marginEnd="8dp"
                 android:layout_marginRight="8dp"
+                android:hint="Enter rule for twos"
                 app:counterEnabled="true"
                 app:counterMaxLength="45"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -82,7 +84,6 @@
                     android:id="@+id/inputTwo"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="Enter rule for twos"
                     android:maxLength="45" />
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -95,6 +96,7 @@
                 android:layout_marginTop="8dp"
                 android:layout_marginEnd="8dp"
                 android:layout_marginRight="8dp"
+                android:hint="Enter rule for threes"
                 app:counterEnabled="true"
                 app:counterMaxLength="45"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -105,7 +107,6 @@
                     android:id="@+id/inputThree"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="Enter rule for threes"
                     android:maxLength="45" />
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -118,6 +119,7 @@
                 android:layout_marginTop="8dp"
                 android:layout_marginEnd="8dp"
                 android:layout_marginRight="8dp"
+                android:hint="Enter rule for fours"
                 app:counterEnabled="true"
                 app:counterMaxLength="45"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -128,7 +130,6 @@
                     android:id="@+id/inputFour"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="Enter rule for fours"
                     android:maxLength="45" />
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -141,6 +142,7 @@
                 android:layout_marginTop="8dp"
                 android:layout_marginEnd="8dp"
                 android:layout_marginRight="8dp"
+                android:hint="Enter rule for fives"
                 app:counterEnabled="true"
                 app:counterMaxLength="45"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -151,7 +153,6 @@
                     android:id="@+id/inputFive"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="Enter rule for fives"
                     android:maxLength="45" />
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -164,6 +165,7 @@
                 android:layout_marginTop="8dp"
                 android:layout_marginEnd="8dp"
                 android:layout_marginRight="8dp"
+                android:hint="Enter rule for sixes"
                 app:counterEnabled="true"
                 app:counterMaxLength="45"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -174,7 +176,6 @@
                     android:id="@+id/inputSix"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="Enter rule for sixes"
                     android:maxLength="45" />
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -187,6 +188,7 @@
                 android:layout_marginTop="8dp"
                 android:layout_marginEnd="8dp"
                 android:layout_marginRight="8dp"
+                android:hint="Enter rule for sevens"
                 app:counterEnabled="true"
                 app:counterMaxLength="45"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -197,7 +199,6 @@
                     android:id="@+id/inputSeven"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="Enter rule for sevens"
                     android:maxLength="45" />
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -210,6 +211,7 @@
                 android:layout_marginTop="8dp"
                 android:layout_marginEnd="8dp"
                 android:layout_marginRight="8dp"
+                android:hint="Enter rule for eights"
                 app:counterEnabled="true"
                 app:counterMaxLength="45"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -220,7 +222,6 @@
                     android:id="@+id/inputEight"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="Enter rule for eights"
                     android:maxLength="45" />
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -233,6 +234,7 @@
                 android:layout_marginTop="8dp"
                 android:layout_marginEnd="8dp"
                 android:layout_marginRight="8dp"
+                android:hint="Enter rule for nines"
                 app:counterEnabled="true"
                 app:counterMaxLength="45"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -243,7 +245,6 @@
                     android:id="@+id/inputNine"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="Enter rule for nines"
                     android:maxLength="45" />
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -256,6 +257,7 @@
                 android:layout_marginTop="8dp"
                 android:layout_marginEnd="8dp"
                 android:layout_marginRight="8dp"
+                android:hint="Enter rule for tens"
                 app:counterEnabled="true"
                 app:counterMaxLength="45"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -266,7 +268,6 @@
                     android:id="@+id/inputTen"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="Enter rule for tens"
                     android:maxLength="45" />
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -279,6 +280,7 @@
                 android:layout_marginTop="8dp"
                 android:layout_marginEnd="8dp"
                 android:layout_marginRight="8dp"
+                android:hint="Enter rule for jacks"
                 app:counterEnabled="true"
                 app:counterMaxLength="45"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -289,7 +291,6 @@
                     android:id="@+id/inputJack"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="Enter rule for jacks"
                     android:maxLength="45" />
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -302,6 +303,7 @@
                 android:layout_marginTop="8dp"
                 android:layout_marginEnd="8dp"
                 android:layout_marginRight="8dp"
+                android:hint="Enter rule for queens"
                 app:counterEnabled="true"
                 app:counterMaxLength="45"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -312,7 +314,6 @@
                     android:id="@+id/inputQueen"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="Enter rule for queens"
                     android:maxLength="45" />
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -325,6 +326,7 @@
                 android:layout_marginTop="8dp"
                 android:layout_marginEnd="8dp"
                 android:layout_marginRight="8dp"
+                android:hint="Enter rule for the kings"
                 app:counterEnabled="true"
                 app:counterMaxLength="45"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -335,7 +337,6 @@
                     android:id="@+id/inputKing"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="Enter rule for the kings"
                     android:maxLength="45" />
             </com.google.android.material.textfield.TextInputLayout>
         </LinearLayout>
