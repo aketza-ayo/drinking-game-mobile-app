@@ -1,12 +1,18 @@
 package com.devapp.drinkinggame
 
+//import android.widget.Switch
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log.d
 import android.view.Menu
 import android.view.MenuItem
+import android.view.View
+import android.widget.CompoundButton
+import android.widget.Switch
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
+import androidx.core.view.MenuItemCompat
 import com.google.firebase.analytics.FirebaseAnalytics
 import kotlinx.android.synthetic.main.content_main.*
 
@@ -15,13 +21,9 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var firebaseAnalytics: FirebaseAnalytics
 
-    var mutableDeck = CardsData().getAllCards()
-    private  var showLogOnlyOnce = true
+    private lateinit var database: DatabaseHelper
+    private var mutableDeck = CardsData().getAllCards()
 
-    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-        menuInflater.inflate(R.menu.menu_main, menu)
-        return super.onCreateOptionsMenu(menu)
-    }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when(item.itemId){
@@ -30,6 +32,21 @@ class MainActivity : AppCompatActivity() {
         }
 
         return true
+    }
+
+
+    override fun onCreateOptionsMenu(menu: Menu): Boolean {
+        menuInflater.inflate(R.menu.menu_main, menu)
+
+        var item = menu.findItem(R.id.main_switch)
+        val view: View = MenuItemCompat.getActionView(item)
+        val switch = view.findViewById<View>(R.id.switchRule) as Switch
+
+        switch.setOnCheckedChangeListener(CompoundButton.OnCheckedChangeListener { buttonView, isChecked ->
+            Toast.makeText(applicationContext,"the switch is " + isChecked,Toast.LENGTH_SHORT).show()
+        })
+
+        return super.onCreateOptionsMenu(menu)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -46,8 +63,8 @@ class MainActivity : AppCompatActivity() {
             if(mutableDeck.isEmpty()){
                 mutableDeck = CardsData().getAllCards()
                 displayCardInViewAndToolbar(Card("back_red","card_back_red.png","Click to play again"))
-                textCardCounter.setText("Cards left: ${mutableDeck.size}")
-                textTip.setText("Click to play again")
+                textCardCounter.text = "Cards left: ${mutableDeck.size}"
+                textTip.text = "Click to play again"
 
                 d("drinking-game","Size of the deck: ${mutableDeck.size}" )
                 return@setOnClickListener
@@ -56,6 +73,7 @@ class MainActivity : AppCompatActivity() {
             unfoldCardFromDeckAndDisplayInformation()
         }
     }
+
 
     private fun openRulesActivity(){
         val intent = Intent(this, RulesActivity::class.java)
@@ -68,7 +86,7 @@ class MainActivity : AppCompatActivity() {
 
         d("drinking-game","size of the deck: ${mutableDeck.size} and unfolded card is: $card" )
         displayCardInViewAndToolbar(card)
-        textCardCounter.setText("Cards left: ${mutableDeck.size}")
+        textCardCounter.text = "Cards left: ${mutableDeck.size}"
 
 
     }
@@ -134,3 +152,4 @@ class MainActivity : AppCompatActivity() {
         textTip.setText(card.tooltip)
     }
 }
+
