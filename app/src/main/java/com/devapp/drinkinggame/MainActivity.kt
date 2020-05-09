@@ -1,6 +1,5 @@
 package com.devapp.drinkinggame
 
-//import android.widget.Switch
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log.d
@@ -21,8 +20,11 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var firebaseAnalytics: FirebaseAnalytics
 
-    private lateinit var database: DatabaseHelper
+    private var database = DatabaseHelper.getInstance(this)
+
     private var mutableDeck = CardsData().getAllCards()
+    private lateinit var currentCard: Card
+    private lateinit var switch: Switch
 
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -40,10 +42,16 @@ class MainActivity : AppCompatActivity() {
 
         var item = menu.findItem(R.id.main_switch)
         val view: View = MenuItemCompat.getActionView(item)
-        val switch = view.findViewById<View>(R.id.switchRule) as Switch
+        switch = view.findViewById<View>(R.id.switchRule) as Switch
 
         switch.setOnCheckedChangeListener(CompoundButton.OnCheckedChangeListener { buttonView, isChecked ->
-            Toast.makeText(applicationContext,"the switch is " + isChecked,Toast.LENGTH_SHORT).show()
+            if(switch.isChecked){
+                textTip.text = showCustomRules()
+                Toast.makeText(applicationContext, "Custom Rules", Toast.LENGTH_SHORT).show()
+            }else{
+                textTip.text = currentCard.rule
+                Toast.makeText(applicationContext,"Default Rules",Toast.LENGTH_SHORT).show()
+            }
         })
 
         return super.onCreateOptionsMenu(menu)
@@ -74,6 +82,21 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    private fun showCustomRules(): String {
+
+        val customRules = database.getCustomRules()
+
+        if (customRules.count != 0) {
+            while (customRules.moveToNext()) {
+                var ruleNameId = customRules.getString(1).substring(5)
+
+                if (ruleNameId in currentCard.name) {
+                    return customRules.getString(2)
+                }
+            }
+        }
+        return "Oops!"
+    }
 
     private fun openRulesActivity(){
         val intent = Intent(this, RulesActivity::class.java)
@@ -81,22 +104,20 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun unfoldCardFromDeckAndDisplayInformation(){
-        var card = mutableDeck.shuffled().take(1).get(0)
-        mutableDeck.remove(card)
+        currentCard = mutableDeck.shuffled().take(1).get(0)
+        mutableDeck.remove(currentCard)
 
-        d("drinking-game","size of the deck: ${mutableDeck.size} and unfolded card is: $card" )
-        displayCardInViewAndToolbar(card)
+        d("drinking-game","size of the deck: ${mutableDeck.size} and unfolded card is: $currentCard" )
+        displayCardInViewAndToolbar(currentCard)
         textCardCounter.text = "Cards left: ${mutableDeck.size}"
-
-
     }
 
     private fun displayCardInViewAndToolbar(card: Card){
         when (card.name) {
-             "AC"-> viewDeck.setImageResource(R.drawable.ac)
-             "AD"-> viewDeck.setImageResource(R.drawable.ad)
-             "AH"-> viewDeck.setImageResource(R.drawable.ah)
-             "AS"-> viewDeck.setImageResource(R.drawable.`as`)
+             "1C"-> viewDeck.setImageResource(R.drawable.ac)
+             "1D"-> viewDeck.setImageResource(R.drawable.ad)
+             "1H"-> viewDeck.setImageResource(R.drawable.ah)
+             "1S"-> viewDeck.setImageResource(R.drawable.`as`)
              "2C"-> viewDeck.setImageResource(R.drawable.twoc)
              "2D"-> viewDeck.setImageResource(R.drawable.twod)
              "2H"-> viewDeck.setImageResource(R.drawable.twoh)
@@ -149,7 +170,13 @@ class MainActivity : AppCompatActivity() {
             else ->  viewDeck.setImageResource(R.drawable.card_back_red)
 
         }
-        textTip.setText(card.tooltip)
+
+        if(switch.isChecked){
+            textTip.text = showCustomRules()
+        }else{
+            textTip.text = card.rule
+        }
+
     }
 }
 

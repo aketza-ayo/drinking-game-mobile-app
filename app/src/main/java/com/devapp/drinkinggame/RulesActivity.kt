@@ -4,7 +4,10 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
-import android.widget.*
+import android.widget.AdapterView
+import android.widget.ArrayAdapter
+import android.widget.Spinner
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import com.google.android.material.textfield.TextInputEditText
@@ -13,7 +16,9 @@ import kotlinx.android.synthetic.main.activity_rules.*
 
 class RulesActivity : AppCompatActivity() {
 
-    var defaultCustomeMode = true
+    private var database = DatabaseHelper.getInstance(this)
+
+    private lateinit var spinner : Spinner
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.menu_rules, menu)
@@ -22,10 +27,24 @@ class RulesActivity : AppCompatActivity() {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when(item.title){
-           "Done"-> Toast.makeText(this, "Saved", Toast.LENGTH_SHORT).show()
-            else -> finish()
+           "Save"-> saveDataIfCustomMode()
+            else -> {
+                finish()
+            }
+
         }
         return true
+    }
+
+    private fun saveDataIfCustomMode(){
+        if(spinner.selectedItemPosition == 1){
+            for(e in getTextFieldValues()){
+                database.updateRule(e.first, e.second.text.toString())
+            }
+            Toast.makeText(this, "Saved", Toast.LENGTH_SHORT).show()
+        }else{
+            Toast.makeText(this, "Unable to save default rules", Toast.LENGTH_SHORT).show()
+        }
     }
 
 
@@ -36,36 +55,30 @@ class RulesActivity : AppCompatActivity() {
         initToolbar()
         initSpinner()
 
-//        populateRulesTextFieldsIfDefaultMode()  //this method is automatically called from onItemSelected() when the activity first loads
+        /**
+         * default rules are populated into the fields onItemSelected() when the activity first loads
+         */
 
         addCloseIconInToolbar()
         replaceTitleFromToolbar()
     }
 
     private fun initSpinner(){
-        var spinner = findViewById<Spinner>(R.id.spinnerRules)
+
+        spinner = findViewById<Spinner>(R.id.spinnerRules)
 
         val itemsAdapter: ArrayAdapter<String> =
             ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, resources.getStringArray(R.array.spinnerNames))
         itemsAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         spinner.setAdapter(itemsAdapter)
 
-        spinner.onItemSelectedListener = object :
-            AdapterView.OnItemSelectedListener{
+        spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener{
             override fun onNothingSelected(parent: AdapterView<*>?) {
                 TODO("to be implemented if needed")
             }
 
             override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
-                //0 Default (true) - 1 Custom (false)
-
-                if(position == 0){
-                    defaultCustomeMode = true
-                    populateRulesTextFieldsIfDefaultMode()
-                }else{
-                    defaultCustomeMode = false
-                    clearAllTextFields()
-                }
+                populateRulesTextFields(position)
             }
         }
     }
@@ -85,7 +98,38 @@ class RulesActivity : AppCompatActivity() {
         this.title = "Rules Management"
     }
 
-    private fun clearAllTextFields(){
+    private fun populateRulesTextFields(position: Int){
+        if(position == 1) populateCustomRules() else populateDefaultRules()
+    }
+
+    private fun populateCustomRules(){
+        val customRules = database.getCustomRules()
+
+        if(customRules.count != 0){
+            while(customRules.moveToNext()){
+                when(customRules.getString(1)){
+                    "RULE_1"-> inputAce.setText(customRules.getString(2))
+                    "RULE_2"-> inputTwo.setText(customRules.getString(2))
+                    "RULE_3"-> inputThree.setText(customRules.getString(2))
+                    "RULE_4"-> inputFour.setText(customRules.getString(2))
+                    "RULE_5"-> inputFive.setText(customRules.getString(2))
+                    "RULE_6"-> inputSix.setText(customRules.getString(2))
+                    "RULE_7"-> inputSeven.setText(customRules.getString(2))
+                    "RULE_8"-> inputEight.setText(customRules.getString(2))
+                    "RULE_9"-> inputNine.setText(customRules.getString(2))
+                    "RULE_10"-> inputTen.setText(customRules.getString(2))
+                    "RULE_J"-> inputJack.setText(customRules.getString(2))
+                    "RULE_Q"-> inputQueen.setText(customRules.getString(2))
+                    "RULE_K"-> inputKing.setText(customRules.getString(2))
+                    else ->  Toast.makeText(this, "Oops!", Toast.LENGTH_SHORT).show()
+                }
+            }
+        }else{
+            clearDefaulFields()
+        }
+    }
+
+    private fun clearDefaulFields(){
         inputAce.setText("")
         inputTwo.setText("")
         inputThree.setText("")
@@ -101,28 +145,32 @@ class RulesActivity : AppCompatActivity() {
         inputKing.setText("")
     }
 
-    private fun populateRulesTextFieldsIfDefaultMode(){
+    private fun populateDefaultRules(){
+        val allCardsSet = CardsData().getAllCards()
+        var allCardsMap = allCardsSet.map { it.name to it.rule }.toMap()
 
-        if(defaultCustomeMode) {
-            var inputAce = findViewById<TextInputEditText>(R.id.inputAce)
-            var inputTwo = findViewById<TextInputEditText>(R.id.inputTwo)
+        inputAce.setText(allCardsMap.get("1C"))
+        inputTwo.setText(allCardsMap.get("2C"))
+        inputThree.setText(allCardsMap.get("3C"))
+        inputFour.setText(allCardsMap.get("4C"))
+        inputFive.setText(allCardsMap.get("5C"))
+        inputSix.setText(allCardsMap.get("6C"))
+        inputSeven.setText(allCardsMap.get("7C"))
+        inputEight.setText(allCardsMap.get("8C"))
+        inputNine.setText(allCardsMap.get("9C"))
+        inputTen.setText(allCardsMap.get("10C"))
+        inputJack.setText(allCardsMap.get("JC"))
+        inputQueen.setText(allCardsMap.get("QC"))
+        inputKing.setText(allCardsMap.get("KC"))
+    }
 
-            val allCardsSet = CardsData().getAllCards()
-            var allCardsMap = allCardsSet.map { it.name to it.tooltip }.toMap()
-
-            inputAce.setText(allCardsMap.get("AC"))
-            inputTwo.setText(allCardsMap.get("2C"))
-            inputThree.setText(allCardsMap.get("3C"))
-            inputFour.setText(allCardsMap.get("4C"))
-            inputFive.setText(allCardsMap.get("5C"))
-            inputSix.setText(allCardsMap.get("6C"))
-            inputSeven.setText(allCardsMap.get("7C"))
-            inputEight.setText(allCardsMap.get("8C"))
-            inputNine.setText(allCardsMap.get("9C"))
-            inputTen.setText(allCardsMap.get("10C"))
-            inputJack.setText(allCardsMap.get("JC"))
-            inputQueen.setText(allCardsMap.get("QC"))
-            inputKing.setText(allCardsMap.get("KC"))
-        }
+    private fun getTextFieldValues() : List<Pair<String,TextInputEditText>>{
+        return listOf(
+            Pair("RULE_1",inputAce),Pair("RULE_2",inputTwo),Pair("RULE_3",inputThree), Pair("RULE_4",inputFour),
+            Pair("RULE_5",inputFive), Pair("RULE_6",inputSix), Pair("RULE_7",inputSeven),Pair("RULE_8",inputEight),
+            Pair("RULE_9",inputNine), Pair("RULE_10",inputTen), Pair("RULE_J",inputJack),Pair("RULE_Q",inputQueen),
+            Pair("RULE_K",inputKing
+            )
+        )
     }
 }

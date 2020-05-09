@@ -59,8 +59,7 @@
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/inputAce"
                     android:layout_width="match_parent"
-                    android:layout_height="37dp"
-                    android:hint="Enter rule for ace"
+                    android:layout_height="wrap_content"
                     android:maxLength="45" />
             </com.google.android.material.textfield.TextInputLayout>
 
