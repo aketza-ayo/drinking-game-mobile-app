@@ -1,6 +1,7 @@
 package com.devapp.drinkinggame
 
 import android.os.Bundle
+import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
@@ -19,6 +20,7 @@ class RulesActivity : AppCompatActivity() {
     private var database = DatabaseHelper.getInstance(this)
 
     private lateinit var spinner : Spinner
+    private var isCustomMode: Boolean = false
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.menu_rules, menu)
@@ -52,6 +54,15 @@ class RulesActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_rules)
 
+        isCustomMode = intent.getBooleanExtra("IS_CUSTOM_RULE_ON", isCustomMode)
+        Log.d("drinking-game", "Intent Extra IS_CUSTOM_RULE_ON: $isCustomMode")
+
+        if(isCustomMode){
+            textRuleMode.text = "  Playing with <custom> rules"
+        }else{
+            textRuleMode.text = "  Playing with <default> rules"
+        }
+
         initToolbar()
         initSpinner()
 
@@ -71,6 +82,7 @@ class RulesActivity : AppCompatActivity() {
             ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, resources.getStringArray(R.array.spinnerNames))
         itemsAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         spinner.setAdapter(itemsAdapter)
+        spinner.setSelection(if(isCustomMode) 1 else 0)
 
         spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener{
             override fun onNothingSelected(parent: AdapterView<*>?) {
@@ -78,6 +90,11 @@ class RulesActivity : AppCompatActivity() {
             }
 
             override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+                if(position == 1){
+                    textRuleMode.text = "  Playing with <custom> rules"
+                }else{
+                    textRuleMode.text = "  Playing with <default> rules"
+                }
                 populateRulesTextFields(position)
             }
         }

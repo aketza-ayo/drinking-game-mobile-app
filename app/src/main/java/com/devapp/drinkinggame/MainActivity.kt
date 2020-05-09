@@ -99,7 +99,8 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun openRulesActivity(){
-        val intent = Intent(this, RulesActivity::class.java)
+        val intent = Intent(this@MainActivity, RulesActivity::class.java)
+        intent.putExtra("IS_CUSTOM_RULE_ON", switch.isChecked)
         startActivity(intent)
     }
 
