@@ -3,10 +3,9 @@ package com.devapp.drinkinggame
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log.d
-import android.view.Menu
-import android.view.MenuItem
-import android.view.View
+import android.view.*
 import android.widget.CompoundButton
+import android.widget.FrameLayout
 import android.widget.Switch
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -16,7 +15,7 @@ import com.google.firebase.analytics.FirebaseAnalytics
 import kotlinx.android.synthetic.main.content_main.*
 
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), RightFragment.OnFragmentInteractionListener, GestureDetector.OnGestureListener {
 
     private lateinit var firebaseAnalytics: FirebaseAnalytics
 
@@ -26,6 +25,13 @@ class MainActivity : AppCompatActivity() {
     private lateinit var currentCard: Card
     private lateinit var switch: Switch
 
+    private lateinit var fragmentContainer: FrameLayout
+    private lateinit var gestureDetector: GestureDetector
+    private var x1: Float = 0.0F
+    private var x2: Float = 0.0F
+    private var y1: Float = 0.0F
+    private var y2: Float = 0.0F
+    private var MIN_DISTANCE = 150
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when(item.itemId){
@@ -80,6 +86,59 @@ class MainActivity : AppCompatActivity() {
 
             unfoldCardFromDeckAndDisplayInformation()
         }
+
+        viewDeck.setOnTouchListener(object : View.OnTouchListener{
+            override fun onTouch(v: View?, event: MotionEvent?): Boolean {
+
+                when(event!!.action){
+                    MotionEvent.ACTION_DOWN -> {
+                        x1 = event.x
+                        y1 = event.y
+                    }
+
+                    MotionEvent.ACTION_UP -> {
+
+                        x2 = event.x
+                        y2 = event.y
+
+                        var valueX = x2 - x1
+                        var valueY = y2 - y1
+
+                        if (Math.abs(valueX) > MIN_DISTANCE) {
+
+                            if (x2 > x1) {
+                                Toast.makeText(applicationContext, "right swipe", Toast.LENGTH_SHORT).show()
+                                //                        editText.setText("mierda")
+                                closeFragment()
+                            } else {
+
+                                Toast.makeText(applicationContext, "left swipe", Toast.LENGTH_SHORT).show()
+                                openFragment("left swiped")
+
+                            }
+
+                        } else if (Math.abs(valueY) > MIN_DISTANCE) {
+
+                            if (y2 > y1) {
+                                Toast.makeText(applicationContext, "bottom swipe", Toast.LENGTH_SHORT).show()
+
+
+                            } else {
+
+                                Toast.makeText(applicationContext, "Top swipe", Toast.LENGTH_SHORT).show()
+
+                            }
+                        }else{
+                            viewDeck.performClick()
+                        }
+                    }
+                }
+                return true
+            }
+        })
+
+        fragmentContainer = findViewById(R.id.fragment_container)
+//        this.gestureDetector = GestureDetector(viewDeck.context.applicationContext, this);
     }
 
     private fun showCustomRules(): String {
@@ -95,7 +154,7 @@ class MainActivity : AppCompatActivity() {
                 }
             }
         }
-        return "Oops!"
+        return "Oops! Clear cached data"
     }
 
     private fun openRulesActivity(){
@@ -177,6 +236,125 @@ class MainActivity : AppCompatActivity() {
         }else{
             textTip.text = card.rule
         }
+
+    }
+
+    private fun openFragment(text: String){
+        val fragment: RightFragment? = supportFragmentManager.findFragmentByTag("RIGHT_FRAGMENT") as RightFragment?
+
+        if(fragment == null) {
+            var fragment = RightFragment.newInstance(text)
+            var fragmentManager = supportFragmentManager
+            var transaction = fragmentManager.beginTransaction()
+            transaction.setCustomAnimations(
+                R.anim.enter_from_right,
+                R.anim.exit_to_right,
+                R.anim.enter_from_right,
+                R.anim.exit_to_right
+            )
+            transaction.addToBackStack("RIGHT_FRAGMENT")
+            transaction.add(R.id.fragment_container, fragment, "RIGHT_FRAGMENT").commit()
+        }else{
+            var fragmentManager = supportFragmentManager
+            var transaction = fragmentManager.beginTransaction()
+            transaction.setCustomAnimations(
+                R.anim.enter_from_right,
+                R.anim.exit_to_right,
+                R.anim.enter_from_right,
+                R.anim.exit_to_right
+            )
+            transaction.replace(R.id.fragment_container, fragment, "RIGHT_FRAGMENT");
+        }
+    }
+
+    private fun closeFragment(){
+        val fragment: RightFragment? = supportFragmentManager.findFragmentByTag("RIGHT_FRAGMENT") as RightFragment?
+
+        if(fragment != null){
+            onBackPressed()
+        }
+    }
+
+    override fun onFragmentInteraction(sendBackText: String) {
+        Toast.makeText(this, sendBackText + " deleted", Toast.LENGTH_SHORT ).show()
+//        editText.setText(sendBackText)
+//        onBackPressed()
+    }
+
+    override fun onTouchEvent(event: MotionEvent): Boolean {
+
+        when(event.action){
+            MotionEvent.ACTION_DOWN -> {
+                x1 = event.x
+                y1 = event.y
+            }
+
+            MotionEvent.ACTION_UP -> {
+
+                x2 = event.x
+                y2 = event.y
+
+                var valueX = x2 - x1
+                var valueY = y2 - y1
+
+                if (Math.abs(valueX) > MIN_DISTANCE) {
+
+                    if (x2 > x1) {
+                        Toast.makeText(this, "right swipe", Toast.LENGTH_SHORT).show()
+                        //                        editText.setText("mierda")
+                        closeFragment()
+                    } else {
+
+                        Toast.makeText(this, "left swipe", Toast.LENGTH_SHORT).show()
+                        openFragment("left swiped")
+
+                    }
+
+                } else if (Math.abs(valueY) > MIN_DISTANCE) {
+
+                    if (y2 > y1) {
+                        Toast.makeText(this, "bottom swipe", Toast.LENGTH_SHORT).show()
+
+
+                    } else {
+
+                        Toast.makeText(this, "Top swipe", Toast.LENGTH_SHORT).show()
+
+                    }
+                }else{
+                    viewDeck.performClick()
+                }
+            }
+        }
+//        return super.onTouchEvent(event)
+        return true
+    }
+
+    override fun onShowPress(e: MotionEvent?) {
+
+    }
+
+    override fun onSingleTapUp(e: MotionEvent?): Boolean {
+        return true
+    }
+
+    override fun onDown(e: MotionEvent?): Boolean {
+        return true
+
+    }
+
+    override fun onFling(e1: MotionEvent?, e2: MotionEvent?, velocityX: Float, velocityY: Float): Boolean {
+        return true
+
+    }
+
+
+    override fun onScroll(e1: MotionEvent?, e2: MotionEvent?, distanceX: Float, distanceY: Float): Boolean {
+        return true
+
+    }
+
+    override fun onLongPress(e: MotionEvent?) {
 
     }
 }

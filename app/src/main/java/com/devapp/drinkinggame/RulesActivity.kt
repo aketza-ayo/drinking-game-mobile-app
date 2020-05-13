@@ -90,11 +90,7 @@ class RulesActivity : AppCompatActivity() {
             }
 
             override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
-                if(position == 1){
-                    textRuleMode.text = "  Playing with <custom> rules"
-                }else{
-                    textRuleMode.text = "  Playing with <default> rules"
-                }
+
                 populateRulesTextFields(position)
             }
         }

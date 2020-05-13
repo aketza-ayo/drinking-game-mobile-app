@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="100dp"
+    android:layout_height="match_parent"
+    android:background="@android:color/holo_blue_light"
+    android:clickable="true"
+    android:elevation="20dp"
+    android:layout_gravity="right"
+    tools:context=".RightFragment">
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recycler_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="@android:dimen/notification_large_icon_height"
+        android:clipToPadding="false"
+        android:padding="0dp"
+        android:elevation="4dp"
+        tools:listitem="@layout/card_item" />
+
+    <!--    <EditText-->
+<!--        android:id="@+id/edit_fragment"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_marginStart="16dp"-->
+<!--        android:layout_marginEnd="16dp"-->
+<!--        android:textColor="@android:color/white" />-->
+
+<!--    <Button-->
+<!--        android:id="@+id/button_fragment"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_centerHorizontal="true"-->
+<!--        android:layout_centerVertical="true"-->
+<!--        android:text="send back" />-->
+
+</RelativeLayout>
