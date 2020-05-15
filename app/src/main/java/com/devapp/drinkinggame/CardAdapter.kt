@@ -4,9 +4,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
-import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import kotlinx.android.synthetic.main.card_item.view.*
 import kotlinx.android.synthetic.main.card_item.view.*
 
 class CardAdapter(private val exampleList: List<CardItem>) : RecyclerView.Adapter<CardAdapter.ExampleViewHolder>(){

@@ -22,7 +22,7 @@ class MainActivity : AppCompatActivity(), RightFragment.OnFragmentInteractionLis
     private var database = DatabaseHelper.getInstance(this)
 
     private var mutableDeck = CardsData().getAllCards()
-    private lateinit var currentCard: Card
+    private lateinit var currentCardItem: CardItem
     private lateinit var switch: Switch
 
     private lateinit var fragmentContainer: FrameLayout
@@ -32,6 +32,8 @@ class MainActivity : AppCompatActivity(), RightFragment.OnFragmentInteractionLis
     private var y1: Float = 0.0F
     private var y2: Float = 0.0F
     private var MIN_DISTANCE = 150
+
+    private var historicalDeck = arrayListOf<CardItem>()
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when(item.itemId){
@@ -55,7 +57,7 @@ class MainActivity : AppCompatActivity(), RightFragment.OnFragmentInteractionLis
                 textTip.text = showCustomRules()
                 Toast.makeText(applicationContext, "Custom Rules", Toast.LENGTH_SHORT).show()
             }else{
-                textTip.text = currentCard.rule
+                textTip.text = currentCardItem.rule
                 Toast.makeText(applicationContext,"Default Rules",Toast.LENGTH_SHORT).show()
             }
         })
@@ -74,17 +76,11 @@ class MainActivity : AppCompatActivity(), RightFragment.OnFragmentInteractionLis
 
         viewDeck.setOnClickListener {
 
-            if(mutableDeck.isEmpty()){
-                mutableDeck = CardsData().getAllCards()
-                displayCardInViewAndToolbar(Card("back_red","card_back_red.png","Click to play again"))
-                textCardCounter.text = "Cards left: ${mutableDeck.size}"
-                textTip.text = "Click to play again"
-
-                d("drinking-game","Size of the deck: ${mutableDeck.size}" )
-                return@setOnClickListener
+            if(isFragmentVisible()){
+               closeFragment()
+            }else {
+                unfoldCard()
             }
-
-            unfoldCardFromDeckAndDisplayInformation()
         }
 
         viewDeck.setOnTouchListener(object : View.OnTouchListener{
@@ -113,7 +109,7 @@ class MainActivity : AppCompatActivity(), RightFragment.OnFragmentInteractionLis
                             } else {
 
                                 Toast.makeText(applicationContext, "left swipe", Toast.LENGTH_SHORT).show()
-                                openFragment("left swiped")
+                                openFragment()
 
                             }
 
@@ -137,8 +133,40 @@ class MainActivity : AppCompatActivity(), RightFragment.OnFragmentInteractionLis
             }
         })
 
+
         fragmentContainer = findViewById(R.id.fragment_container)
 //        this.gestureDetector = GestureDetector(viewDeck.context.applicationContext, this);
+    }
+
+    private fun unfoldCard(){
+        if (mutableDeck.isEmpty()) {
+            mutableDeck = CardsData().getAllCards()
+
+            displayCardInViewAndToolbar(
+                CardItem("back_red", R.drawable.ic_1h_small, "Click to play again"))
+
+            textCardCounter.text = "Cards left: ${mutableDeck.size}"
+            textTip.text = "Click to play again"
+
+            historicalDeck.clear()
+            d("drinking-game", "Size of the deck: ${mutableDeck.size}")
+            return
+        }
+
+        var unfoldedCard = unfoldCardFromDeckAndDisplayInformation()
+
+        addCurrentCardIntoHistoricalList(unfoldedCard)
+    }
+
+    private fun isFragmentVisible():Boolean{
+
+        val rightFragment: RightFragment? = supportFragmentManager.findFragmentByTag("RIGHT_FRAGMENT") as RightFragment?
+
+        if (rightFragment != null && rightFragment.isVisible()) {
+            return true
+        }
+
+        return false
     }
 
     private fun showCustomRules(): String {
@@ -149,7 +177,7 @@ class MainActivity : AppCompatActivity(), RightFragment.OnFragmentInteractionLis
             while (customRules.moveToNext()) {
                 var ruleNameId = customRules.getString(1).substring(5)
 
-                if (ruleNameId in currentCard.name) {
+                if (ruleNameId in currentCardItem.name!!) {
                     return customRules.getString(2)
                 }
             }
@@ -163,17 +191,32 @@ class MainActivity : AppCompatActivity(), RightFragment.OnFragmentInteractionLis
         startActivity(intent)
     }
 
-    private fun unfoldCardFromDeckAndDisplayInformation(){
-        currentCard = mutableDeck.shuffled().take(1).get(0)
-        mutableDeck.remove(currentCard)
+    private fun unfoldCardFromDeckAndDisplayInformation(): CardItem{
+        currentCardItem = mutableDeck.shuffled().take(1)[0]
+        mutableDeck.remove(currentCardItem)
 
-        d("drinking-game","size of the deck: ${mutableDeck.size} and unfolded card is: $currentCard" )
-        displayCardInViewAndToolbar(currentCard)
-        textCardCounter.text = "Cards left: ${mutableDeck.size}"
+        d("drinking-game","size of the deck: ${mutableDeck.size} and unfolded card is: $currentCardItem" )
+        displayCardInViewAndToolbar(currentCardItem)
+
+        displayDeckCounter(mutableDeck)
+
+        return currentCardItem
     }
 
-    private fun displayCardInViewAndToolbar(card: Card){
-        when (card.name) {
+    private fun displayDeckCounter(deck: MutableSet<CardItem> ){
+        textCardCounter.text = "Cards left: ${deck.size}"
+    }
+
+    private fun addCardBackIntoDeck(cardItem: CardItem){
+        mutableDeck.add(cardItem)
+    }
+
+    private fun addCurrentCardIntoHistoricalList(currentCardItem: CardItem){
+        historicalDeck.add(0,currentCardItem)
+    }
+
+    private fun displayCardInViewAndToolbar(cardItem: CardItem){
+        when (cardItem.name) {
              "1C"-> viewDeck.setImageResource(R.drawable.ac)
              "1D"-> viewDeck.setImageResource(R.drawable.ad)
              "1H"-> viewDeck.setImageResource(R.drawable.ah)
@@ -234,16 +277,19 @@ class MainActivity : AppCompatActivity(), RightFragment.OnFragmentInteractionLis
         if(switch.isChecked){
             textTip.text = showCustomRules()
         }else{
-            textTip.text = card.rule
+            textTip.text = cardItem.rule
         }
 
     }
 
-    private fun openFragment(text: String){
+    private fun openFragment(){
         val fragment: RightFragment? = supportFragmentManager.findFragmentByTag("RIGHT_FRAGMENT") as RightFragment?
 
+        val bundle = Bundle()
+        bundle.putParcelableArrayList("historicalDeck", historicalDeck)
+
         if(fragment == null) {
-            var fragment = RightFragment.newInstance(text)
+            var fragment = RightFragment.newInstance()
             var fragmentManager = supportFragmentManager
             var transaction = fragmentManager.beginTransaction()
             transaction.setCustomAnimations(
@@ -252,6 +298,7 @@ class MainActivity : AppCompatActivity(), RightFragment.OnFragmentInteractionLis
                 R.anim.enter_from_right,
                 R.anim.exit_to_right
             )
+            fragment.arguments = bundle
             transaction.addToBackStack("RIGHT_FRAGMENT")
             transaction.add(R.id.fragment_container, fragment, "RIGHT_FRAGMENT").commit()
         }else{
@@ -263,6 +310,7 @@ class MainActivity : AppCompatActivity(), RightFragment.OnFragmentInteractionLis
                 R.anim.enter_from_right,
                 R.anim.exit_to_right
             )
+            fragment.arguments = bundle
             transaction.replace(R.id.fragment_container, fragment, "RIGHT_FRAGMENT");
         }
     }
@@ -275,10 +323,26 @@ class MainActivity : AppCompatActivity(), RightFragment.OnFragmentInteractionLis
         }
     }
 
-    override fun onFragmentInteraction(sendBackText: String) {
-        Toast.makeText(this, sendBackText + " deleted", Toast.LENGTH_SHORT ).show()
-//        editText.setText(sendBackText)
+    override fun onFragmentInteraction(cardItemDeleted : CardItem) {
+//        Toast.makeText(this, cardItemDeleted.name + " added", Toast.LENGTH_SHORT ).show()
+        addCardBackIntoDeck(cardItemDeleted)
+        displayDeckCounter(mutableDeck)
+        deleteFromHistoricalList(cardItemDeleted)
+
 //        onBackPressed()
+    }
+
+    private fun deleteFromHistoricalList(cardItem: CardItem){
+        Toast.makeText(this, cardItem.name + " deleted", Toast.LENGTH_SHORT).show()
+
+        if(historicalDeck.remove(cardItem)){
+            Toast.makeText(this, cardItem.name + " true", Toast.LENGTH_SHORT).show()
+
+        }
+//        else{
+//            Toast.makeText(this, "Oops! unable to delete historical list", Toast.LENGTH_SHORT).show()
+//        }
+
     }
 
     override fun onTouchEvent(event: MotionEvent): Boolean {
@@ -301,12 +365,11 @@ class MainActivity : AppCompatActivity(), RightFragment.OnFragmentInteractionLis
 
                     if (x2 > x1) {
                         Toast.makeText(this, "right swipe", Toast.LENGTH_SHORT).show()
-                        //                        editText.setText("mierda")
                         closeFragment()
                     } else {
 
                         Toast.makeText(this, "left swipe", Toast.LENGTH_SHORT).show()
-                        openFragment("left swiped")
+                        openFragment()
 
                     }
 
