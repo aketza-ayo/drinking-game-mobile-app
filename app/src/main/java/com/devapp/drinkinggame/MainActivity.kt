@@ -11,6 +11,8 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.core.view.MenuItemCompat
+import androidx.preference.PreferenceFragment
+import androidx.preference.PreferenceManager
 import com.google.firebase.analytics.FirebaseAnalytics
 import kotlinx.android.synthetic.main.content_main.*
 
@@ -38,6 +40,7 @@ class MainActivity : AppCompatActivity(), RightFragment.OnFragmentInteractionLis
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when(item.itemId){
             R.id.action_rules_management-> openRulesActivity()
+            R.id.action_settings -> openFragmentActivity()
             else ->  super.onOptionsItemSelected(item)
         }
 
@@ -73,6 +76,8 @@ class MainActivity : AppCompatActivity(), RightFragment.OnFragmentInteractionLis
         setSupportActionBar(toolbar)
 
         firebaseAnalytics = FirebaseAnalytics.getInstance(this)
+
+        PreferenceManager.setDefaultValues(this, R.xml.settings, false)
 
         viewDeck.setOnClickListener {
 
@@ -185,9 +190,20 @@ class MainActivity : AppCompatActivity(), RightFragment.OnFragmentInteractionLis
         return "Oops! Clear cached data"
     }
 
+    private fun openFragmentActivity(){
+        val intent = Intent(this@MainActivity, SettingsActivity::class.java)
+//        intent.putExtra("IS_CUSTOM_RULE_ON", switch.isChecked)
+        startActivity(intent)
+    }
+
     private fun openRulesActivity(){
         val intent = Intent(this@MainActivity, RulesActivity::class.java)
         intent.putExtra("IS_CUSTOM_RULE_ON", switch.isChecked)
+        startActivity(intent)
+    }
+
+    private fun openSettingsActivity(){
+        val intent = Intent(this@MainActivity, SettingsFragment::class.java)
         startActivity(intent)
     }
 
