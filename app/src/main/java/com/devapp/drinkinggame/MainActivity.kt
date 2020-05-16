@@ -22,7 +22,7 @@ class MainActivity : AppCompatActivity(), RightFragment.OnFragmentInteractionLis
     private var database = DatabaseHelper.getInstance(this)
 
     private var mutableDeck = CardsData().getAllCards()
-    private lateinit var currentCardItem: CardItem
+    private var currentCardItem = CardItem("Back",R.drawable.card_back_blue,"Draw a card to continue...")
     private lateinit var switch: Switch
 
     private lateinit var fragmentContainer: FrameLayout
@@ -103,12 +103,12 @@ class MainActivity : AppCompatActivity(), RightFragment.OnFragmentInteractionLis
                         if (Math.abs(valueX) > MIN_DISTANCE) {
 
                             if (x2 > x1) {
-                                Toast.makeText(applicationContext, "right swipe", Toast.LENGTH_SHORT).show()
-                                //                        editText.setText("mierda")
+                                d("drinking-game","right swipe" )
+//                                Toast.makeText(applicationContext, "right swipe", Toast.LENGTH_SHORT).show()
                                 closeFragment()
                             } else {
-
-                                Toast.makeText(applicationContext, "left swipe", Toast.LENGTH_SHORT).show()
+                                d("drinking-game","left swipe" )
+//                                Toast.makeText(applicationContext, "left swipe", Toast.LENGTH_SHORT).show()
                                 openFragment()
 
                             }
@@ -116,12 +116,13 @@ class MainActivity : AppCompatActivity(), RightFragment.OnFragmentInteractionLis
                         } else if (Math.abs(valueY) > MIN_DISTANCE) {
 
                             if (y2 > y1) {
-                                Toast.makeText(applicationContext, "bottom swipe", Toast.LENGTH_SHORT).show()
+                                d("drinking-game","bottom swipe" )
+//                                Toast.makeText(applicationContext, "bottom swipe", Toast.LENGTH_SHORT).show()
 
 
                             } else {
-
-                                Toast.makeText(applicationContext, "Top swipe", Toast.LENGTH_SHORT).show()
+                                d("drinking-game","top swipe" )
+//                                Toast.makeText(applicationContext, "Top swipe", Toast.LENGTH_SHORT).show()
 
                             }
                         }else{
@@ -182,7 +183,7 @@ class MainActivity : AppCompatActivity(), RightFragment.OnFragmentInteractionLis
                 }
             }
         }
-        return "Oops! Clear cached data"
+        return "Draw a card to continue..."
     }
 
     private fun openRulesActivity(){
@@ -324,7 +325,6 @@ class MainActivity : AppCompatActivity(), RightFragment.OnFragmentInteractionLis
     }
 
     override fun onFragmentInteraction(cardItemDeleted : CardItem) {
-//        Toast.makeText(this, cardItemDeleted.name + " added", Toast.LENGTH_SHORT ).show()
         addCardBackIntoDeck(cardItemDeleted)
         displayDeckCounter(mutableDeck)
         deleteFromHistoricalList(cardItemDeleted)
@@ -333,15 +333,8 @@ class MainActivity : AppCompatActivity(), RightFragment.OnFragmentInteractionLis
     }
 
     private fun deleteFromHistoricalList(cardItem: CardItem){
-        Toast.makeText(this, cardItem.name + " deleted", Toast.LENGTH_SHORT).show()
-
-        if(historicalDeck.remove(cardItem)){
-            Toast.makeText(this, cardItem.name + " true", Toast.LENGTH_SHORT).show()
-
-        }
-//        else{
-//            Toast.makeText(this, "Oops! unable to delete historical list", Toast.LENGTH_SHORT).show()
-//        }
+        historicalDeck.remove(cardItem)
+//            Toast.makeText(this, cardItem.name + " true", Toast.LENGTH_SHORT).show()
 
     }
 
@@ -364,11 +357,12 @@ class MainActivity : AppCompatActivity(), RightFragment.OnFragmentInteractionLis
                 if (Math.abs(valueX) > MIN_DISTANCE) {
 
                     if (x2 > x1) {
-                        Toast.makeText(this, "right swipe", Toast.LENGTH_SHORT).show()
+                        d("drinking-game","right swipe" )
+//                        Toast.makeText(this, "right swipe", Toast.LENGTH_SHORT).show()
                         closeFragment()
                     } else {
-
-                        Toast.makeText(this, "left swipe", Toast.LENGTH_SHORT).show()
+                        d("drinking-game","left swipe" )
+//                        Toast.makeText(this, "left swipe", Toast.LENGTH_SHORT).show()
                         openFragment()
 
                     }
@@ -376,12 +370,13 @@ class MainActivity : AppCompatActivity(), RightFragment.OnFragmentInteractionLis
                 } else if (Math.abs(valueY) > MIN_DISTANCE) {
 
                     if (y2 > y1) {
-                        Toast.makeText(this, "bottom swipe", Toast.LENGTH_SHORT).show()
+                        d("drinking-game","bottom swipe" )
+//                        Toast.makeText(this, "bottom swipe", Toast.LENGTH_SHORT).show()
 
 
                     } else {
-
-                        Toast.makeText(this, "Top swipe", Toast.LENGTH_SHORT).show()
+                        d("drinking-game","top swipe" )
+//                        Toast.makeText(this, "Top swipe", Toast.LENGTH_SHORT).show()
 
                     }
                 }else{

@@ -51,15 +51,9 @@ class RightFragment : Fragment() {
             }
 
             override fun onSwiped(viewHolder: ViewHolder, direction: Int) {
-
                 val item = adapter.getItemAt(viewHolder.adapterPosition)
-//                if(histoList.remove(item)){
-                    adapter.notifyItemRemoved(viewHolder.adapterPosition)
-                    sendBack(item)
-//                }
-
-                // might need to print the list again ?
-//                Toast.makeText(this@BlankFragment, "Card restored", Toast.LENGTH_SHORT).show()
+                adapter.notifyItemRemoved(viewHolder.adapterPosition)
+                sendBack(item)
             }
         }).attachToRecyclerView(recyclerView)
 
