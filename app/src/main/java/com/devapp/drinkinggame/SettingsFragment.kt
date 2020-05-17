@@ -11,7 +11,7 @@ class SettingsFragment : PreferenceFragment() {
 
     companion object {
         const val PREFERENCE_SOUND_FX = "prefSound"
-        const val PREFERENCE_NIGHT_MODE = "prefNight"
+        const val PREFERENCE_DARK_MODE = "prefDark"
     }
 
     private lateinit var preferenceChangeListener: SharedPreferences.OnSharedPreferenceChangeListener
@@ -31,14 +31,15 @@ class SettingsFragment : PreferenceFragment() {
                 }
             }
 
-            if(PREFERENCE_NIGHT_MODE == key){
-                val nightPreference = findPreference(key)
+            if(PREFERENCE_DARK_MODE == key){
+                val darkPreference = findPreference(key)
                 if(prefs.getBoolean(key,false)){
-                    nightPreference.summary = "Enabled"
+                    darkPreference.summary = "Enabled"
+                    Toast.makeText(activity, "Not yet implemented", Toast.LENGTH_SHORT).show()
                 }else{
-                    nightPreference.summary = "Disabled"
+                    darkPreference.summary = "Disabled"
+                    Toast.makeText(activity, "Not yet implemented", Toast.LENGTH_SHORT).show()
                 }
-                Toast.makeText(activity, "Not yet implemented", Toast.LENGTH_SHORT).show()
             }
         }
     }
@@ -48,13 +49,13 @@ class SettingsFragment : PreferenceFragment() {
 
         preferenceScreen.sharedPreferences.registerOnSharedPreferenceChangeListener(preferenceChangeListener)
 
-        val nightPreference = findPreference(PREFERENCE_NIGHT_MODE)
+        val darkPreference = findPreference(PREFERENCE_DARK_MODE)
 
-        val sharePreferenceNightMode =  preferenceScreen.sharedPreferences.getBoolean(PREFERENCE_NIGHT_MODE, false)
-        if(sharePreferenceNightMode){
-            nightPreference.summary = "Enabled"
+        val sharePreferenceDarkMode =  preferenceScreen.sharedPreferences.getBoolean(PREFERENCE_DARK_MODE, false)
+        if(sharePreferenceDarkMode){
+            darkPreference.summary = "Enabled"
         }else{
-            nightPreference.summary = "Disabled"
+            darkPreference.summary = "Disabled"
         }
 
         val soundPreference = findPreference(PREFERENCE_SOUND_FX)
