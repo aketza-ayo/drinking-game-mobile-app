@@ -16,6 +16,16 @@ class RightFragment : Fragment() {
 
     private lateinit var mListener: OnFragmentInteractionListener
 
+    interface OnFragmentInteractionListener{
+
+        fun onFragmentInteraction(cardItemDeleted: CardItem)
+    }
+
+    companion object {
+        @JvmStatic
+        fun newInstance() = RightFragment()
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -37,6 +47,8 @@ class RightFragment : Fragment() {
         val histoList =
             requireArguments().getParcelableArrayList<Parcelable>("historicalDeck") as MutableList<CardItem>
 
+        val isReturnCardFeatureEnabled =
+            requireArguments().getBoolean("isReturnCardFeatureEnabled")
 
         val recyclerView = view.findViewById(R.id.recycler_view) as RecyclerView
         var adapter = CardAdapter(histoList)
@@ -45,40 +57,33 @@ class RightFragment : Fragment() {
         recyclerView.setHasFixedSize(true)
 
 
+        if(isReturnCardFeatureEnabled){
+            registerItemTouchHelper(adapter, isReturnCardFeatureEnabled, recyclerView)
+        }
+
+        return view
+    }
+
+    private fun registerItemTouchHelper(adapter: CardAdapter, isReturnCardFeatureEnabled: Boolean, recyclerView: RecyclerView ){
+
         ItemTouchHelper(object : ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT or ItemTouchHelper.RIGHT) {
+
             override fun onMove(recyclerView: RecyclerView, viewHolder: ViewHolder, target: ViewHolder): Boolean {
                 return false
             }
 
             override fun onSwiped(viewHolder: ViewHolder, direction: Int) {
-
                 val item = adapter.getItemAt(viewHolder.adapterPosition)
-//                if(histoList.remove(item)){
-                    adapter.notifyItemRemoved(viewHolder.adapterPosition)
-                    sendBack(item)
-//                }
+                adapter.notifyItemRemoved(viewHolder.adapterPosition)
+                sendBack(item)
 
-                // might need to print the list again ?
-//                Toast.makeText(this@BlankFragment, "Card restored", Toast.LENGTH_SHORT).show()
             }
         }).attachToRecyclerView(recyclerView)
-
-        return view
     }
 
     private fun sendBack(cardItemDeleted: CardItem){
         if(mListener != null){
             mListener.onFragmentInteraction(cardItemDeleted)
         }
-    }
-
-    interface OnFragmentInteractionListener{
-
-        fun onFragmentInteraction(cardItemDeleted: CardItem)
-    }
-
-    companion object {
-        @JvmStatic
-        fun newInstance() = RightFragment()
     }
 }

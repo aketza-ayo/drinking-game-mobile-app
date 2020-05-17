@@ -16,7 +16,6 @@ import androidx.preference.PreferenceManager
 import com.google.firebase.analytics.FirebaseAnalytics
 import kotlinx.android.synthetic.main.content_main.*
 
-
 class MainActivity : AppCompatActivity(), RightFragment.OnFragmentInteractionListener, GestureDetector.OnGestureListener {
 
     private lateinit var firebaseAnalytics: FirebaseAnalytics
@@ -33,9 +32,19 @@ class MainActivity : AppCompatActivity(), RightFragment.OnFragmentInteractionLis
     private var x2: Float = 0.0F
     private var y1: Float = 0.0F
     private var y2: Float = 0.0F
-    private var MIN_DISTANCE = 150
 
     private var historicalDeck = arrayListOf<CardItem>()
+
+    private var isHistoricalFeatureEnabled = true
+    private var isReturnCardFeatureEnabled = true
+
+
+    companion object {
+        private const val PREFERENCE_FEATURE_HISTORICAL = "prefHistorical"
+        private const val PREFERENCE_FEATURE_RETURN_CARD = "prefReturnCard"
+
+        private const val MIN_DISTANCE = 150
+    }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when(item.itemId){
@@ -68,6 +77,11 @@ class MainActivity : AppCompatActivity(), RightFragment.OnFragmentInteractionLis
         return super.onCreateOptionsMenu(menu)
     }
 
+    override fun onResume() {
+        super.onResume()
+        initPreferences()
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -78,6 +92,7 @@ class MainActivity : AppCompatActivity(), RightFragment.OnFragmentInteractionLis
         firebaseAnalytics = FirebaseAnalytics.getInstance(this)
 
         PreferenceManager.setDefaultValues(this, R.xml.settings, false)
+        initPreferences()
 
         viewDeck.setOnClickListener {
 
@@ -114,8 +129,9 @@ class MainActivity : AppCompatActivity(), RightFragment.OnFragmentInteractionLis
                             } else {
 
                                 Toast.makeText(applicationContext, "left swipe", Toast.LENGTH_SHORT).show()
-                                openFragment()
-
+                                if(isHistoricalFeatureEnabled){
+                                    openFragment()
+                                }
                             }
 
                         } else if (Math.abs(valueY) > MIN_DISTANCE) {
@@ -199,11 +215,6 @@ class MainActivity : AppCompatActivity(), RightFragment.OnFragmentInteractionLis
     private fun openRulesActivity(){
         val intent = Intent(this@MainActivity, RulesActivity::class.java)
         intent.putExtra("IS_CUSTOM_RULE_ON", switch.isChecked)
-        startActivity(intent)
-    }
-
-    private fun openSettingsActivity(){
-        val intent = Intent(this@MainActivity, SettingsFragment::class.java)
         startActivity(intent)
     }
 
@@ -303,6 +314,7 @@ class MainActivity : AppCompatActivity(), RightFragment.OnFragmentInteractionLis
 
         val bundle = Bundle()
         bundle.putParcelableArrayList("historicalDeck", historicalDeck)
+        bundle.putBoolean("isReturnCardFeatureEnabled", isReturnCardFeatureEnabled)
 
         if(fragment == null) {
             var fragment = RightFragment.newInstance()
@@ -385,8 +397,9 @@ class MainActivity : AppCompatActivity(), RightFragment.OnFragmentInteractionLis
                     } else {
 
                         Toast.makeText(this, "left swipe", Toast.LENGTH_SHORT).show()
-                        openFragment()
-
+                        if(isHistoricalFeatureEnabled){
+                            openFragment()
+                        }
                     }
 
                 } else if (Math.abs(valueY) > MIN_DISTANCE) {
@@ -435,6 +448,13 @@ class MainActivity : AppCompatActivity(), RightFragment.OnFragmentInteractionLis
 
     override fun onLongPress(e: MotionEvent?) {
 
+    }
+
+    private fun initPreferences(){
+        val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this)
+
+        isHistoricalFeatureEnabled = sharedPreferences.getBoolean(PREFERENCE_FEATURE_HISTORICAL, true)
+        isReturnCardFeatureEnabled = sharedPreferences.getBoolean(PREFERENCE_FEATURE_RETURN_CARD, true)
     }
 }
 
