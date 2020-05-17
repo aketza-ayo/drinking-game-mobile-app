@@ -70,7 +70,7 @@ class RulesActivity : AppCompatActivity() {
          * default rules are populated into the fields onItemSelected() when the activity first loads
          */
 
-        addCloseIconInToolbar()
+        addCloseArrowIconInToolbar()
         replaceTitleFromToolbar()
     }
 
@@ -101,14 +101,14 @@ class RulesActivity : AppCompatActivity() {
         setSupportActionBar(toolbar)
     }
 
-    private fun addCloseIconInToolbar(){
+    private fun addCloseArrowIconInToolbar(){
         var toolbar = findViewById<Toolbar>(R.id.toolbar)
         toolbar.setNavigationIcon(R.drawable.ic_back_arrow)
 
     }
 
     private fun replaceTitleFromToolbar(){
-        this.title = "Rules Management"
+        this.title = getString(R.string.action_rules_management)
     }
 
     private fun populateRulesTextFields(position: Int){

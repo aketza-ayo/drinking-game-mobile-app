@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <PreferenceCategory android:title="General">
+        <SwitchPreference
+            android:id="@+id/switcSound"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:defaultValue="false"
+            android:key="switch_sound"
+            android:summary="Disabled"
+            android:title="Sound FX" />
+
+        <SwitchPreference
+            android:id="@+id/switchNightMode"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:defaultValue="false"
+            android:key="switch_night"
+            android:summary="Disabled"
+            android:title="Night mode" />
+    </PreferenceCategory>
+
+    <PreferenceCategory android:title="Game Features">
+         <CheckBoxPreference
+             android:key="prefHistorical"
+             android:title="Historical Deck"
+             android:summary="Allows user to left swipe the screen to see the cards that have been drawn"
+             android:defaultValue="true" />
+
+        <CheckBoxPreference
+            android:dependency="prefHistorical"
+            android:key="prefReturnCard"
+            android:title="Return Deck"
+            android:summary="Allows the user to return a card back in the deck"
+            android:defaultValue="true" />
+
+    </PreferenceCategory>
+
+    <PreferenceCategory android:title="Others">
+        <Preference android:key="keyContact"
+            android:title="Contact"
+            android:summary="aketzamaster@gmail.com" />
+    </PreferenceCategory>
+
+
+    <!-- The string literal might appear in RED but it is not an error.
+        They are injected by gradle at compile time with applicationVariants-->
+    <PreferenceCategory android:title="About">
+        <Preference android:key="appDeveloper"
+            android:title="Developer"
+            android:summary="Murcielago Dev Commits" />
+        <Preference android:key="appVersion"
+            android:title="App version"
+            android:summary="@string/versionName" />
+    </PreferenceCategory>
+
+</PreferenceScreen>
