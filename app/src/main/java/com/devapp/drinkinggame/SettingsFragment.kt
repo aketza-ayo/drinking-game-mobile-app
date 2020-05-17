@@ -10,8 +10,8 @@ import android.widget.Toast
 class SettingsFragment : PreferenceFragment() {
 
     companion object {
-        const val PREFERENCE_SOUND_FX = "switch_sound"
-        const val PREFERENCE_NIGHT_MODE = "switch_night"
+        const val PREFERENCE_SOUND_FX = "prefSound"
+        const val PREFERENCE_NIGHT_MODE = "prefNight"
     }
 
     private lateinit var preferenceChangeListener: SharedPreferences.OnSharedPreferenceChangeListener
@@ -29,7 +29,6 @@ class SettingsFragment : PreferenceFragment() {
                 }else{
                     soundPreference.summary = "Disabled"
                 }
-                Toast.makeText(activity, "Not yet implemented", Toast.LENGTH_SHORT).show()
             }
 
             if(PREFERENCE_NIGHT_MODE == key){

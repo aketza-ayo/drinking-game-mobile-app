@@ -3,11 +3,11 @@
 
     <PreferenceCategory android:title="General">
         <SwitchPreference
-            android:id="@+id/switcSound"
+            android:id="@+id/switchSound"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:defaultValue="false"
-            android:key="switch_sound"
+            android:key="prefSound"
             android:summary="Disabled"
             android:title="Sound FX" />
 
@@ -16,7 +16,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:defaultValue="false"
-            android:key="switch_night"
+            android:key="prefNight"
             android:summary="Disabled"
             android:title="Night mode" />
     </PreferenceCategory>
@@ -31,8 +31,8 @@
         <CheckBoxPreference
             android:dependency="prefHistorical"
             android:key="prefReturnCard"
-            android:title="Return Deck"
-            android:summary="Allows the user to return a card back in the deck"
+            android:title="Return Card"
+            android:summary="Allows the user to return a card back into the deck"
             android:defaultValue="true" />
 
     </PreferenceCategory>

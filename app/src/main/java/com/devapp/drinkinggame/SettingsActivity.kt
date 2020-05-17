@@ -8,10 +8,6 @@ import androidx.appcompat.widget.Toolbar
 
 class SettingsActivity:  AppCompatActivity() {
 
-    companion object {
-        const val KEY_SETTING_EXAMPLE_SWITCH = "example_switch"
-    }
-
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when(item.title){
             "Save"-> Toast.makeText(this, "to be implemented", Toast.LENGTH_SHORT).show()

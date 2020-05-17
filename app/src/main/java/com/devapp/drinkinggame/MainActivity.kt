@@ -2,6 +2,8 @@ package com.devapp.drinkinggame
 
 import android.content.Intent
 import android.os.Bundle
+import android.speech.tts.TextToSpeech
+import android.speech.tts.TextToSpeech.OnInitListener
 import android.util.Log.d
 import android.view.*
 import android.widget.CompoundButton
@@ -14,6 +16,8 @@ import androidx.core.view.MenuItemCompat
 import androidx.preference.PreferenceManager
 import com.google.firebase.analytics.FirebaseAnalytics
 import kotlinx.android.synthetic.main.content_main.*
+import java.util.*
+
 
 class MainActivity : AppCompatActivity(), RightFragment.OnFragmentInteractionListener, GestureDetector.OnGestureListener {
 
@@ -37,12 +41,15 @@ class MainActivity : AppCompatActivity(), RightFragment.OnFragmentInteractionLis
 
     private var isHistoricalFeatureEnabled = true
     private var isReturnCardFeatureEnabled = true
+    private var isSoundFxFeatureEnabled = false
+
+    private lateinit var textToSpeech: TextToSpeech
 
 
     companion object {
         private const val PREFERENCE_FEATURE_HISTORICAL = "prefHistorical"
         private const val PREFERENCE_FEATURE_RETURN_CARD = "prefReturnCard"
-
+        private const val PREFERENCE_FEATURE_SOUND_FX= "prefSound"
         private const val MIN_DISTANCE = 150
     }
 
@@ -155,9 +162,32 @@ class MainActivity : AppCompatActivity(), RightFragment.OnFragmentInteractionLis
             }
         })
 
+        initTextToSpeech()
 
         fragmentContainer = findViewById(R.id.fragment_container)
 //        this.gestureDetector = GestureDetector(viewDeck.context.applicationContext, this);
+    }
+
+    private fun initTextToSpeech(){
+        textToSpeech = TextToSpeech(this, OnInitListener { status ->
+            if (status == TextToSpeech.SUCCESS) {
+                val result: Int = textToSpeech.setLanguage(Locale.ENGLISH)
+                if (result == TextToSpeech.LANG_MISSING_DATA || result == TextToSpeech.LANG_NOT_SUPPORTED) {
+                    d("drinking-game","Language not supported" )
+                }
+            } else {
+                d("drinking-game","Initialization failed" )
+            }
+        })
+    }
+
+    private fun speakIfEnabled(text: String){
+        if(isSoundFxFeatureEnabled) {
+            textToSpeech.setSpeechRate(1F)
+            textToSpeech.setPitch(1F)
+
+            textToSpeech.speak(text, TextToSpeech.QUEUE_FLUSH, null)
+        }
     }
 
     private fun unfoldCard(){
@@ -308,6 +338,8 @@ class MainActivity : AppCompatActivity(), RightFragment.OnFragmentInteractionLis
             textTip.text = cardItem.rule
         }
 
+        speakIfEnabled(textTip.text.toString())
+
     }
 
     private fun openFragment(){
@@ -450,6 +482,16 @@ class MainActivity : AppCompatActivity(), RightFragment.OnFragmentInteractionLis
 
         isHistoricalFeatureEnabled = sharedPreferences.getBoolean(PREFERENCE_FEATURE_HISTORICAL, true)
         isReturnCardFeatureEnabled = sharedPreferences.getBoolean(PREFERENCE_FEATURE_RETURN_CARD, true)
+        isSoundFxFeatureEnabled = sharedPreferences.getBoolean(PREFERENCE_FEATURE_SOUND_FX, false)
+    }
+
+    override fun onDestroy() {
+        if(textToSpeech != null){
+            textToSpeech.stop()
+            textToSpeech.shutdown()
+        }
+
+        super.onDestroy()
     }
 }
 
