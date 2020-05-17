@@ -11,6 +11,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.core.view.MenuItemCompat
+import androidx.preference.PreferenceManager
 import com.google.firebase.analytics.FirebaseAnalytics
 import kotlinx.android.synthetic.main.content_main.*
 
