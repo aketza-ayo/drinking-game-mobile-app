@@ -6,6 +6,6 @@
     android:background="@color/colorPrimaryDark"
     android:elevation="4dp"
     android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
-    app:popupTheme="@style/ThemeOverlay.AppCompat.Light">
+    app:popupTheme="?popupOverlayStyle">
 
 </androidx.appcompat.widget.Toolbar>

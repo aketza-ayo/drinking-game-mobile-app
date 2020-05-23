@@ -5,6 +5,8 @@ import android.util.Log
 class CardsData {
 
     companion object {
+        val TAG: String = CardsData::class.java.simpleName
+
         const val RULE_1 = "You assign one drink."
         const val RULE_2 = "You assign two drinks."
         const val RULE_3 = "You assign three drinks."
@@ -22,7 +24,7 @@ class CardsData {
     }
 
     fun getAllCards(): MutableSet<CardItem>{
-        Log.d("drinking-game", "Deck of cards loaded")
+        Log.d(Constants.APP_NAME, "Deck of cards loaded from $TAG")
 
         return setOf(
             CardItem("1C",R.drawable.ic_1c_small,RULE_1),

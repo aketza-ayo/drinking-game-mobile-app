@@ -1,11 +1,16 @@
 package com.devapp.drinkinggame
 
 import android.content.Intent
+import android.content.SharedPreferences
+import android.graphics.Color
 import android.os.Bundle
 import android.speech.tts.TextToSpeech
 import android.speech.tts.TextToSpeech.OnInitListener
-import android.util.Log.d
-import android.view.*
+import android.util.Log
+import android.view.Menu
+import android.view.MenuItem
+import android.view.MotionEvent
+import android.view.View
 import android.widget.CompoundButton
 import android.widget.FrameLayout
 import android.widget.Switch
@@ -15,11 +20,14 @@ import androidx.appcompat.widget.Toolbar
 import androidx.core.view.MenuItemCompat
 import androidx.preference.PreferenceManager
 import com.google.firebase.analytics.FirebaseAnalytics
+import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
 import kotlinx.android.synthetic.main.content_main.*
+import java.lang.reflect.Type
 import java.util.*
 
 
-class MainActivity : AppCompatActivity(), RightFragment.OnFragmentInteractionListener, GestureDetector.OnGestureListener {
+class MainActivity : AppCompatActivity(), RightFragment.OnFragmentInteractionListener {
 
     private lateinit var firebaseAnalytics: FirebaseAnalytics
 
@@ -30,27 +38,32 @@ class MainActivity : AppCompatActivity(), RightFragment.OnFragmentInteractionLis
     private lateinit var switch: Switch
 
     private lateinit var fragmentContainer: FrameLayout
-    private lateinit var gestureDetector: GestureDetector
     private var x1: Float = 0.0F
     private var x2: Float = 0.0F
     private var y1: Float = 0.0F
     private var y2: Float = 0.0F
-    private var MIN_DISTANCE = 150
 
     private var historicalDeck = arrayListOf<CardItem>()
 
     private var isHistoricalFeatureEnabled = true
     private var isReturnCardFeatureEnabled = true
     private var isSoundFxFeatureEnabled = false
+    private var isDarkModeFeatureEnabled = false
 
     private lateinit var textToSpeech: TextToSpeech
 
 
     companion object {
+        private const val MIN_DISTANCE = 150
         private const val PREFERENCE_FEATURE_HISTORICAL = "prefHistorical"
         private const val PREFERENCE_FEATURE_RETURN_CARD = "prefReturnCard"
-        private const val PREFERENCE_FEATURE_SOUND_FX= "prefSound"
-        private const val MIN_DISTANCE = 150
+        private const val PREFERENCE_FEATURE_SOUND_FX = "prefSound"
+        private const val PREFERENCE_FEATURE_DARK_MODE = "prefDark"
+
+        private const val SHARED_HISTORICAL_DECK = "sharedHistoricalDeck"
+        private const val SHARED_PLAYING_DECK = "sharedPlayingDeck"
+        private const val SHARED_CURRENT_CARD = "sharedCurrentCard"
+        private const val SHARED_SWITCH_MODE = "sharedSwitchMode"
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -79,27 +92,62 @@ class MainActivity : AppCompatActivity(), RightFragment.OnFragmentInteractionLis
                 textTip.text = currentCardItem.rule
                 Toast.makeText(applicationContext,"Default Rules",Toast.LENGTH_SHORT).show()
             }
+            persistSwitchMode()
         })
+
+        if(loadCurrentCard().name == "Back"){
+            Log.d(Constants.APP_NAME, "onCreate() -> New Game deleting sharedPreferences...")
+            freeSharedPreferences()
+        }else{
+            Log.d(Constants.APP_NAME, "onCreate() -> Existing Game load sharedPreferences...")
+            displayCardInViewAndToolbar(loadCurrentCard())
+
+            mutableDeck = loadPlayingDeck()
+            historicalDeck = loadHistoricalDeck()
+            displayDeckCounter(mutableDeck.size)
+        }
 
         return super.onCreateOptionsMenu(menu)
     }
 
     override fun onResume() {
         super.onResume()
-        initPreferences()
+//        initPreferences()
+
+        if(isDarkModeFeatureEnabled){
+            setTheme(R.style.DarkTheme)
+        }else{
+            setTheme(R.style.AppTheme)
+        }
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        firebaseAnalytics = FirebaseAnalytics.getInstance(this)
+        Log.d(Constants.APP_NAME,"===============================================================")
+        initPreferences()
+
+        if(isDarkModeFeatureEnabled){
+            setTheme(R.style.DarkTheme)
+        }else{
+            setTheme(R.style.AppTheme)
+        }
+
         setContentView(R.layout.activity_main)
 
         val toolbar = findViewById<Toolbar>(R.id.toolbar)
+        if(isDarkModeFeatureEnabled){
+            toolbar.setBackgroundColor(Color.parseColor("#000000"))
+        }else{
+            toolbar.setBackgroundColor(Color.parseColor("#3700B3"))
+        }
         setSupportActionBar(toolbar)
+//        toolbar.setSubtitle("By Murcielago Dev Commits");
 
-        firebaseAnalytics = FirebaseAnalytics.getInstance(this)
+        Log.d(Constants.APP_NAME,"onCreate() -> ${loadCurrentCard().name }")
+
 
         PreferenceManager.setDefaultValues(this, R.xml.settings, false)
-        initPreferences()
 
         viewDeck.setOnClickListener {
 
@@ -130,12 +178,10 @@ class MainActivity : AppCompatActivity(), RightFragment.OnFragmentInteractionLis
                         if (Math.abs(valueX) > MIN_DISTANCE) {
 
                             if (x2 > x1) {
-                                d("drinking-game","right swipe" )
-//                                Toast.makeText(applicationContext, "right swipe", Toast.LENGTH_SHORT).show()
+                                Log.d(Constants.APP_NAME,"onTouch() -> right swipe" )
                                 closeFragment()
                             } else {
-                                d("drinking-game","left swipe" )
-//                                Toast.makeText(applicationContext, "left swipe", Toast.LENGTH_SHORT).show()
+                                Log.d(Constants.APP_NAME,"onTouch() -> left swipe")
                                 if(isHistoricalFeatureEnabled){
                                     openFragment()
                                 }
@@ -144,13 +190,11 @@ class MainActivity : AppCompatActivity(), RightFragment.OnFragmentInteractionLis
                         } else if (Math.abs(valueY) > MIN_DISTANCE) {
 
                             if (y2 > y1) {
-                                d("drinking-game","bottom swipe" )
-//                                Toast.makeText(applicationContext, "bottom swipe", Toast.LENGTH_SHORT).show()
+                                Log.d(Constants.APP_NAME,"onTouch() -> bottom swipe" )
 
 
                             } else {
-                                d("drinking-game","top swipe" )
-//                                Toast.makeText(applicationContext, "Top swipe", Toast.LENGTH_SHORT).show()
+                                Log.d(Constants.APP_NAME,"onTouch() -> top swipe" )
 
                             }
                         }else{
@@ -165,7 +209,7 @@ class MainActivity : AppCompatActivity(), RightFragment.OnFragmentInteractionLis
         initTextToSpeech()
 
         fragmentContainer = findViewById(R.id.fragment_container)
-//        this.gestureDetector = GestureDetector(viewDeck.context.applicationContext, this);
+
     }
 
     private fun initTextToSpeech(){
@@ -173,10 +217,10 @@ class MainActivity : AppCompatActivity(), RightFragment.OnFragmentInteractionLis
             if (status == TextToSpeech.SUCCESS) {
                 val result: Int = textToSpeech.setLanguage(Locale.ENGLISH)
                 if (result == TextToSpeech.LANG_MISSING_DATA || result == TextToSpeech.LANG_NOT_SUPPORTED) {
-                    d("drinking-game","Language not supported" )
+                    Log.d(Constants.APP_NAME,"initTextToSpeech() -> Language not supported" )
                 }
             } else {
-                d("drinking-game","Initialization failed" )
+                Log.d(Constants.APP_NAME,"initTextToSpeech() -> Initialization failed" )
             }
         })
     }
@@ -193,6 +237,7 @@ class MainActivity : AppCompatActivity(), RightFragment.OnFragmentInteractionLis
     private fun unfoldCard(){
         if (mutableDeck.isEmpty()) {
             mutableDeck = CardsData().getAllCards()
+            persistPlayingDeck()
 
             displayCardInViewAndToolbar(
                 CardItem("back_red", R.drawable.ic_1h_small, "Click to play again"))
@@ -201,7 +246,8 @@ class MainActivity : AppCompatActivity(), RightFragment.OnFragmentInteractionLis
             textTip.text = "Click to play again"
 
             historicalDeck.clear()
-            d("drinking-game", "Size of the deck: ${mutableDeck.size}")
+            persistHistoricalDeck()
+            Log.d(Constants.APP_NAME, "unfoldCard() -> Size of the deck: ${mutableDeck.size}")
             return
         }
 
@@ -214,7 +260,7 @@ class MainActivity : AppCompatActivity(), RightFragment.OnFragmentInteractionLis
 
         val rightFragment: RightFragment? = supportFragmentManager.findFragmentByTag("RIGHT_FRAGMENT") as RightFragment?
 
-        if (rightFragment != null && rightFragment.isVisible()) {
+        if (rightFragment != null && rightFragment.isVisible) {
             return true
         }
 
@@ -251,26 +297,30 @@ class MainActivity : AppCompatActivity(), RightFragment.OnFragmentInteractionLis
 
     private fun unfoldCardFromDeckAndDisplayInformation(): CardItem{
         currentCardItem = mutableDeck.shuffled().take(1)[0]
+        persistCurrentCard()
         mutableDeck.remove(currentCardItem)
+        persistPlayingDeck()
 
-        d("drinking-game","size of the deck: ${mutableDeck.size} and unfolded card is: $currentCardItem" )
+        Log.d(Constants.APP_NAME,"unfoldCardFromDeckAndDisplayInformation() -> Deck: ${mutableDeck.size} histo: ${historicalDeck.size} current: ${currentCardItem.name}" )
         displayCardInViewAndToolbar(currentCardItem)
 
-        displayDeckCounter(mutableDeck)
+        displayDeckCounter(mutableDeck.size)
 
         return currentCardItem
     }
 
-    private fun displayDeckCounter(deck: MutableSet<CardItem> ){
-        textCardCounter.text = "Cards left: ${deck.size}"
+    private fun displayDeckCounter(size: Int ){
+        textCardCounter.text = "Cards left: $size"
     }
 
     private fun addCardBackIntoDeck(cardItem: CardItem){
         mutableDeck.add(cardItem)
+        persistPlayingDeck()
     }
 
     private fun addCurrentCardIntoHistoricalList(currentCardItem: CardItem){
         historicalDeck.add(0,currentCardItem)
+        persistHistoricalDeck()
     }
 
     private fun displayCardInViewAndToolbar(cardItem: CardItem){
@@ -332,6 +382,7 @@ class MainActivity : AppCompatActivity(), RightFragment.OnFragmentInteractionLis
 
         }
 
+        switch.isChecked = loadSwitchMode()
         if(switch.isChecked){
             textTip.text = showCustomRules()
         }else{
@@ -346,8 +397,10 @@ class MainActivity : AppCompatActivity(), RightFragment.OnFragmentInteractionLis
         val fragment: RightFragment? = supportFragmentManager.findFragmentByTag("RIGHT_FRAGMENT") as RightFragment?
 
         val bundle = Bundle()
-        bundle.putParcelableArrayList("historicalDeck", historicalDeck)
+//        bundle.putParcelableArrayList("historicalDeck", historicalDeck)
+        bundle.putParcelableArrayList("historicalDeck", loadHistoricalDeck())
         bundle.putBoolean("isReturnCardFeatureEnabled", isReturnCardFeatureEnabled)
+        Log.d(Constants.APP_NAME,"openFragment() -> Opened Right Fragment histo:${historicalDeck.size} loaded:${loadHistoricalDeck().size}")
 
         if(fragment == null) {
             var fragment = RightFragment.newInstance()
@@ -372,7 +425,7 @@ class MainActivity : AppCompatActivity(), RightFragment.OnFragmentInteractionLis
                 R.anim.exit_to_right
             )
             fragment.arguments = bundle
-            transaction.replace(R.id.fragment_container, fragment, "RIGHT_FRAGMENT");
+            transaction.replace(R.id.fragment_container, fragment, "RIGHT_FRAGMENT")
         }
     }
 
@@ -386,16 +439,24 @@ class MainActivity : AppCompatActivity(), RightFragment.OnFragmentInteractionLis
 
     override fun onFragmentInteraction(cardItemDeleted : CardItem) {
         addCardBackIntoDeck(cardItemDeleted)
-        displayDeckCounter(mutableDeck)
+        displayDeckCounter(mutableDeck.size)
         deleteFromHistoricalList(cardItemDeleted)
-
-//        onBackPressed()
     }
 
     private fun deleteFromHistoricalList(cardItem: CardItem){
-        historicalDeck.remove(cardItem)
-//            Toast.makeText(this, cardItem.name + " true", Toast.LENGTH_SHORT).show()
 
+//        historicalDeck.remove(cardItem)
+
+        var i = 0
+        for(item in historicalDeck){
+            if(cardItem.name == item.name){
+                historicalDeck.removeAt(i)
+                break
+            }
+            i++
+        }
+
+        persistHistoricalDeck()
     }
 
     override fun onTouchEvent(event: MotionEvent): Boolean {
@@ -417,11 +478,11 @@ class MainActivity : AppCompatActivity(), RightFragment.OnFragmentInteractionLis
                 if (Math.abs(valueX) > MIN_DISTANCE) {
 
                     if (x2 > x1) {
-                        d("drinking-game","right swipe" )
+                        Log.d(Constants.APP_NAME,"onTouchEvent() -> right swipe" )
 //                        Toast.makeText(this, "right swipe", Toast.LENGTH_SHORT).show()
                         closeFragment()
                     } else {
-                        d("drinking-game","left swipe" )
+                        Log.d(Constants.APP_NAME,"onTouchEvent() -> left swipe" )
 //                        Toast.makeText(this, "left swipe", Toast.LENGTH_SHORT).show()
                         if(isHistoricalFeatureEnabled){
                             openFragment()
@@ -431,12 +492,12 @@ class MainActivity : AppCompatActivity(), RightFragment.OnFragmentInteractionLis
                 } else if (Math.abs(valueY) > MIN_DISTANCE) {
 
                     if (y2 > y1) {
-                        d("drinking-game","bottom swipe" )
+                        Log.d(Constants.APP_NAME,"onTouchEvent() -> bottom swipe" )
 //                        Toast.makeText(this, "bottom swipe", Toast.LENGTH_SHORT).show()
 
 
                     } else {
-                        d("drinking-game","top swipe" )
+                        Log.d(Constants.APP_NAME,"onTouchEvent() -> top swipe" )
 //                        Toast.makeText(this, "Top swipe", Toast.LENGTH_SHORT).show()
 
                     }
@@ -449,49 +510,150 @@ class MainActivity : AppCompatActivity(), RightFragment.OnFragmentInteractionLis
         return true
     }
 
-    override fun onShowPress(e: MotionEvent?) {
-
-    }
-
-    override fun onSingleTapUp(e: MotionEvent?): Boolean {
-        return true
-    }
-
-    override fun onDown(e: MotionEvent?): Boolean {
-        return true
-
-    }
-
-    override fun onFling(e1: MotionEvent?, e2: MotionEvent?, velocityX: Float, velocityY: Float): Boolean {
-        return true
-
-    }
-
-
-    override fun onScroll(e1: MotionEvent?, e2: MotionEvent?, distanceX: Float, distanceY: Float): Boolean {
-        return true
-
-    }
-
-    override fun onLongPress(e: MotionEvent?) {
-
-    }
-
     private fun initPreferences(){
         val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this)
 
         isHistoricalFeatureEnabled = sharedPreferences.getBoolean(PREFERENCE_FEATURE_HISTORICAL, true)
         isReturnCardFeatureEnabled = sharedPreferences.getBoolean(PREFERENCE_FEATURE_RETURN_CARD, true)
         isSoundFxFeatureEnabled = sharedPreferences.getBoolean(PREFERENCE_FEATURE_SOUND_FX, false)
+        isDarkModeFeatureEnabled = sharedPreferences.getBoolean(PREFERENCE_FEATURE_DARK_MODE, false)
     }
 
     override fun onDestroy() {
+        deleteCurrentCard()
+
         if(textToSpeech != null){
             textToSpeech.stop()
             textToSpeech.shutdown()
         }
-
         super.onDestroy()
+    }
+
+    private fun freeSharedPreferences(){
+        deleteHistoricalDeck()
+        deletePlayingDeck()
+        deleteSwitchMode()
+    }
+
+    private fun persistHistoricalDeck(){
+        val sharedPreferences: SharedPreferences = PreferenceManager.getDefaultSharedPreferences(this)
+        var editor = sharedPreferences.edit()
+        var gson = Gson()
+        var json = gson.toJson(historicalDeck)
+        editor.putString(SHARED_HISTORICAL_DECK, json)
+        editor.apply()
+        Log.d(Constants.APP_NAME, "persistHistoricalDeck() -> Persisting histo: ${historicalDeck.size} ")
+    }
+
+    private fun loadHistoricalDeck(): ArrayList<CardItem>{
+        val sharedPreferences: SharedPreferences = PreferenceManager.getDefaultSharedPreferences(this)
+        var gson = Gson()
+        var json: String? = sharedPreferences.getString(SHARED_HISTORICAL_DECK,null)
+            ?: return arrayListOf<CardItem>()
+        val type: Type = object : TypeToken<ArrayList<CardItem?>?>() {}.type
+        historicalDeck = gson.fromJson(json, type)
+
+        if(historicalDeck == null){
+            Log.d(Constants.APP_NAME, "loadHistoricalDeck() -> histo deck is empty")
+            historicalDeck = arrayListOf<CardItem>()
+        }
+
+        return historicalDeck
+    }
+
+    private fun deleteHistoricalDeck(){
+        val sharedPreferences: SharedPreferences = PreferenceManager.getDefaultSharedPreferences(this)
+        var editor = sharedPreferences.edit()
+        editor.remove(SHARED_HISTORICAL_DECK)
+        editor.commit()
+        Log.d(Constants.APP_NAME, "deleteHistoricalDeck() -> Deleting history deck...")
+    }
+
+    private fun persistPlayingDeck(){
+        val sharedPreferences: SharedPreferences = PreferenceManager.getDefaultSharedPreferences(this)
+        var editor = sharedPreferences.edit()
+        var gson = Gson()
+        var json = gson.toJson(mutableDeck)
+        editor.putString(SHARED_PLAYING_DECK, json)
+        editor.apply()
+        Log.d(Constants.APP_NAME, "persistPlayingDeck() -> Persisting playing deck: ${mutableDeck.size} ")
+
+    }
+
+    private fun loadPlayingDeck(): MutableSet<CardItem>{
+        val sharedPreferences: SharedPreferences = PreferenceManager.getDefaultSharedPreferences(this)
+        var gson = Gson()
+        var json: String? = sharedPreferences.getString(SHARED_PLAYING_DECK,null)
+        val type: Type = object : TypeToken<MutableSet<CardItem?>?>() {}.type
+        mutableDeck = gson.fromJson(json, type)
+        if(mutableDeck == null){
+            Log.d(Constants.APP_NAME, "loadPlayingDeck() -> Loading playing deck with cards")
+            mutableDeck = CardsData().getAllCards()
+        }
+
+        return mutableDeck
+    }
+
+    private fun deletePlayingDeck(){
+        val sharedPreferences: SharedPreferences = PreferenceManager.getDefaultSharedPreferences(this)
+        var editor = sharedPreferences.edit()
+        editor.remove(SHARED_PLAYING_DECK)
+        editor.commit()
+        Log.d(Constants.APP_NAME, "deletePlayingDeck() -> Deleting playing deck...")
+    }
+
+    private fun persistCurrentCard(){
+        val sharedPreferences: SharedPreferences = PreferenceManager.getDefaultSharedPreferences(this)
+        var editor = sharedPreferences.edit()
+        var gson = Gson()
+        var json = gson.toJson(currentCardItem)
+        editor.putString(SHARED_CURRENT_CARD, json)
+        editor.apply()
+        Log.d(Constants.APP_NAME, "persistCurrentCard() -> Persisting current card: ${currentCardItem.name} ")
+
+    }
+
+    private fun loadCurrentCard(): CardItem{
+        val sharedPreferences: SharedPreferences = PreferenceManager.getDefaultSharedPreferences(this)
+        var gson = Gson()
+        var json: String? = sharedPreferences.getString(SHARED_CURRENT_CARD,null)
+            ?: return CardItem("Back",R.drawable.card_back_blue,"Draw a card to continue...")
+        val type: Type = object : TypeToken<CardItem?>() {}.type
+        currentCardItem = gson.fromJson(json, type)
+
+//        if(currentCardItem == null){
+//            return CardItem("Back",R.drawable.card_back_blue,"Draw a card to continue...")
+//        }
+
+        return currentCardItem
+    }
+
+    private fun deleteCurrentCard(){
+        val sharedPreferences: SharedPreferences = PreferenceManager.getDefaultSharedPreferences(this)
+        var editor = sharedPreferences.edit()
+        editor.remove(SHARED_SWITCH_MODE)
+        editor.commit()
+        Log.d(Constants.APP_NAME, "deleteCurrentCard() -> Deleting current card...")
+    }
+
+    private fun persistSwitchMode(){
+        val sharedPreferences: SharedPreferences = PreferenceManager.getDefaultSharedPreferences(this)
+        var editor = sharedPreferences.edit()
+        editor.putBoolean(SHARED_SWITCH_MODE, switch.isChecked)
+        editor.apply()
+    }
+
+    private fun loadSwitchMode(): Boolean{
+        val sharedPreferences: SharedPreferences = PreferenceManager.getDefaultSharedPreferences(this)
+        return sharedPreferences.getBoolean(SHARED_SWITCH_MODE, false)
+
+    }
+
+    private fun deleteSwitchMode(){
+        val sharedPreferences: SharedPreferences = PreferenceManager.getDefaultSharedPreferences(this)
+        var editor = sharedPreferences.edit()
+        editor.remove(SHARED_SWITCH_MODE)
+        editor.commit()
     }
 }
 

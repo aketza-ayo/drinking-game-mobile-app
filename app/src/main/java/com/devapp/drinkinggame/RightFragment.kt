@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.RecyclerView.ViewHolder
 class RightFragment : Fragment() {
 
     private lateinit var mListener: OnFragmentInteractionListener
+    private lateinit var histoList: MutableList<CardItem>
 
     interface OnFragmentInteractionListener{
 
@@ -44,7 +45,7 @@ class RightFragment : Fragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         var view =  inflater.inflate(R.layout.fragment_right, container, false)
 
-        val histoList =
+        histoList =
             requireArguments().getParcelableArrayList<Parcelable>("historicalDeck") as MutableList<CardItem>
 
         val isReturnCardFeatureEnabled =
@@ -74,6 +75,7 @@ class RightFragment : Fragment() {
 
             override fun onSwiped(viewHolder: ViewHolder, direction: Int) {
                 val item = adapter.getItemAt(viewHolder.adapterPosition)
+                histoList.removeAt(viewHolder.adapterPosition)
                 adapter.notifyItemRemoved(viewHolder.adapterPosition)
                 sendBack(item)
 

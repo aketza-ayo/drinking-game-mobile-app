@@ -1,5 +1,6 @@
 package com.devapp.drinkinggame
 
+import android.graphics.Color
 import android.os.Bundle
 import android.util.Log
 import android.view.Menu
@@ -11,6 +12,7 @@ import android.widget.Spinner
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
+import androidx.preference.PreferenceManager
 import com.google.android.material.textfield.TextInputEditText
 import kotlinx.android.synthetic.main.activity_rules.*
 
@@ -21,6 +23,12 @@ class RulesActivity : AppCompatActivity() {
 
     private lateinit var spinner : Spinner
     private var isCustomMode: Boolean = false
+
+    private var isDarkModeFeatureEnabled = false
+
+    companion object {
+        private const val PREFERENCE_FEATURE_DARK_MODE = "prefDark"
+    }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.menu_rules, menu)
@@ -52,6 +60,14 @@ class RulesActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        initPreferences()
+
+        if(isDarkModeFeatureEnabled){
+            setTheme(R.style.DarkTheme)
+        }else{
+            setTheme(R.style.AppTheme)
+        }
         setContentView(R.layout.activity_rules)
 
         isCustomMode = intent.getBooleanExtra("IS_CUSTOM_RULE_ON", isCustomMode)
@@ -98,6 +114,13 @@ class RulesActivity : AppCompatActivity() {
 
     private fun initToolbar(){
         var toolbar = findViewById<Toolbar>(R.id.toolbar)
+
+        if(isDarkModeFeatureEnabled){
+            toolbar.setBackgroundColor(Color.parseColor("#000000"))
+        }else{
+            toolbar.setBackgroundColor(Color.parseColor("#3700B3"))
+        }
+
         setSupportActionBar(toolbar)
     }
 
@@ -185,5 +208,11 @@ class RulesActivity : AppCompatActivity() {
             Pair("RULE_K",inputKing
             )
         )
+    }
+
+    private fun initPreferences(){
+        val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this)
+
+        isDarkModeFeatureEnabled = sharedPreferences.getBoolean(PREFERENCE_FEATURE_DARK_MODE, false)
     }
 }

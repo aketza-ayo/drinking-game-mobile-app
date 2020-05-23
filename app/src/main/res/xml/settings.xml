@@ -38,9 +38,10 @@
     </PreferenceCategory>
 
     <PreferenceCategory android:title="Others">
-        <Preference android:key="keyContact"
-            android:title="Contact"
-            android:summary="aketzamaster@gmail.com" />
+        <Preference
+            android:key="keyContact"
+            android:summary="aketzamaster@gmail.com"
+            android:title="Contact" />
     </PreferenceCategory>
 
 
