@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:focusableInTouchMode="true"
+    android:layout_height="match_parent"
+    android:layout_width="match_parent"
     tools:context=".RulesActivity">
 
     <include
@@ -13,49 +13,47 @@
 
     <LinearLayout
         android:id="@+id/modeSpinnerLayoutRules"
-        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="?attr/backgroundcolor"
+        android:layout_width="match_parent"
         android:orientation="vertical"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/toolbar">
 
         <RelativeLayout
-            android:layout_width="fill_parent"
             android:layout_height="wrap_content"
+            android:layout_width="fill_parent"
             android:orientation="horizontal">
 
             <TextView
+                android:drawableLeft="@drawable/ic_info"
                 android:id="@+id/textRuleMode"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
                 android:layout_alignParentLeft="true"
+                android:layout_height="wrap_content"
                 android:layout_marginLeft="8dp"
                 android:layout_marginTop="13dp"
-                android:drawableLeft="@drawable/ic_info"
-                android:textColor="@color/colorAccent"
+                android:layout_width="wrap_content"
+                android:textColor="#3700B3"
                 android:textStyle="italic"
                 app:layout_constraintEnd_toStartOf="@+id/spinnerRules"
                 app:layout_constraintStart_toStartOf="parent" />
 
             <Spinner
                 android:id="@+id/spinnerRules"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textRuleMode"
-                app:popupTheme="?popupOverlayStyle" />
+                app:layout_constraintTop_toBottomOf="@+id/textRuleMode" />
 
         </RelativeLayout>
     </LinearLayout>
 
     <ScrollView
         android:id="@+id/scrollView2"
-        android:layout_width="0dp"
         android:layout_height="0dp"
-        android:background="?attr/backgroundcolor"
+        android:layout_marginBottom="8dp"
+        android:layout_width="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
@@ -64,25 +62,22 @@
 
         <LinearLayout
             android:id="@+id/scrollLayoutRules"
-            android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:layout_width="match_parent"
             android:orientation="vertical"
-            android:background="?attr/backgroundcolor"
             tools:layout_editor_absoluteX="8dp"
             tools:layout_editor_absoluteY="128dp">
 
             <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/textAce"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:layout_marginLeft="8dp"
-                android:layout_marginTop="8dp"
-                android:layout_marginEnd="8dp"
-                android:layout_marginRight="8dp"
-                android:background="?attr/backgroundcolor"
                 android:hint="Enter rule for ace"
-                android:textColorHint="?attr/tintcolor"
+                android:id="@+id/textAce"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="8dp"
+                android:layout_marginLeft="8dp"
+                android:layout_marginRight="8dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:layout_width="match_parent"
                 app:counterEnabled="true"
                 app:counterMaxLength="45"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -91,24 +86,21 @@
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/inputAce"
-                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:maxLength="45"
-                    android:textColor="?attr/textcolor" />
+                    android:layout_width="match_parent"
+                    android:maxLength="45" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/textTwo"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:layout_marginLeft="8dp"
-                android:layout_marginTop="8dp"
-                android:layout_marginEnd="8dp"
-                android:layout_marginRight="8dp"
-                android:background="?attr/backgroundcolor"
                 android:hint="Enter rule for twos"
-                android:textColorHint="?attr/tintcolor"
+                android:id="@+id/textTwo"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="8dp"
+                android:layout_marginLeft="8dp"
+                android:layout_marginRight="8dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:layout_width="match_parent"
                 app:counterEnabled="true"
                 app:counterMaxLength="45"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -117,24 +109,21 @@
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/inputTwo"
-                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:maxLength="45"
-                    android:textColor="?attr/textcolor" />
+                    android:layout_width="match_parent"
+                    android:maxLength="45" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/textThree"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:layout_marginLeft="8dp"
-                android:layout_marginTop="8dp"
-                android:layout_marginEnd="8dp"
-                android:layout_marginRight="8dp"
-                android:background="?attr/backgroundcolor"
                 android:hint="Enter rule for threes"
-                android:textColorHint="?attr/tintcolor"
+                android:id="@+id/textThree"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="8dp"
+                android:layout_marginLeft="8dp"
+                android:layout_marginRight="8dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:layout_width="match_parent"
                 app:counterEnabled="true"
                 app:counterMaxLength="45"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -143,24 +132,21 @@
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/inputThree"
-                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:maxLength="45"
-                    android:textColor="?attr/textcolor" />
+                    android:layout_width="match_parent"
+                    android:maxLength="45" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/textFour"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:layout_marginLeft="8dp"
-                android:layout_marginTop="8dp"
-                android:layout_marginEnd="8dp"
-                android:layout_marginRight="8dp"
-                android:background="?attr/backgroundcolor"
                 android:hint="Enter rule for fours"
-                android:textColorHint="?attr/tintcolor"
+                android:id="@+id/textFour"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="8dp"
+                android:layout_marginLeft="8dp"
+                android:layout_marginRight="8dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:layout_width="match_parent"
                 app:counterEnabled="true"
                 app:counterMaxLength="45"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -169,24 +155,21 @@
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/inputFour"
-                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:maxLength="45"
-                    android:textColor="?attr/textcolor" />
+                    android:layout_width="match_parent"
+                    android:maxLength="45" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/textFive"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:layout_marginLeft="8dp"
-                android:layout_marginTop="8dp"
-                android:layout_marginEnd="8dp"
-                android:layout_marginRight="8dp"
-                android:background="?attr/backgroundcolor"
                 android:hint="Enter rule for fives"
-                android:textColorHint="?attr/tintcolor"
+                android:id="@+id/textFive"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="8dp"
+                android:layout_marginLeft="8dp"
+                android:layout_marginRight="8dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:layout_width="match_parent"
                 app:counterEnabled="true"
                 app:counterMaxLength="45"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -195,24 +178,21 @@
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/inputFive"
-                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:maxLength="45"
-                    android:textColor="?attr/textcolor" />
+                    android:layout_width="match_parent"
+                    android:maxLength="45" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/textSix"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:layout_marginLeft="8dp"
-                android:layout_marginTop="8dp"
-                android:layout_marginEnd="8dp"
-                android:layout_marginRight="8dp"
-                android:background="?attr/backgroundcolor"
                 android:hint="Enter rule for sixes"
-                android:textColorHint="?attr/tintcolor"
+                android:id="@+id/textSix"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="8dp"
+                android:layout_marginLeft="8dp"
+                android:layout_marginRight="8dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:layout_width="match_parent"
                 app:counterEnabled="true"
                 app:counterMaxLength="45"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -221,24 +201,21 @@
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/inputSix"
-                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:maxLength="45"
-                    android:textColor="?attr/textcolor" />
+                    android:layout_width="match_parent"
+                    android:maxLength="45" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/textSeven"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:layout_marginLeft="8dp"
-                android:layout_marginTop="8dp"
-                android:layout_marginEnd="8dp"
-                android:layout_marginRight="8dp"
-                android:background="?attr/backgroundcolor"
                 android:hint="Enter rule for sevens"
-                android:textColorHint="?attr/tintcolor"
+                android:id="@+id/textSeven"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="8dp"
+                android:layout_marginLeft="8dp"
+                android:layout_marginRight="8dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:layout_width="match_parent"
                 app:counterEnabled="true"
                 app:counterMaxLength="45"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -247,24 +224,21 @@
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/inputSeven"
-                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:maxLength="45"
-                    android:textColor="?attr/textcolor" />
+                    android:layout_width="match_parent"
+                    android:maxLength="45" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/textEight"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:layout_marginLeft="8dp"
-                android:layout_marginTop="8dp"
-                android:layout_marginEnd="8dp"
-                android:layout_marginRight="8dp"
-                android:background="?attr/backgroundcolor"
                 android:hint="Enter rule for eights"
-                android:textColorHint="?attr/tintcolor"
+                android:id="@+id/textEight"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="8dp"
+                android:layout_marginLeft="8dp"
+                android:layout_marginRight="8dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:layout_width="match_parent"
                 app:counterEnabled="true"
                 app:counterMaxLength="45"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -273,24 +247,21 @@
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/inputEight"
-                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:maxLength="45"
-                    android:textColor="?attr/textcolor" />
+                    android:layout_width="match_parent"
+                    android:maxLength="45" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/textNine"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:layout_marginLeft="8dp"
-                android:layout_marginTop="8dp"
-                android:layout_marginEnd="8dp"
-                android:layout_marginRight="8dp"
-                android:background="?attr/backgroundcolor"
                 android:hint="Enter rule for nines"
-                android:textColorHint="?attr/tintcolor"
+                android:id="@+id/textNine"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="8dp"
+                android:layout_marginLeft="8dp"
+                android:layout_marginRight="8dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:layout_width="match_parent"
                 app:counterEnabled="true"
                 app:counterMaxLength="45"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -299,24 +270,21 @@
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/inputNine"
-                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:maxLength="45"
-                    android:textColor="?attr/textcolor" />
+                    android:layout_width="match_parent"
+                    android:maxLength="45" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/textTen"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:layout_marginLeft="8dp"
-                android:layout_marginTop="8dp"
-                android:layout_marginEnd="8dp"
-                android:layout_marginRight="8dp"
-                android:background="?attr/backgroundcolor"
                 android:hint="Enter rule for tens"
-                android:textColorHint="?attr/tintcolor"
+                android:id="@+id/textTen"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="8dp"
+                android:layout_marginLeft="8dp"
+                android:layout_marginRight="8dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:layout_width="match_parent"
                 app:counterEnabled="true"
                 app:counterMaxLength="45"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -325,24 +293,21 @@
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/inputTen"
-                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:maxLength="45"
-                    android:textColor="?attr/textcolor" />
+                    android:layout_width="match_parent"
+                    android:maxLength="45" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/textJack"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:layout_marginLeft="8dp"
-                android:layout_marginTop="8dp"
-                android:layout_marginEnd="8dp"
-                android:layout_marginRight="8dp"
-                android:background="?attr/backgroundcolor"
                 android:hint="Enter rule for jacks"
-                android:textColorHint="?attr/tintcolor"
+                android:id="@+id/textJack"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="8dp"
+                android:layout_marginLeft="8dp"
+                android:layout_marginRight="8dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:layout_width="match_parent"
                 app:counterEnabled="true"
                 app:counterMaxLength="45"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -351,24 +316,21 @@
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/inputJack"
-                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:maxLength="45"
-                    android:textColor="?attr/textcolor" />
+                    android:layout_width="match_parent"
+                    android:maxLength="45" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/textQueen"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:layout_marginLeft="8dp"
-                android:layout_marginTop="8dp"
-                android:layout_marginEnd="8dp"
-                android:layout_marginRight="8dp"
-                android:background="?attr/backgroundcolor"
                 android:hint="Enter rule for queens"
-                android:textColorHint="?attr/tintcolor"
+                android:id="@+id/textQueen"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="8dp"
+                android:layout_marginLeft="8dp"
+                android:layout_marginRight="8dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:layout_width="match_parent"
                 app:counterEnabled="true"
                 app:counterMaxLength="45"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -377,24 +339,21 @@
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/inputQueen"
-                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:maxLength="45"
-                    android:textColor="?attr/textcolor" />
+                    android:layout_width="match_parent"
+                    android:maxLength="45" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/textKing"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:layout_marginLeft="8dp"
-                android:layout_marginTop="8dp"
-                android:layout_marginEnd="8dp"
-                android:layout_marginRight="8dp"
-                android:background="?attr/backgroundcolor"
                 android:hint="Enter rule for the kings"
-                android:textColorHint="?attr/tintcolor"
+                android:id="@+id/textKing"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="8dp"
+                android:layout_marginLeft="8dp"
+                android:layout_marginRight="8dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:layout_width="match_parent"
                 app:counterEnabled="true"
                 app:counterMaxLength="45"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -403,11 +362,9 @@
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/inputKing"
-                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:maxLength="45"
-                    android:textColor="?attr/textcolor"
-                    android:textColorHint="?attr/tintcolor" />
+                    android:layout_width="match_parent"
+                    android:maxLength="45" />
             </com.google.android.material.textfield.TextInputLayout>
         </LinearLayout>
     </ScrollView>
