@@ -6,9 +6,11 @@ import android.content.SharedPreferences.OnSharedPreferenceChangeListener
 import android.graphics.Color
 import android.os.Bundle
 import android.preference.PreferenceFragment
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.preference.PreferenceManager
 
 
@@ -19,6 +21,7 @@ class SettingsFragment : PreferenceFragment() {
         const val PREFERENCE_FEATURE_DARK_MODE = "prefDark"
     }
 
+    private var revealEasterEgg: Int = 5
     private var isDarkModeFeatureEnabled = false
 
     private lateinit var preferenceChangeListener: SharedPreferences.OnSharedPreferenceChangeListener
@@ -41,10 +44,30 @@ class SettingsFragment : PreferenceFragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        addPreferencesFromResource(R.xml.settings);
+        addPreferencesFromResource(R.xml.settings)
 
 //        initPreferences()
 
+        findPreference("appDeveloper").onPreferenceClickListener =
+            android.preference.Preference.OnPreferenceClickListener { preference: android.preference.Preference? ->
+
+                if(revealEasterEgg == 5){
+                    Toast.makeText(activity,"Keep going",Toast.LENGTH_SHORT).show()
+                }
+
+                if(revealEasterEgg == 3){
+                    Toast.makeText(activity,"Almost there...",Toast.LENGTH_SHORT).show()
+                }
+
+                if(revealEasterEgg <= 0) {
+                    triggerMurcielagoAnimation()
+                    revealEasterEgg = 5
+                }else{
+                    revealEasterEgg--
+                }
+
+                true
+            }
 
         this.preferenceChangeListener  = OnSharedPreferenceChangeListener { prefs, key ->
 
@@ -69,6 +92,13 @@ class SettingsFragment : PreferenceFragment() {
                 forceReStartToApplyStyle()
             }
         }
+    }
+
+    private fun triggerMurcielagoAnimation(){
+        Log.d(Constants.APP_NAME, "triggerMurcielagoAnimation() -> showing animation")
+
+        var dialog = MurcielagoDialog.getInstace()
+        dialog?.show(fragmentManager,"Murcielago's Easter Egg")
     }
 
     private fun forceReStartToApplyStyle(){
