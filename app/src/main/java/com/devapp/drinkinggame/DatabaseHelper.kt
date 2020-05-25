@@ -12,7 +12,7 @@ import java.util.*
 class DatabaseHelper: SQLiteOpenHelper{
 
     companion object {
-        const val CUSTOM_MESSAGE = "Enter your custom rule"
+        const val CUSTOM_MESSAGE = "n/a"
 
         const val DATABASE_NAME = "drinkinggame.db"
         const val TABLE_NAME = "rules"

@@ -33,8 +33,8 @@ class MainActivity : AppCompatActivity(), RightFragment.OnFragmentInteractionLis
 
     private var database = DatabaseHelper.getInstance(this)
 
-    private var mutableDeck = CardsData().getAllCards()
-    private var currentCardItem = CardItem("Back",R.drawable.card_back_blue,"Draw a card to continue...")
+    private lateinit var mutableDeck: MutableSet<CardItem>
+    private lateinit var currentCardItem: CardItem
     private lateinit var switch: Switch
 
     private lateinit var fragmentContainer: FrameLayout
@@ -52,6 +52,7 @@ class MainActivity : AppCompatActivity(), RightFragment.OnFragmentInteractionLis
 
     private lateinit var textToSpeech: TextToSpeech
 
+    private var cardsData = CardsData()
 
     companion object {
         private const val MIN_DISTANCE = 150
@@ -87,10 +88,10 @@ class MainActivity : AppCompatActivity(), RightFragment.OnFragmentInteractionLis
         switch.setOnCheckedChangeListener(CompoundButton.OnCheckedChangeListener { buttonView, isChecked ->
             if(switch.isChecked){
                 textTip.text = showCustomRules()
-                Toast.makeText(applicationContext, "Custom Rules", Toast.LENGTH_SHORT).show()
+                Toast.makeText(applicationContext,  resources.getString(R.string.custom_rules), Toast.LENGTH_SHORT).show()
             }else{
                 textTip.text = currentCardItem.rule
-                Toast.makeText(applicationContext,"Default Rules",Toast.LENGTH_SHORT).show()
+                Toast.makeText(applicationContext, resources.getString(R.string.default_rules),Toast.LENGTH_SHORT).show()
             }
             persistSwitchMode()
         })
@@ -126,6 +127,9 @@ class MainActivity : AppCompatActivity(), RightFragment.OnFragmentInteractionLis
         firebaseAnalytics = FirebaseAnalytics.getInstance(this)
         Log.d(Constants.APP_NAME,"===============================================================")
         initPreferences()
+
+        currentCardItem = CardItem("Back",R.drawable.card_back_blue, resources.getString(R.string.draw_a_card_to_continue))
+        mutableDeck = cardsData.getAllCards(applicationContext)
 
         if(isDarkModeFeatureEnabled){
             setTheme(R.style.DarkTheme)
@@ -236,14 +240,14 @@ class MainActivity : AppCompatActivity(), RightFragment.OnFragmentInteractionLis
 
     private fun unfoldCard(){
         if (mutableDeck.isEmpty()) {
-            mutableDeck = CardsData().getAllCards()
+            mutableDeck = cardsData.getAllCards(applicationContext)
             persistPlayingDeck()
 
             displayCardInViewAndToolbar(
-                CardItem("back_red", R.drawable.ic_1h_small, "Click to play again"))
+                CardItem("back_red", R.drawable.ic_1h_small, resources.getString(R.string.press_to_play_again)))
 
-            textCardCounter.text = "Cards left: ${mutableDeck.size}"
-            textTip.text = "Click to play again"
+            textCardCounter.text = resources.getString(R.string.cards_left) + mutableDeck.size
+            textTip.text = resources.getString(R.string.press_to_play_again)
 
             historicalDeck.clear()
             persistHistoricalDeck()
@@ -280,7 +284,7 @@ class MainActivity : AppCompatActivity(), RightFragment.OnFragmentInteractionLis
                 }
             }
         }
-        return "Draw a card to continue..."
+        return resources.getString(R.string.draw_a_card_to_continue)
     }
 
     private fun openFragmentActivity(){
@@ -310,7 +314,7 @@ class MainActivity : AppCompatActivity(), RightFragment.OnFragmentInteractionLis
     }
 
     private fun displayDeckCounter(size: Int ){
-        textCardCounter.text = "Cards left: $size"
+        textCardCounter.text = resources.getString(R.string.cards_left) + size
     }
 
     private fun addCardBackIntoDeck(cardItem: CardItem){
@@ -386,11 +390,22 @@ class MainActivity : AppCompatActivity(), RightFragment.OnFragmentInteractionLis
         if(switch.isChecked){
             textTip.text = showCustomRules()
         }else{
-            textTip.text = cardItem.rule
+            textTip.text = cardsData.getDefaultRule(cardItem, applicationContext)
         }
 
         speakIfEnabled(textTip.text.toString())
 
+    }
+
+    private fun getRulesLanguage(cardItem: CardItem): String{
+
+        val lang = Locale.getDefault().language
+
+        if(lang == "es"){
+            return cardsData.getDefaultRule(cardItem, applicationContext)
+        }
+
+        return "english rules"
     }
 
     private fun openFragment(){
@@ -588,7 +603,7 @@ class MainActivity : AppCompatActivity(), RightFragment.OnFragmentInteractionLis
         mutableDeck = gson.fromJson(json, type)
         if(mutableDeck == null){
             Log.d(Constants.APP_NAME, "loadPlayingDeck() -> Loading playing deck with cards")
-            mutableDeck = CardsData().getAllCards()
+            mutableDeck = CardsData().getAllCards(applicationContext)
         }
 
         return mutableDeck
@@ -617,13 +632,9 @@ class MainActivity : AppCompatActivity(), RightFragment.OnFragmentInteractionLis
         val sharedPreferences: SharedPreferences = PreferenceManager.getDefaultSharedPreferences(this)
         var gson = Gson()
         var json: String? = sharedPreferences.getString(SHARED_CURRENT_CARD,null)
-            ?: return CardItem("Back",R.drawable.card_back_blue,"Draw a card to continue...")
+            ?: return CardItem("Back",R.drawable.card_back_blue,resources.getString(R.string.cards_left))
         val type: Type = object : TypeToken<CardItem?>() {}.type
         currentCardItem = gson.fromJson(json, type)
-
-//        if(currentCardItem == null){
-//            return CardItem("Back",R.drawable.card_back_blue,"Draw a card to continue...")
-//        }
 
         return currentCardItem
     }

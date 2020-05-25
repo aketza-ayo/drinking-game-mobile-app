@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Drinking Game</string>
+
+    <string name="rule_1">Mandas un trago.</string>
+    <string name="rule_2">Mandas dos tragos.</string>
+    <string name="rule_3">Mandas tres tragos.</string>
+    <string name="rule_4">Mandas cuatro tragos.</string>
+    <string name="rule_5">El de la izquierda bebe.</string>
+    <string name="rule_6">El de la derecha bebe.</string>
+    <string name="rule_7">Regla del pulgar. Guardatela!</string>
+    <string name="rule_8">Todas las chicas beben.</string>
+    <string name="rule_9">Todos los hombres beben.</string>
+    <string name="rule_10">Inventate una regla.</string>
+    <string name="rule_J">Canta una canción - Elige categoria.</string>
+    <string name="rule_Q">Tienes un escudo - Elige a alguien.</string>
+    <string name="rule_K">Fondo!</string>
+
+    <string name="action_rules_management">Gestión de Reglas</string>
+    <string name="action_settings">Configuraciones</string>
+    <string name="cards_left">Cartas restantes:</string>
+    <string name="cards_left_52">Cartas restantes:52</string>
+    <string name="enter_ones">Introduce regla para ases</string>
+    <string name="enter_twos">Introduce regla para doses</string>
+    <string name="enter_threes">Introduce regla para treses</string>
+    <string name="enter_fours">Introduce regla para cuatros</string>
+    <string name="enter_fives">Introduce regla para cincos</string>
+    <string name="enter_sixes">Introduce regla para seises</string>
+    <string name="enter_sevens">Introduce regla para sietes</string>
+    <string name="enter_eights">Introduce regla para ochos</string>
+    <string name="enter_nines">Introduce regla para nueves</string>
+    <string name="enter_tens">Introduce regla para dieces</string>
+    <string name="enter_jacks">Introduce regla para caballos</string>
+    <string name="enter_queens">Introduce regla para reinas</string>
+    <string name="enter_kings">Introduce regla para reyes</string>
+
+    <string name="sound">Sonido [TextToSpeech]</string>
+    <string name="game_features">Features del juego</string>
+    <string name="other">Otros</string>
+    <string name="about">Acerca de</string>
+
+    <string name="enabled">Habilitado</string>
+    <string name="disabled">Deshabilitado</string>
+
+    <string name="historical_deck">Histórico de la Baraja</string>
+    <string name="historical_deck_desc">Permite al usuario deslizar hacia la izquierda para ver las cartas que se han ido robando</string>
+    <string name="return_card">Devolver una Carta</string>
+    <string name="return_card_desc">Permite al usuario devolver una carta a la baraja</string>
+
+    <string name="contact">Contacto</string>
+    <string name="developer">Desarrollador</string>
+    <string name="app_version">Versión de la App</string>
+
+    <string name="dark_mode">Modo Oscuro</string>
+    <string name="keep_going">Sigue</string>
+    <string name="almost_there">Ya casi&#8230;</string>
+    <string name="custom_rules">Reglas Personalizadas</string>
+    <string name="default_rules">Reglas Por Defecto</string>
+    <string name="press_to_play_again">Pulsa para jugar de nuevo</string>
+    <string name="draw_a_card_to_continue">Roba una carta para continuar&#8230;</string>
+    <string name="playing_with_custom_rules">Jugango con <i>&lt;personalizadas&gt;</i></string>
+    <string name="playing_with_default_rules">Jugando con <i>&lt;por defecto&gt;</i></string>
+    <string name="saved">Guardado</string>
+    <string name="unable_to_save">No ze pueden guardar</string>
+    <string name="general">General</string>
+
+    <string-array name="spinnerNames">
+        <item>Por Defecto</item>
+        <item>Personalizadas</item>
+    </string-array>
+
+</resources>

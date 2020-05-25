@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <PreferenceCategory android:title="General">
+    <PreferenceCategory android:title="@string/general">
         <SwitchPreference
             android:id="@+id/switchSound"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:defaultValue="false"
             android:key="prefSound"
-            android:summary="Disabled"
-            android:title="Sound FX" />
+            android:summary="@string/disabled"
+            android:title="@string/sound" />
 
         <SwitchPreference
             android:id="@+id/switchDarkMode"
@@ -17,42 +17,42 @@
             android:layout_height="match_parent"
             android:defaultValue="false"
             android:key="prefDark"
-            android:summary="Disabled"
-            android:title="Dark mode" />
+            android:summary="@string/disabled"
+            android:title="@string/dark_mode" />
     </PreferenceCategory>
 
-    <PreferenceCategory android:title="Game Features">
+    <PreferenceCategory android:title="@string/game_features">
          <CheckBoxPreference
              android:key="prefHistorical"
-             android:title="Historical Deck"
-             android:summary="Allows user to left swipe the screen to see the cards that have been drawn"
+             android:title="@string/historical_deck"
+             android:summary="@string/historical_deck_desc"
              android:defaultValue="true" />
 
         <CheckBoxPreference
             android:dependency="prefHistorical"
             android:key="prefReturnCard"
-            android:title="Return Card"
-            android:summary="Allows the user to return a card back into the deck"
+            android:title="@string/return_card"
+            android:summary="@string/return_card_desc"
             android:defaultValue="true" />
 
     </PreferenceCategory>
 
-    <PreferenceCategory android:title="Others">
+    <PreferenceCategory android:title="@string/other">
         <Preference
             android:key="keyContact"
             android:summary="aketzamaster@gmail.com"
-            android:title="Contact" />
+            android:title="@string/contact" />
     </PreferenceCategory>
 
 
     <!-- The string literal might appear in RED but it is not an error.
         They are injected by gradle at compile time with applicationVariants-->
-    <PreferenceCategory android:title="About">
+    <PreferenceCategory android:title="@string/about">
         <Preference android:key="appDeveloper"
-            android:title="Developer"
+            android:title="@string/developer"
             android:summary="Murcielago Dev Commits" />
         <Preference android:key="appVersion"
-            android:title="App version"
+            android:title="@string/app_version"
             android:summary="@string/versionName" />
     </PreferenceCategory>
 

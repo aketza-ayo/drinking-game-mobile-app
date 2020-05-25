@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Edateko Jokoa</string>
+    <string name="rule_1">Edari bat bidaltzen duzu.</string>
+    <string name="rule_2">Bi edari bidaltzen dituzu.</string>
+    <string name="rule_3">Hiru edari bidaltzen dituzu.</string>
+    <string name="rule_4">Lau edari bidaltzen dituzu.</string>
+    <string name="rule_5">Ezkerrekok edaten du.</string>
+    <string name="rule_6">Eskuinekoak edaten du.</string>
+    <string name="rule_7">Erpuru araua. Gordeixu!</string>
+    <string name="rule_8">Neskak edate dute.</string>
+    <string name="rule_9">Gizonak edaten dabe.</string>
+    <string name="rule_10">Asmatu araua</string>
+    <string name="rule_J">Abestuixu zeozer - Kategoria aukeratuz.</string>
+    <string name="rule_Q">Armarri bat duzu - Norbait edanten dau zure ordez</string>
+    <string name="rule_K">Amaituixu dana</string>
+    <string name="action_rules_management">Arau Kudeaketa</string>
+    <string name="action_settings">Ezarpenak</string>
+    <string name="cards_left">Kartak sortan:</string>
+    <string name="cards_left_52">Kartak sortan:52</string>
+    <string name="enter_ones">Idatzi araua batentzako</string>
+    <string name="enter_twos">Idatzi araua bintzako</string>
+    <string name="enter_threes">Idatzi araua hirurentzako</string>
+    <string name="enter_fours">Idatzi araua launtzako</string>
+    <string name="enter_fives">Idatzi araua bostentzako</string>
+    <string name="enter_sixes">Idatzi araua seirentzat</string>
+    <string name="enter_sevens">Idatzi araua zazpintzako</string>
+    <string name="enter_eights">Idatzi araua zortzintzako</string>
+    <string name="enter_nines">Idatzi araua bederatzintzako</string>
+    <string name="enter_tens">Idatzi araua hamarrentzako</string>
+    <string name="enter_jacks">Idatzi araua zaldintzako</string>
+    <string name="enter_queens">Idatzi araua erreginantzako</string>
+    <string name="enter_kings">Idatzi araua erregentzako</string>
+    <string name="sound">Soinua [TextToSpeech]</string>
+    <string name="game_features">Jolas Ezaugarriak</string>
+    <string name="other">Besteak</string>
+    <string name="about">Buruz</string>
+    <string name="enabled">Piztuta</string>
+    <string name="disabled">Itzalita</string>
+    <string name="historical_deck">Mahai Historikoa</string>
+    <string name="historical_deck_desc">Erabiltzaileari jolastutako kartak ikusten aukera hematen dio, ezkerrerantz irrist eginez</string>
+    <string name="return_card">Itzulitako Karta</string>
+    <string name="return_card_desc">Erabiltzaileari jolastutako karta itzultzeko aukera ematen dio</string>
+    <string name="contact">Harremanetarako</string>
+    <string name="developer">Egilea</string>
+    <string name="app_version">App Bertsioa</string>
+    <string name="dark_mode">Modu Iluna</string>
+    <string name="keep_going">Jarraitu</string>
+    <string name="almost_there">Ia hor...</string>
+    <string name="custom_rules">Zure Arauak</string>
+    <string name="default_rules">Betiko Arauak</string>
+    <string name="press_to_play_again">Sakatu berriro jolasteko</string>
+    <string name="draw_a_card_to_continue">Ostu kartaren bat jarraitzeko</string>
+    <string name="playing_with_custom_rules">  <i>&lt;Zeure></i> arauekin jolasten</string>
+    <string name="playing_with_default_rules">  <i>&lt;Betiko></i> arauekin jolasten</string>
+    <string name="saved">Gordeta</string>
+    <string name="unable_to_save">Ezin izen da gorde</string>
+    <string name="general">Orokorra</string>
+    <string-array name="spinnerNames">
+        <item>Betikoak</item>
+        <item>Zureak</item>
+    </string-array>
+</resources>

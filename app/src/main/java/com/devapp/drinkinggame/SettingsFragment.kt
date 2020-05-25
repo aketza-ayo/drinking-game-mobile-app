@@ -52,11 +52,11 @@ class SettingsFragment : PreferenceFragment() {
             android.preference.Preference.OnPreferenceClickListener { preference: android.preference.Preference? ->
 
                 if(revealEasterEgg == 5){
-                    Toast.makeText(activity,"Keep going",Toast.LENGTH_SHORT).show()
+                    Toast.makeText(activity, resources.getString(R.string.keep_going),Toast.LENGTH_SHORT).show()
                 }
 
                 if(revealEasterEgg == 3){
-                    Toast.makeText(activity,"Almost there...",Toast.LENGTH_SHORT).show()
+                    Toast.makeText(activity,resources.getString(R.string.almost_there),Toast.LENGTH_SHORT).show()
                 }
 
                 if(revealEasterEgg <= 0) {
@@ -75,18 +75,18 @@ class SettingsFragment : PreferenceFragment() {
             if(PREFERENCE_FEATURE_SOUND_FX == key){
                 val soundPreference = findPreference(key)
                 if(prefs.getBoolean(key,false)){
-                    soundPreference.summary = "Enabled"
+                    soundPreference.summary = resources.getString(R.string.enabled)
                 }else{
-                    soundPreference.summary = "Disabled"
+                    soundPreference.summary = resources.getString(R.string.disabled)
                 }
             }
 
             if(PREFERENCE_FEATURE_DARK_MODE == key){
                 val darkPreference = findPreference(key)
                 if(prefs.getBoolean(key,false)){
-                    darkPreference.summary = "Enabled"
+                    darkPreference.summary = resources.getString(R.string.enabled)
                 }else{
-                    darkPreference.summary = "Disabled"
+                    darkPreference.summary = resources.getString(R.string.disabled)
                 }
 
                 forceReStartToApplyStyle()
@@ -116,18 +116,18 @@ class SettingsFragment : PreferenceFragment() {
 
         val sharePreferenceDarkMode =  preferenceScreen.sharedPreferences.getBoolean(PREFERENCE_FEATURE_DARK_MODE, false)
         if(sharePreferenceDarkMode){
-            darkPreference.summary = "Enabled"
+            darkPreference.summary = resources.getString(R.string.enabled)
         }else{
-            darkPreference.summary = "Disabled"
+            darkPreference.summary = resources.getString(R.string.disabled)
         }
 
         val soundPreference = findPreference(PREFERENCE_FEATURE_SOUND_FX)
         val sharePreferenceSound =  preferenceScreen.sharedPreferences.getBoolean(PREFERENCE_FEATURE_SOUND_FX, false)
 
         if(sharePreferenceSound){
-            soundPreference.summary = "Enabled"
+            soundPreference.summary = resources.getString(R.string.enabled)
         }else{
-            soundPreference.summary = "Disabled"
+            soundPreference.summary = resources.getString(R.string.disabled)
         }
 
     }

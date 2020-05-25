@@ -51,9 +51,9 @@ class RulesActivity : AppCompatActivity() {
             for(e in getTextFieldValues()){
                 database.updateRule(e.first, e.second.text.toString())
             }
-            Toast.makeText(this, "Saved", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, resources.getString(R.string.saved), Toast.LENGTH_SHORT).show()
         }else{
-            Toast.makeText(this, "Unable to save default rules", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, resources.getString(R.string.unable_to_save), Toast.LENGTH_SHORT).show()
         }
     }
 
@@ -74,9 +74,9 @@ class RulesActivity : AppCompatActivity() {
         Log.d("drinking-game", "Intent Extra IS_CUSTOM_RULE_ON: $isCustomMode")
 
         if(isCustomMode){
-            textRuleMode.text = "  Playing with <custom> rules"
+            textRuleMode.text = resources.getString(R.string.playing_with_custom_rules)
         }else{
-            textRuleMode.text = "  Playing with <default> rules"
+            textRuleMode.text = resources.getString(R.string.playing_with_default_rules)
         }
 
         initToolbar()
@@ -161,11 +161,11 @@ class RulesActivity : AppCompatActivity() {
                 }
             }
         }else{
-            clearDefaulFields()
+            clearDefaultFields()
         }
     }
 
-    private fun clearDefaulFields(){
+    private fun clearDefaultFields(){
         inputAce.setText("")
         inputTwo.setText("")
         inputThree.setText("")
@@ -182,7 +182,7 @@ class RulesActivity : AppCompatActivity() {
     }
 
     private fun populateDefaultRules(){
-        val allCardsSet = CardsData().getAllCards()
+        val allCardsSet = CardsData().getAllCards(applicationContext)
         var allCardsMap = allCardsSet.map { it.name to it.rule }.toMap()
 
         inputAce.setText(allCardsMap.get("1C"))
