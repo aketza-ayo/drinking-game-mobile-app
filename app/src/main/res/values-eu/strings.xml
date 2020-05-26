@@ -50,11 +50,11 @@
     <string name="custom_rules">Zure Arauak</string>
     <string name="default_rules">Betiko Arauak</string>
     <string name="press_to_play_again">Sakatu berriro jolasteko</string>
-    <string name="draw_a_card_to_continue">Ostu kartaren bat jarraitzeko</string>
+    <string name="draw_a_card_to_continue">Ostu kartaren bat jolasteko</string>
     <string name="playing_with_custom_rules">  <i>&lt;Zeure></i> arauekin jolasten</string>
     <string name="playing_with_default_rules">  <i>&lt;Betiko></i> arauekin jolasten</string>
     <string name="saved">Gordeta</string>
-    <string name="unable_to_save">Ezin izen da gorde</string>
+    <string name="unable_to_save">Ezin da gorde</string>
     <string name="general">Orokorra</string>
     <string-array name="spinnerNames">
         <item>Betikoak</item>

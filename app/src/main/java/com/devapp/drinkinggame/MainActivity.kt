@@ -80,11 +80,11 @@ class MainActivity : AppCompatActivity(), RightFragment.OnFragmentInteractionLis
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         menuInflater.inflate(R.menu.menu_main, menu)
-
+        Log.d(Constants.APP_NAME, "onCreateOptionsMenu() ")
         var item = menu.findItem(R.id.main_switch)
         val view: View = MenuItemCompat.getActionView(item)
         switch = view.findViewById<View>(R.id.switchRule) as Switch
-
+        switch.isChecked = loadSwitchMode()
         switch.setOnCheckedChangeListener(CompoundButton.OnCheckedChangeListener { buttonView, isChecked ->
             if(switch.isChecked){
                 textTip.text = showCustomRules()
@@ -128,7 +128,7 @@ class MainActivity : AppCompatActivity(), RightFragment.OnFragmentInteractionLis
         Log.d(Constants.APP_NAME,"===============================================================")
         initPreferences()
 
-        currentCardItem = CardItem("Back",R.drawable.card_back_blue, resources.getString(R.string.draw_a_card_to_continue))
+        currentCardItem = loadCurrentCard()
         mutableDeck = cardsData.getAllCards(applicationContext)
 
         if(isDarkModeFeatureEnabled){
@@ -535,7 +535,7 @@ class MainActivity : AppCompatActivity(), RightFragment.OnFragmentInteractionLis
     }
 
     override fun onDestroy() {
-        deleteCurrentCard()
+//        deleteCurrentCard()
 
         if(textToSpeech != null){
             textToSpeech.stop()
@@ -635,14 +635,14 @@ class MainActivity : AppCompatActivity(), RightFragment.OnFragmentInteractionLis
             ?: return CardItem("Back",R.drawable.card_back_blue,resources.getString(R.string.cards_left))
         val type: Type = object : TypeToken<CardItem?>() {}.type
         currentCardItem = gson.fromJson(json, type)
-
+        Log.d(Constants.APP_NAME, "loadCurrentCard() ->Loading card=${currentCardItem.name}")
         return currentCardItem
     }
 
     private fun deleteCurrentCard(){
         val sharedPreferences: SharedPreferences = PreferenceManager.getDefaultSharedPreferences(this)
         var editor = sharedPreferences.edit()
-        editor.remove(SHARED_SWITCH_MODE)
+        editor.remove(SHARED_CURRENT_CARD)
         editor.commit()
         Log.d(Constants.APP_NAME, "deleteCurrentCard() -> Deleting current card...")
     }
@@ -652,11 +652,14 @@ class MainActivity : AppCompatActivity(), RightFragment.OnFragmentInteractionLis
         var editor = sharedPreferences.edit()
         editor.putBoolean(SHARED_SWITCH_MODE, switch.isChecked)
         editor.apply()
+        Log.d(Constants.APP_NAME, "persistSwitchMode() Persiting switch state isChecked="+ switch.isChecked)
     }
 
     private fun loadSwitchMode(): Boolean{
         val sharedPreferences: SharedPreferences = PreferenceManager.getDefaultSharedPreferences(this)
-        return sharedPreferences.getBoolean(SHARED_SWITCH_MODE, false)
+        val switchValue = sharedPreferences.getBoolean(SHARED_SWITCH_MODE, false)
+        Log.d(Constants.APP_NAME, "loadSwitchMode() Loading switch value isChecked=" + switchValue)
+        return switchValue
 
     }
 

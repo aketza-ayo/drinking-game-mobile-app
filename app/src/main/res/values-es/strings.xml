@@ -54,19 +54,19 @@
     <string name="dark_mode">Modo Oscuro</string>
     <string name="keep_going">Sigue</string>
     <string name="almost_there">Ya casi&#8230;</string>
-    <string name="custom_rules">Reglas Personalizadas</string>
-    <string name="default_rules">Reglas Por Defecto</string>
+    <string name="custom_rules">Reglas Customizadas</string>
+    <string name="default_rules">Reglas por Defecto</string>
     <string name="press_to_play_again">Pulsa para jugar de nuevo</string>
     <string name="draw_a_card_to_continue">Roba una carta para continuar&#8230;</string>
-    <string name="playing_with_custom_rules">Jugango con <i>&lt;personalizadas&gt;</i></string>
-    <string name="playing_with_default_rules">Jugando con <i>&lt;por defecto&gt;</i></string>
+    <string name="playing_with_custom_rules">Jugango con <i>&lt;customizadas&gt;</i></string>
+    <string name="playing_with_default_rules">Jugando con <i>&lt;defecto&gt;</i></string>
     <string name="saved">Guardado</string>
-    <string name="unable_to_save">No ze pueden guardar</string>
+    <string name="unable_to_save">No se pueden guardar</string>
     <string name="general">General</string>
 
     <string-array name="spinnerNames">
-        <item>Por Defecto</item>
-        <item>Personalizadas</item>
+        <item>Defecto</item>
+        <item>Customizadas</item>
     </string-array>
 
 </resources>
