@@ -90,7 +90,7 @@ class MainActivity : AppCompatActivity(), RightFragment.OnFragmentInteractionLis
                 textTip.text = showCustomRules()
                 Toast.makeText(applicationContext,  resources.getString(R.string.custom_rules), Toast.LENGTH_SHORT).show()
             }else{
-                textTip.text = currentCardItem.rule
+                textTip.text = cardsData.getDefaultRule(currentCardItem, applicationContext)
                 Toast.makeText(applicationContext, resources.getString(R.string.default_rules),Toast.LENGTH_SHORT).show()
             }
             persistSwitchMode()
@@ -219,9 +219,19 @@ class MainActivity : AppCompatActivity(), RightFragment.OnFragmentInteractionLis
     private fun initTextToSpeech(){
         textToSpeech = TextToSpeech(this, OnInitListener { status ->
             if (status == TextToSpeech.SUCCESS) {
-                val result: Int = textToSpeech.setLanguage(Locale.ENGLISH)
+
+                var phoneLocale = Locale.getDefault().isO3Language
+                val result: Int = textToSpeech.setLanguage(Locale(phoneLocale, phoneLocale))
                 if (result == TextToSpeech.LANG_MISSING_DATA || result == TextToSpeech.LANG_NOT_SUPPORTED) {
                     Log.d(Constants.APP_NAME,"initTextToSpeech() -> Language not supported" )
+                    if(phoneLocale == "eus"){
+                        Log.d(Constants.APP_NAME,"initTextToSpeech() -> Defaulting to spanish" )
+                        textToSpeech.setLanguage(Locale("spa", "spa"))
+                    }else{
+                        Log.d(Constants.APP_NAME,"initTextToSpeech() -> Defaulting to english" )
+                        textToSpeech.setLanguage(Locale("eng", "eng"))
+                    }
+
                 }
             } else {
                 Log.d(Constants.APP_NAME,"initTextToSpeech() -> Initialization failed" )
