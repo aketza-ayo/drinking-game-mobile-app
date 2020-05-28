@@ -71,6 +71,7 @@ class MainActivity : AppCompatActivity(), RightFragment.OnFragmentInteractionLis
         when(item.itemId){
             R.id.action_rules_management-> openRulesActivity()
             R.id.action_settings -> openFragmentActivity()
+            R.id.main_refresh -> createNewGame()
             else ->  super.onOptionsItemSelected(item)
         }
 
@@ -407,17 +408,6 @@ class MainActivity : AppCompatActivity(), RightFragment.OnFragmentInteractionLis
 
     }
 
-    private fun getRulesLanguage(cardItem: CardItem): String{
-
-        val lang = Locale.getDefault().language
-
-        if(lang == "es"){
-            return cardsData.getDefaultRule(cardItem, applicationContext)
-        }
-
-        return "english rules"
-    }
-
     private fun openFragment(){
         val fragment: RightFragment? = supportFragmentManager.findFragmentByTag("RIGHT_FRAGMENT") as RightFragment?
 
@@ -554,10 +544,22 @@ class MainActivity : AppCompatActivity(), RightFragment.OnFragmentInteractionLis
         super.onDestroy()
     }
 
+    private fun createNewGame(){
+        deleteCurrentCard()
+        deleteHistoricalDeck()
+        deletePlayingDeck()
+//        deleteSwitchMode()
+
+        val intent = Intent(this, MainActivity::class.java)
+        intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+        startActivity(intent)
+        finish()
+    }
+
     private fun freeSharedPreferences(){
         deleteHistoricalDeck()
         deletePlayingDeck()
-        deleteSwitchMode()
+//        deleteSwitchMode()
     }
 
     private fun persistHistoricalDeck(){

@@ -63,6 +63,8 @@
     <string name="saved">Guardado</string>
     <string name="unable_to_save">No se pueden guardar</string>
     <string name="general">General</string>
+    <string name="new_game">Nuevo juego</string>
+
 
     <string-array name="spinnerNames">
         <item>Defecto</item>

@@ -56,6 +56,8 @@
     <string name="saved">Gordeta</string>
     <string name="unable_to_save">Ezin da gorde</string>
     <string name="general">Orokorra</string>
+    <string name="new_game">Joko berria</string>
+
     <string-array name="spinnerNames">
         <item>Betikoak</item>
         <item>Zureak</item>
