@@ -5,6 +5,7 @@ import android.content.Context
 import android.database.Cursor
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
+import android.util.Log
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -49,7 +50,15 @@ class DatabaseHelper: SQLiteOpenHelper{
     }
 
     private fun insertCustomRules(db: SQLiteDatabase){
-        for (x in 1..10){
+        Log.d(Constants.APP_NAME,"insertCustomRules() -> inserting rules into local database" )
+
+        val contentValuesA = ContentValues()
+        contentValuesA.put(COL2, "RULE_A")
+        contentValuesA.put(COL3, CUSTOM_MESSAGE)
+        contentValuesA.put(COL4, dateFormat.format(Date()).toString())
+        db.insert(TABLE_NAME, null, contentValuesA)
+
+        for (x in 2..10){
             val contentValues = ContentValues()
             contentValues.put(COL2, "RULE_$x")
             contentValues.put(COL3, CUSTOM_MESSAGE)

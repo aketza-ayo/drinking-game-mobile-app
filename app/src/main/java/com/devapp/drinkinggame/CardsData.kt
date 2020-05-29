@@ -13,10 +13,10 @@ class CardsData {
         Log.d(Constants.APP_NAME, "Deck of cards loaded from $TAG")
 
         return setOf(
-            CardItem("1C",R.drawable.ic_1c_small,context.resources.getString(R.string.rule_1)),
-            CardItem("1D",R.drawable.ic_1d_small,context.resources.getString(R.string.rule_1)),
-            CardItem("1H",R.drawable.ic_1h_small,context.resources.getString(R.string.rule_1)),
-            CardItem("1S",R.drawable.ic_1s_small,context.resources.getString(R.string.rule_1)),
+            CardItem("AC",R.drawable.ic_1c_small,context.resources.getString(R.string.rule_1)),
+            CardItem("AD",R.drawable.ic_1d_small,context.resources.getString(R.string.rule_1)),
+            CardItem("AH",R.drawable.ic_1h_small,context.resources.getString(R.string.rule_1)),
+            CardItem("AS",R.drawable.ic_1s_small,context.resources.getString(R.string.rule_1)),
             CardItem("2C",R.drawable.ic_2c_small,context.resources.getString(R.string.rule_2)),
             CardItem("2D",R.drawable.ic_2d_small,context.resources.getString(R.string.rule_2)),
             CardItem("2H",R.drawable.ic_2h_small,context.resources.getString(R.string.rule_2)),

@@ -64,7 +64,7 @@
     <string name="unable_to_save">No se pueden guardar</string>
     <string name="general">General</string>
     <string name="new_game">Nuevo juego</string>
-
+    <string name="murcielago_dev_commits">Murcielago Dev Commits</string>
 
     <string-array name="spinnerNames">
         <item>Defecto</item>

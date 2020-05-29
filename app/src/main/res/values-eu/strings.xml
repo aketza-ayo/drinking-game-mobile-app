@@ -57,6 +57,7 @@
     <string name="unable_to_save">Ezin da gorde</string>
     <string name="general">Orokorra</string>
     <string name="new_game">Joko berria</string>
+    <string name="murcielago_dev_commits">Murcielago Dev Commits</string>
 
     <string-array name="spinnerNames">
         <item>Betikoak</item>

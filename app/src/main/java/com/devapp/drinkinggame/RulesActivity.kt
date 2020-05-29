@@ -144,7 +144,7 @@ class RulesActivity : AppCompatActivity() {
         if(customRules.count != 0){
             while(customRules.moveToNext()){
                 when(customRules.getString(1)){
-                    "RULE_1"-> inputAce.setText(customRules.getString(2))
+                    "RULE_A"-> inputAce.setText(customRules.getString(2))
                     "RULE_2"-> inputTwo.setText(customRules.getString(2))
                     "RULE_3"-> inputThree.setText(customRules.getString(2))
                     "RULE_4"-> inputFour.setText(customRules.getString(2))
@@ -185,7 +185,7 @@ class RulesActivity : AppCompatActivity() {
         val allCardsSet = CardsData().getAllCards(applicationContext)
         var allCardsMap = allCardsSet.map { it.name to it.rule }.toMap()
 
-        inputAce.setText(allCardsMap.get("1C"))
+        inputAce.setText(allCardsMap.get("AC"))
         inputTwo.setText(allCardsMap.get("2C"))
         inputThree.setText(allCardsMap.get("3C"))
         inputFour.setText(allCardsMap.get("4C"))
@@ -202,7 +202,7 @@ class RulesActivity : AppCompatActivity() {
 
     private fun getTextFieldValues() : List<Pair<String,TextInputEditText>>{
         return listOf(
-            Pair("RULE_1",inputAce),Pair("RULE_2",inputTwo),Pair("RULE_3",inputThree), Pair("RULE_4",inputFour),
+            Pair("RULE_A",inputAce),Pair("RULE_2",inputTwo),Pair("RULE_3",inputThree), Pair("RULE_4",inputFour),
             Pair("RULE_5",inputFive), Pair("RULE_6",inputSix), Pair("RULE_7",inputSeven),Pair("RULE_8",inputEight),
             Pair("RULE_9",inputNine), Pair("RULE_10",inputTen), Pair("RULE_J",inputJack),Pair("RULE_Q",inputQueen),
             Pair("RULE_K",inputKing

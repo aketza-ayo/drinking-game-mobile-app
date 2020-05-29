@@ -59,6 +59,7 @@
     <string name="unable_to_save">Unable to save</string>
     <string name="general">General</string>
     <string name="new_game">New game</string>
+    <string name="murcielago_dev_commits">Murcielago Dev Commits</string>
 
     <string-array name="spinnerNames">
         <item>Default</item>

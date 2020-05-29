@@ -91,13 +91,13 @@ class MainActivity : AppCompatActivity(), RightFragment.OnFragmentInteractionLis
                 textTip.text = showCustomRules()
                 Toast.makeText(applicationContext,  resources.getString(R.string.custom_rules), Toast.LENGTH_SHORT).show()
             }else{
-                textTip.text = cardsData.getDefaultRule(currentCardItem, applicationContext)
+                textTip.text = showDefaultRules()
                 Toast.makeText(applicationContext, resources.getString(R.string.default_rules),Toast.LENGTH_SHORT).show()
             }
             persistSwitchMode()
         })
 
-        if(loadCurrentCard().name == "Back"){
+        if(loadCurrentCard().name == "Back" || loadCurrentCard().name!!.contains("back")){
             Log.d(Constants.APP_NAME, "onCreate() -> New Game deleting sharedPreferences...")
             freeSharedPreferences()
         }else{
@@ -254,8 +254,9 @@ class MainActivity : AppCompatActivity(), RightFragment.OnFragmentInteractionLis
             mutableDeck = cardsData.getAllCards(applicationContext)
             persistPlayingDeck()
 
-            displayCardInViewAndToolbar(
-                CardItem("back_red", R.drawable.ic_1h_small, resources.getString(R.string.press_to_play_again)))
+            currentCardItem = CardItem("back_red", R.drawable.ic_1h_small, resources.getString(R.string.press_to_play_again))
+            persistCurrentCard()
+            displayCardInViewAndToolbar(currentCardItem)
 
             textCardCounter.text = resources.getString(R.string.cards_left) + mutableDeck.size
             textTip.text = resources.getString(R.string.press_to_play_again)
@@ -280,6 +281,15 @@ class MainActivity : AppCompatActivity(), RightFragment.OnFragmentInteractionLis
         }
 
         return false
+    }
+
+    private fun showDefaultRules(): String {
+        var tooltip = cardsData.getDefaultRule(currentCardItem, applicationContext)
+        if(tooltip == "null"){
+            tooltip = resources.getString(R.string.draw_a_card_to_continue)
+        }
+
+        return tooltip
     }
 
     private fun showCustomRules(): String {
@@ -340,10 +350,10 @@ class MainActivity : AppCompatActivity(), RightFragment.OnFragmentInteractionLis
 
     private fun displayCardInViewAndToolbar(cardItem: CardItem){
         when (cardItem.name) {
-             "1C"-> viewDeck.setImageResource(R.drawable.ac)
-             "1D"-> viewDeck.setImageResource(R.drawable.ad)
-             "1H"-> viewDeck.setImageResource(R.drawable.ah)
-             "1S"-> viewDeck.setImageResource(R.drawable.`as`)
+             "AC"-> viewDeck.setImageResource(R.drawable.ac)
+             "AD"-> viewDeck.setImageResource(R.drawable.ad)
+             "AH"-> viewDeck.setImageResource(R.drawable.ah)
+             "AS"-> viewDeck.setImageResource(R.drawable.`as`)
              "2C"-> viewDeck.setImageResource(R.drawable.twoc)
              "2D"-> viewDeck.setImageResource(R.drawable.twod)
              "2H"-> viewDeck.setImageResource(R.drawable.twoh)
@@ -401,7 +411,7 @@ class MainActivity : AppCompatActivity(), RightFragment.OnFragmentInteractionLis
         if(switch.isChecked){
             textTip.text = showCustomRules()
         }else{
-            textTip.text = cardsData.getDefaultRule(cardItem, applicationContext)
+            textTip.text = showDefaultRules()
         }
 
         speakIfEnabled(textTip.text.toString())
@@ -550,7 +560,7 @@ class MainActivity : AppCompatActivity(), RightFragment.OnFragmentInteractionLis
         deletePlayingDeck()
 //        deleteSwitchMode()
 
-        val intent = Intent(this, MainActivity::class.java)
+        val intent  = Intent(this, SplashActivity::class.java)
         intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
         startActivity(intent)
         finish()
