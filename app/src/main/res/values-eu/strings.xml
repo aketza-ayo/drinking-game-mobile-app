@@ -19,13 +19,13 @@
     <string name="cards_left">Kartak sortan:</string>
     <string name="cards_left_52">Kartak sortan:52</string>
     <string name="enter_ones">Idatzi araua eta denbora batentzako</string>
-    <string name="enter_twos">Idatzi araua eta denbora bintzako</string>
-    <string name="enter_threes">Idatzi araua eta denbora hirurentzako</string>
+    <string name="enter_twos">Idatzi araua eta denbora bientzako</string>
+    <string name="enter_threes">Idatzi araua eta denbora hiruentzako</string>
     <string name="enter_fours">Idatzi araua eta denbora lauentzako</string>
     <string name="enter_fives">Idatzi araua eta denbora bostentzako</string>
-    <string name="enter_sixes">Idatzi araua eta denbora seirentzako</string>
-    <string name="enter_sevens">Idatzi araua eta denbora zazpirentzako</string>
-    <string name="enter_eights">Idatzi araua eta denbora zortzirenntzako</string>
+    <string name="enter_sixes">Idatzi araua eta denbora seientzako</string>
+    <string name="enter_sevens">Idatzi araua eta denbora zazpientzako</string>
+    <string name="enter_eights">Idatzi araua eta denbora zortzientzako</string>
     <string name="enter_nines">Idatzi araua eta denbora bederatzientzako</string>
     <string name="enter_tens">Idatzi araua eta denbora hamarrentzako</string>
     <string name="enter_jacks">Idatzi araua eta denbora zaldientzako</string>
@@ -61,7 +61,7 @@
     <string name="stories_progress">Karta automatikoaren aurrerapena</string>
     <string name="stories_progress_desc">Erabiltzaileari karta automatikoki jolasteko aukera ematen dio. Aurreratze-barra ikusten du ateratako kartaren gainean</string>
     <string name="enter_custom_rule">Mesedez, sartu zure araua</string>
-
+    <string name="drinking_game_app">Edateko Jokoa\n&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;app</string>
 
     <string-array name="spinnerNames">
         <item>Betikoak</item>

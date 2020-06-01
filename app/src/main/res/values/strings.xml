@@ -63,6 +63,7 @@
     <string name="stories_progress">Automatic card progress</string>
     <string name="stories_progress_desc">Allows the user to draw cards automatically. Displays a progress bar on top of the unfolded card</string>
     <string name="enter_custom_rule">Please, enter your custom rule</string>
+    <string name="drinking_game_app">Drinking Game\n&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;app</string>
 
     <string-array name="spinnerNames">
         <item>Default</item>
