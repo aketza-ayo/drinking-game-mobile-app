@@ -20,19 +20,19 @@
     <string name="action_settings">Configuraciones</string>
     <string name="cards_left">Cartas restantes:</string>
     <string name="cards_left_52">Cartas restantes:52</string>
-    <string name="enter_ones">Introduce regla para ases</string>
-    <string name="enter_twos">Introduce regla para doses</string>
-    <string name="enter_threes">Introduce regla para treses</string>
-    <string name="enter_fours">Introduce regla para cuatros</string>
-    <string name="enter_fives">Introduce regla para cincos</string>
-    <string name="enter_sixes">Introduce regla para seises</string>
-    <string name="enter_sevens">Introduce regla para sietes</string>
-    <string name="enter_eights">Introduce regla para ochos</string>
-    <string name="enter_nines">Introduce regla para nueves</string>
-    <string name="enter_tens">Introduce regla para dieces</string>
-    <string name="enter_jacks">Introduce regla para caballos</string>
-    <string name="enter_queens">Introduce regla para reinas</string>
-    <string name="enter_kings">Introduce regla para reyes</string>
+    <string name="enter_ones">Introduce regla y valor del tiempo para ases</string>
+    <string name="enter_twos">Introduce regla y valor del tiempo para doses</string>
+    <string name="enter_threes">Introduce regla y valor del tiempo para treses</string>
+    <string name="enter_fours">Introduce regla y valor del tiempo para cuatros</string>
+    <string name="enter_fives">Introduce regla y valor del tiempo para cincos</string>
+    <string name="enter_sixes">Introduce regla y valor del tiempo para seises</string>
+    <string name="enter_sevens">Introduce regla y valor del tiempo para sietes</string>
+    <string name="enter_eights">Introduce regla y valor del tiempo para ochos</string>
+    <string name="enter_nines">Introduce regla y valor del tiempo para nueves</string>
+    <string name="enter_tens">Introduce regla y valor del tiempo para dieces</string>
+    <string name="enter_jacks">Introduce regla y valor del tiempo para caballos</string>
+    <string name="enter_queens">Introduce regla y valor del tiempo para reinas</string>
+    <string name="enter_kings">Introduce regla y valor del tiempo para reyes</string>
 
     <string name="sound">Sonido [TextToSpeech]</string>
     <string name="game_features">Features del juego</string>
@@ -64,7 +64,10 @@
     <string name="unable_to_save">No se pueden guardar</string>
     <string name="general">General</string>
     <string name="new_game">Nuevo juego</string>
-    <string name="murcielago_dev_commits">Murcielago Dev Commits</string>
+    <string name="murcielago_dev_commits">Murciélago Dev Commits</string>
+    <string name="stories_progress">Progreso automático de las cartas</string>
+    <string name="stories_progress_desc">Permite al usuario robar cartas automáticamente. Muestra una barra de progreso en la parte superior de la carta robada</string>
+    <string name="enter_custom_rule">Por favor, introduzca regla</string>
 
     <string-array name="spinnerNames">
         <item>Defecto</item>

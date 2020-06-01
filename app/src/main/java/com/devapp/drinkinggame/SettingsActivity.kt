@@ -21,11 +21,7 @@ class SettingsActivity:  AppCompatActivity() {
         when(item.title){
             "Save"-> Toast.makeText(this, "to be implemented", Toast.LENGTH_SHORT).show()
             else -> {
-                val intent = Intent(this@SettingsActivity, MainActivity::class.java)
-                intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-                startActivity(intent)
-                finish()
-
+                callMainActivity()
             }
         }
         return true
@@ -73,24 +69,23 @@ class SettingsActivity:  AppCompatActivity() {
     }
 
     private fun  openSettingsFragment(){
-//        val fragment: SettingsFragment? = supportFragmentManager.findFragmentByTag("SETTINGS_FRAGMENT") as SettingsFragment?
-//
-//        if(fragment == null) {
-//            var fragment = SettingsFragment()
-//            var fragmentManager = supportFragmentManager
-//            var transaction = fragmentManager.beginTransaction()
-//
-//
-//            transaction.addToBackStack("SETTINGS_FRAGMENT")
-//            transaction.add(R.id.fragment_setting_container, fragment, "SETTINGS_FRAGMENT").commit()
-//        }
-
         fragmentManager.beginTransaction().replace(R.id.fragment_setting_container, SettingsFragment()).commit()
-
     }
 
     private fun initPreferences(){
         val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this)
         isDarkModeFeatureEnabled = sharedPreferences.getBoolean(PREFERENCE_FEATURE_DARK_MODE, false)
+    }
+
+    private fun callMainActivity(){
+        val intent = Intent(this@SettingsActivity, MainActivity::class.java)
+        intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+        startActivity(intent)
+        finish()
+    }
+
+    override fun onBackPressed() {
+        super.onBackPressed()
+        callMainActivity()
     }
 }

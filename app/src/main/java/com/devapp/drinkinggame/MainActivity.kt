@@ -4,6 +4,7 @@ import android.content.Intent
 import android.content.SharedPreferences
 import android.graphics.Color
 import android.os.Bundle
+import android.os.SystemClock
 import android.speech.tts.TextToSpeech
 import android.speech.tts.TextToSpeech.OnInitListener
 import android.util.Log
@@ -22,12 +23,13 @@ import androidx.preference.PreferenceManager
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
+import com.teresaholfeld.stories.StoriesProgressView
 import kotlinx.android.synthetic.main.content_main.*
 import java.lang.reflect.Type
 import java.util.*
 
 
-class MainActivity : AppCompatActivity(), RightFragment.OnFragmentInteractionListener {
+class MainActivity : AppCompatActivity(), RightFragment.OnFragmentInteractionListener, StoriesProgressView.StoriesListener{
 
     private lateinit var firebaseAnalytics: FirebaseAnalytics
 
@@ -49,6 +51,7 @@ class MainActivity : AppCompatActivity(), RightFragment.OnFragmentInteractionLis
     private var isReturnCardFeatureEnabled = true
     private var isSoundFxFeatureEnabled = false
     private var isDarkModeFeatureEnabled = false
+    private var isProgressCardEnabled = false
 
     private lateinit var textToSpeech: TextToSpeech
 
@@ -60,12 +63,20 @@ class MainActivity : AppCompatActivity(), RightFragment.OnFragmentInteractionLis
         private const val PREFERENCE_FEATURE_RETURN_CARD = "prefReturnCard"
         private const val PREFERENCE_FEATURE_SOUND_FX = "prefSound"
         private const val PREFERENCE_FEATURE_DARK_MODE = "prefDark"
+        private const val PREFERENCE_FEATURE_PROGRESS_CARD = "prefStoriesProgress"
 
         private const val SHARED_HISTORICAL_DECK = "sharedHistoricalDeck"
         private const val SHARED_PLAYING_DECK = "sharedPlayingDeck"
         private const val SHARED_CURRENT_CARD = "sharedCurrentCard"
         private const val SHARED_SWITCH_MODE = "sharedSwitchMode"
+
     }
+
+    private var cardResources = intArrayOf(R.drawable.card_back_blue)
+    private lateinit var storiesProgressView: StoriesProgressView
+
+    private var lastTouchTime: Long = 0
+    private var longPressTime = 500
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when(item.itemId){
@@ -77,7 +88,6 @@ class MainActivity : AppCompatActivity(), RightFragment.OnFragmentInteractionLis
 
         return true
     }
-
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         menuInflater.inflate(R.menu.menu_main, menu)
@@ -94,15 +104,24 @@ class MainActivity : AppCompatActivity(), RightFragment.OnFragmentInteractionLis
                 textTip.text = showDefaultRules()
                 Toast.makeText(applicationContext, resources.getString(R.string.default_rules),Toast.LENGTH_SHORT).show()
             }
+
+            if(historicalDeck.isNotEmpty()){
+                var duration = getCurrentCardDurationBasedOnMode(switch.isChecked)
+                storiesProgressView.setStoryDuration(duration.toLong() * 1000)
+                storiesProgressView.startStories()
+            }
+
             persistSwitchMode()
         })
 
-        if(loadCurrentCard().name == "Back" || loadCurrentCard().name!!.contains("back")){
+        if(loadCurrentCard().name == "Back"){
             Log.d(Constants.APP_NAME, "onCreate() -> New Game deleting sharedPreferences...")
             freeSharedPreferences()
         }else{
             Log.d(Constants.APP_NAME, "onCreate() -> Existing Game load sharedPreferences...")
-            displayCardInViewAndToolbar(loadCurrentCard())
+//            initStoriesProgressView()
+            displayCardInView(loadCurrentCard())
+            displayRuleInToolbar()
 
             mutableDeck = loadPlayingDeck()
             historicalDeck = loadHistoricalDeck()
@@ -151,10 +170,18 @@ class MainActivity : AppCompatActivity(), RightFragment.OnFragmentInteractionLis
 
         Log.d(Constants.APP_NAME,"onCreate() -> ${loadCurrentCard().name }")
 
+        if(isProgressCardEnabled){
+            initStoriesProgressView()
+        }else{
+            storiesProgressView = findViewById<StoriesProgressView>(R.id.stories)
+            storiesProgressView.visibility = View.GONE
+            //should hide a view of the progress view
+        }
 
         PreferenceManager.setDefaultValues(this, R.xml.settings, false)
 
         viewDeck.setOnClickListener {
+//            Toast.makeText(this, "setOnClickListener() ", Toast.LENGTH_SHORT).show()
 
             if(isFragmentVisible()){
                closeFragment()
@@ -163,16 +190,28 @@ class MainActivity : AppCompatActivity(), RightFragment.OnFragmentInteractionLis
             }
         }
 
+        viewDeck.setOnLongClickListener {
+//            Toast.makeText(this, "setOnLongClickListener() Long!", Toast.LENGTH_SHORT).show()
+            storiesProgressView.resume()
+            true
+        }
+
         viewDeck.setOnTouchListener(object : View.OnTouchListener{
             override fun onTouch(v: View?, event: MotionEvent?): Boolean {
-
                 when(event!!.action){
                     MotionEvent.ACTION_DOWN -> {
+                        lastTouchTime = SystemClock.elapsedRealtime()
+//                        Toast.makeText(applicationContext, "setOnTouchListener() -> ACTION_DOWN ", Toast.LENGTH_SHORT).show()
+
                         x1 = event.x
                         y1 = event.y
+                        if(isProgressCardEnabled){
+                            storiesProgressView.pause()
+                        }
                     }
 
                     MotionEvent.ACTION_UP -> {
+//                        Toast.makeText(applicationContext, "setOnTouchListener() -> ACTION_UP ", Toast.LENGTH_SHORT).show()
 
                         x2 = event.x
                         y2 = event.y
@@ -185,9 +224,13 @@ class MainActivity : AppCompatActivity(), RightFragment.OnFragmentInteractionLis
                             if (x2 > x1) {
                                 Log.d(Constants.APP_NAME,"onTouch() -> right swipe" )
                                 closeFragment()
+//                                storiesProgressView.resume();
                             } else {
                                 Log.d(Constants.APP_NAME,"onTouch() -> left swipe")
                                 if(isHistoricalFeatureEnabled){
+                                    if(isProgressCardEnabled){
+                                        storiesProgressView.pause()
+                                    }
                                     openFragment()
                                 }
                             }
@@ -203,7 +246,13 @@ class MainActivity : AppCompatActivity(), RightFragment.OnFragmentInteractionLis
 
                             }
                         }else{
-                            viewDeck.performClick()
+                            Log.d(Constants.APP_NAME,"setOnTouchListener() ->  elapsedRealtime=${SystemClock.elapsedRealtime()} lastTouchTime=$lastTouchTime longPressTime=$longPressTime" )
+
+                            if((SystemClock.elapsedRealtime() - lastTouchTime > longPressTime) && isProgressCardEnabled){
+                                viewDeck.performLongClick()
+                            }else{
+                                viewDeck.performClick()
+                            }
                         }
                     }
                 }
@@ -227,10 +276,10 @@ class MainActivity : AppCompatActivity(), RightFragment.OnFragmentInteractionLis
                     Log.d(Constants.APP_NAME,"initTextToSpeech() -> Language not supported" )
                     if(phoneLocale == "eus"){
                         Log.d(Constants.APP_NAME,"initTextToSpeech() -> Defaulting to spanish" )
-                        textToSpeech.setLanguage(Locale("spa", "spa"))
+                        textToSpeech.language = Locale("spa", "spa")
                     }else{
                         Log.d(Constants.APP_NAME,"initTextToSpeech() -> Defaulting to english" )
-                        textToSpeech.setLanguage(Locale("eng", "eng"))
+                        textToSpeech.language = Locale("eng", "eng")
                     }
 
                 }
@@ -254,9 +303,10 @@ class MainActivity : AppCompatActivity(), RightFragment.OnFragmentInteractionLis
             mutableDeck = cardsData.getAllCards(applicationContext)
             persistPlayingDeck()
 
-            currentCardItem = CardItem("back_red", R.drawable.ic_1h_small, resources.getString(R.string.press_to_play_again))
+            currentCardItem = CardItem("Back", R.drawable.card_back_blue, resources.getString(R.string.press_to_play_again), 5000)
             persistCurrentCard()
-            displayCardInViewAndToolbar(currentCardItem)
+            displayCardInView(currentCardItem)
+            displayRuleInToolbar()
 
             textCardCounter.text = resources.getString(R.string.cards_left) + mutableDeck.size
             textTip.text = resources.getString(R.string.press_to_play_again)
@@ -267,9 +317,38 @@ class MainActivity : AppCompatActivity(), RightFragment.OnFragmentInteractionLis
             return
         }
 
-        var unfoldedCard = unfoldCardFromDeckAndDisplayInformation()
+        var unfoldedCard = unfoldCardFromDeck()
+
+        if(isProgressCardEnabled){ // this is the new automatic swipe feature condition
+            automaticCardSwipe(currentCardItem)
+        }else{
+            displayCardInView(currentCardItem)
+        }
+
+        displayRuleInToolbar()
+        displayDeckCounter(mutableDeck.size)
 
         addCurrentCardIntoHistoricalList(unfoldedCard)
+    }
+
+    private fun initStoriesProgressView(){
+        storiesProgressView = findViewById<StoriesProgressView>(R.id.stories)
+        storiesProgressView.visibility = View.VISIBLE
+        storiesProgressView.setStoriesCount(1) // <- set stories
+        storiesProgressView.setStoryDuration(2000L)
+        storiesProgressView.setStoriesListener(this) // <- set listener
+        storiesProgressView.pause() // <- start progress
+    }
+
+    private fun automaticCardSwipe(cardItem: CardItem) {
+        storiesProgressView = findViewById<StoriesProgressView>(R.id.stories)
+        storiesProgressView.setStoriesCount(1) // <- set stories
+        storiesProgressView.setStoryDuration(getCurrentCardDurationBasedOnMode(switch.isChecked).toLong() * 1000)
+        storiesProgressView.setStoriesListener(this) // <- set listener
+        storiesProgressView.startStories() // <- start progress
+
+        cardResources[0] = cardsData.getImageResourceDrawable(cardItem)
+        viewDeck.setImageResource(cardResources[0])
     }
 
     private fun isFragmentVisible():Boolean{
@@ -281,6 +360,33 @@ class MainActivity : AppCompatActivity(), RightFragment.OnFragmentInteractionLis
         }
 
         return false
+    }
+
+    private fun getCurrentCardDurationBasedOnMode(isCustom: Boolean): Int{
+        var duration = 0
+
+        if(isCustom){
+            val customRules = database.getCustomRules()
+
+            if (customRules.count != 0) {
+                while (customRules.moveToNext()) {
+                    var ruleNameId = customRules.getString(1).substring(5)
+
+                    if (ruleNameId in currentCardItem.name!!) {
+                        duration = customRules.getInt(3)
+                    }
+                }
+            }
+
+        }else{
+            if(currentCardItem.name!!.contains("Back")){
+                duration = 0
+            }else{
+                duration = cardsData.getDefaultDuration(currentCardItem, applicationContext)
+            }
+        }
+
+        return duration
     }
 
     private fun showDefaultRules(): String {
@@ -320,16 +426,13 @@ class MainActivity : AppCompatActivity(), RightFragment.OnFragmentInteractionLis
         startActivity(intent)
     }
 
-    private fun unfoldCardFromDeckAndDisplayInformation(): CardItem{
+    private fun unfoldCardFromDeck(): CardItem{
         currentCardItem = mutableDeck.shuffled().take(1)[0]
         persistCurrentCard()
         mutableDeck.remove(currentCardItem)
         persistPlayingDeck()
 
-        Log.d(Constants.APP_NAME,"unfoldCardFromDeckAndDisplayInformation() -> Deck: ${mutableDeck.size} histo: ${historicalDeck.size} current: ${currentCardItem.name}" )
-        displayCardInViewAndToolbar(currentCardItem)
-
-        displayDeckCounter(mutableDeck.size)
+        Log.d(Constants.APP_NAME,"unfoldCardFromDeck() -> Deck: ${mutableDeck.size} histo: ${historicalDeck.size} current: ${currentCardItem.name}" )
 
         return currentCardItem
     }
@@ -348,7 +451,8 @@ class MainActivity : AppCompatActivity(), RightFragment.OnFragmentInteractionLis
         persistHistoricalDeck()
     }
 
-    private fun displayCardInViewAndToolbar(cardItem: CardItem){
+    private fun displayCardInView(cardItem: CardItem){
+
         when (cardItem.name) {
              "AC"-> viewDeck.setImageResource(R.drawable.ac)
              "AD"-> viewDeck.setImageResource(R.drawable.ad)
@@ -403,9 +507,12 @@ class MainActivity : AppCompatActivity(), RightFragment.OnFragmentInteractionLis
              "KH"-> viewDeck.setImageResource(R.drawable.kh)
              "KS"-> viewDeck.setImageResource(R.drawable.ks)
 
-            else ->  viewDeck.setImageResource(R.drawable.card_back_red)
+            else ->  viewDeck.setImageResource(R.drawable.card_back_blue)
 
         }
+    }
+
+    private fun displayRuleInToolbar(){
 
         switch.isChecked = loadSwitchMode()
         if(switch.isChecked){
@@ -415,14 +522,12 @@ class MainActivity : AppCompatActivity(), RightFragment.OnFragmentInteractionLis
         }
 
         speakIfEnabled(textTip.text.toString())
-
     }
 
     private fun openFragment(){
         val fragment: RightFragment? = supportFragmentManager.findFragmentByTag("RIGHT_FRAGMENT") as RightFragment?
 
         val bundle = Bundle()
-//        bundle.putParcelableArrayList("historicalDeck", historicalDeck)
         bundle.putParcelableArrayList("historicalDeck", loadHistoricalDeck())
         bundle.putBoolean("isReturnCardFeatureEnabled", isReturnCardFeatureEnabled)
         Log.d(Constants.APP_NAME,"openFragment() -> Opened Right Fragment histo:${historicalDeck.size} loaded:${loadHistoricalDeck().size}")
@@ -506,10 +611,16 @@ class MainActivity : AppCompatActivity(), RightFragment.OnFragmentInteractionLis
                         Log.d(Constants.APP_NAME,"onTouchEvent() -> right swipe" )
 //                        Toast.makeText(this, "right swipe", Toast.LENGTH_SHORT).show()
                         closeFragment()
+                        if(isProgressCardEnabled){
+                            storiesProgressView.resume()
+                        }
                     } else {
                         Log.d(Constants.APP_NAME,"onTouchEvent() -> left swipe" )
 //                        Toast.makeText(this, "left swipe", Toast.LENGTH_SHORT).show()
                         if(isHistoricalFeatureEnabled){
+                            if(isProgressCardEnabled){
+                                storiesProgressView.pause()
+                            }
                             openFragment()
                         }
                     }
@@ -542,6 +653,7 @@ class MainActivity : AppCompatActivity(), RightFragment.OnFragmentInteractionLis
         isReturnCardFeatureEnabled = sharedPreferences.getBoolean(PREFERENCE_FEATURE_RETURN_CARD, true)
         isSoundFxFeatureEnabled = sharedPreferences.getBoolean(PREFERENCE_FEATURE_SOUND_FX, false)
         isDarkModeFeatureEnabled = sharedPreferences.getBoolean(PREFERENCE_FEATURE_DARK_MODE, false)
+        isProgressCardEnabled =  sharedPreferences.getBoolean(PREFERENCE_FEATURE_PROGRESS_CARD, false)
     }
 
     override fun onDestroy() {
@@ -550,6 +662,11 @@ class MainActivity : AppCompatActivity(), RightFragment.OnFragmentInteractionLis
         if(textToSpeech != null){
             textToSpeech.stop()
             textToSpeech.shutdown()
+        }
+
+        // Very important !
+        if(isProgressCardEnabled){
+            storiesProgressView.destroy()
         }
         super.onDestroy()
     }
@@ -654,7 +771,7 @@ class MainActivity : AppCompatActivity(), RightFragment.OnFragmentInteractionLis
         val sharedPreferences: SharedPreferences = PreferenceManager.getDefaultSharedPreferences(this)
         var gson = Gson()
         var json: String? = sharedPreferences.getString(SHARED_CURRENT_CARD,null)
-            ?: return CardItem("Back",R.drawable.card_back_blue,resources.getString(R.string.cards_left))
+            ?: return CardItem("Back",R.drawable.card_back_blue,resources.getString(R.string.cards_left), 5000)
         val type: Type = object : TypeToken<CardItem?>() {}.type
         currentCardItem = gson.fromJson(json, type)
         Log.d(Constants.APP_NAME, "loadCurrentCard() ->Loading card=${currentCardItem.name}")
@@ -674,13 +791,13 @@ class MainActivity : AppCompatActivity(), RightFragment.OnFragmentInteractionLis
         var editor = sharedPreferences.edit()
         editor.putBoolean(SHARED_SWITCH_MODE, switch.isChecked)
         editor.apply()
-        Log.d(Constants.APP_NAME, "persistSwitchMode() Persiting switch state isChecked="+ switch.isChecked)
+        Log.d(Constants.APP_NAME, "persistSwitchMode() Persisting switch state isChecked=${switch.isChecked}")
     }
 
     private fun loadSwitchMode(): Boolean{
         val sharedPreferences: SharedPreferences = PreferenceManager.getDefaultSharedPreferences(this)
         val switchValue = sharedPreferences.getBoolean(SHARED_SWITCH_MODE, false)
-        Log.d(Constants.APP_NAME, "loadSwitchMode() Loading switch value isChecked=" + switchValue)
+        Log.d(Constants.APP_NAME, "loadSwitchMode() Loading switch value isChecked=$switchValue")
         return switchValue
 
     }
@@ -690,6 +807,19 @@ class MainActivity : AppCompatActivity(), RightFragment.OnFragmentInteractionLis
         var editor = sharedPreferences.edit()
         editor.remove(SHARED_SWITCH_MODE)
         editor.commit()
+    }
+
+    override fun onComplete() {
+        unfoldCard()
+    }
+
+    override fun onPrev() {
+//        Toast.makeText(this, "onPrev", Toast.LENGTH_SHORT).show()
+    }
+
+    override fun onNext() {
+//        Toast.makeText(this, "onNext", Toast.LENGTH_SHORT).show()
+
     }
 }
 

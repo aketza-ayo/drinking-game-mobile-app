@@ -35,6 +35,12 @@
             android:summary="@string/return_card_desc"
             android:defaultValue="true" />
 
+        <CheckBoxPreference
+            android:key="prefStoriesProgress"
+            android:title="@string/stories_progress"
+            android:summary="@string/stories_progress_desc"
+            android:defaultValue="false" />
+
     </PreferenceCategory>
 
     <PreferenceCategory android:title="@string/other">

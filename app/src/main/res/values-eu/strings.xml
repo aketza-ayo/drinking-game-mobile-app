@@ -18,19 +18,19 @@
     <string name="action_settings">Ezarpenak</string>
     <string name="cards_left">Kartak sortan:</string>
     <string name="cards_left_52">Kartak sortan:52</string>
-    <string name="enter_ones">Idatzi araua batentzako</string>
-    <string name="enter_twos">Idatzi araua bintzako</string>
-    <string name="enter_threes">Idatzi araua hirurentzako</string>
-    <string name="enter_fours">Idatzi araua launtzako</string>
-    <string name="enter_fives">Idatzi araua bostentzako</string>
-    <string name="enter_sixes">Idatzi araua seirentzat</string>
-    <string name="enter_sevens">Idatzi araua zazpintzako</string>
-    <string name="enter_eights">Idatzi araua zortzintzako</string>
-    <string name="enter_nines">Idatzi araua bederatzintzako</string>
-    <string name="enter_tens">Idatzi araua hamarrentzako</string>
-    <string name="enter_jacks">Idatzi araua zaldintzako</string>
-    <string name="enter_queens">Idatzi araua erreginantzako</string>
-    <string name="enter_kings">Idatzi araua erregentzako</string>
+    <string name="enter_ones">Idatzi araua eta denbora batentzako</string>
+    <string name="enter_twos">Idatzi araua eta denbora bintzako</string>
+    <string name="enter_threes">Idatzi araua eta denbora hirurentzako</string>
+    <string name="enter_fours">Idatzi araua eta denbora lauentzako</string>
+    <string name="enter_fives">Idatzi araua eta denbora bostentzako</string>
+    <string name="enter_sixes">Idatzi araua eta denbora seirentzako</string>
+    <string name="enter_sevens">Idatzi araua eta denbora zazpirentzako</string>
+    <string name="enter_eights">Idatzi araua eta denbora zortzirenntzako</string>
+    <string name="enter_nines">Idatzi araua eta denbora bederatzientzako</string>
+    <string name="enter_tens">Idatzi araua eta denbora hamarrentzako</string>
+    <string name="enter_jacks">Idatzi araua eta denbora zaldientzako</string>
+    <string name="enter_queens">Idatzi araua eta denbora erreginentzako</string>
+    <string name="enter_kings">Idatzi araua eta denbora erregeentzako</string>
     <string name="sound">Soinua [TextToSpeech]</string>
     <string name="game_features">Jolas Ezaugarriak</string>
     <string name="other">Besteak</string>
@@ -38,7 +38,7 @@
     <string name="enabled">Piztuta</string>
     <string name="disabled">Itzalita</string>
     <string name="historical_deck">Mahai Historikoa</string>
-    <string name="historical_deck_desc">Erabiltzaileari jolastutako kartak ikusten aukera hematen dio, ezkerrerantz irrist eginez</string>
+    <string name="historical_deck_desc">Erabiltzaileari jolastutako kartak ikusten aukera ematen dio, ezkerrerantz irrist eginez</string>
     <string name="return_card">Itzulitako Karta</string>
     <string name="return_card_desc">Erabiltzaileari jolastutako karta itzultzeko aukera ematen dio</string>
     <string name="contact">Harremanetarako</string>
@@ -57,7 +57,11 @@
     <string name="unable_to_save">Ezin da gorde</string>
     <string name="general">Orokorra</string>
     <string name="new_game">Joko berria</string>
-    <string name="murcielago_dev_commits">Murcielago Dev Commits</string>
+    <string name="murcielago_dev_commits">Murciélago Dev Commits</string>
+    <string name="stories_progress">Karta automatikoaren aurrerapena</string>
+    <string name="stories_progress_desc">Erabiltzaileari karta automatikoki jolasteko aukera ematen dio. Aurreratze-barra ikusten du ateratako kartaren gainean</string>
+    <string name="enter_custom_rule">Mesedez, sartu zure araua</string>
+
 
     <string-array name="spinnerNames">
         <item>Betikoak</item>

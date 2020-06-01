@@ -66,349 +66,717 @@
             android:id="@+id/scrollLayoutRules"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical"
             android:background="?attr/backgroundcolor"
+            android:orientation="vertical"
             tools:layout_editor_absoluteX="8dp"
             tools:layout_editor_absoluteY="128dp">
 
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/textAce"
-                android:layout_width="match_parent"
+            <LinearLayout
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
+                android:layout_gravity="center"
                 android:layout_marginLeft="8dp"
-                android:layout_marginTop="8dp"
-                android:layout_marginEnd="8dp"
                 android:layout_marginRight="8dp"
-                android:background="?attr/backgroundcolor"
-                android:hint="@string/enter_ones"
-                android:textColorHint="?attr/tintcolor"
-                app:counterEnabled="true"
-                app:counterMaxLength="45"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/toolbar">
+                android:layout_marginBottom="8dp"
+                android:orientation="horizontal">
 
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/inputAce"
-                    android:layout_width="match_parent"
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/textAce"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:maxLength="45"
-                    android:textColor="?attr/textcolor" />
-            </com.google.android.material.textfield.TextInputLayout>
+                    android:layout_weight="5.5"
+                    android:background="?attr/backgroundcolor"
+                    android:hint="@string/enter_ones"
+                    android:textColorHint="?attr/tintcolor"
+                    app:counterEnabled="true"
+                    app:counterMaxLength="45"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/toolbar">
 
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/textTwo"
-                android:layout_width="match_parent"
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/inputAce"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:maxLength="45"
+                        android:textColor="?attr/textcolor" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+
+                <View
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:layout_weight=".1" />
+
+                <TextView
+                    android:id="@+id/textView1"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_weight=".5"
+                    android:text="(t')=" />
+
+                <NumberPicker
+                    android:id="@+id/numberPickerAces"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginRight="8dp"
+                    android:layout_weight=".8"
+                    android:background="@drawable/background_number_picker" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
+                android:layout_gravity="center"
                 android:layout_marginLeft="8dp"
-                android:layout_marginTop="8dp"
-                android:layout_marginEnd="8dp"
                 android:layout_marginRight="8dp"
-                android:background="?attr/backgroundcolor"
-                android:hint="@string/enter_twos"
-                android:textColorHint="?attr/tintcolor"
-                app:counterEnabled="true"
-                app:counterMaxLength="45"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textAce">
+                android:layout_marginBottom="8dp"
+                android:orientation="horizontal">
 
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/inputTwo"
-                    android:layout_width="match_parent"
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/textTwo"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:maxLength="45"
-                    android:textColor="?attr/textcolor" />
-            </com.google.android.material.textfield.TextInputLayout>
+                    android:layout_weight="5.5"
+                    android:background="?attr/backgroundcolor"
+                    android:hint="@string/enter_twos"
+                    android:textColorHint="?attr/tintcolor"
+                    app:counterEnabled="true"
+                    app:counterMaxLength="45"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/textAce">
 
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/textThree"
-                android:layout_width="match_parent"
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/inputTwo"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:maxLength="45"
+                        android:textColor="?attr/textcolor" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+
+                <View
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:layout_weight=".1" />
+
+                <TextView
+                    android:id="@+id/textView2"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_weight=".5"
+                    android:text="(t')=" />
+
+                <NumberPicker
+                    android:id="@+id/numberPickerTwos"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginRight="8dp"
+                    android:layout_weight=".8"
+                    android:background="@drawable/background_number_picker" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
+                android:layout_gravity="center"
                 android:layout_marginLeft="8dp"
-                android:layout_marginTop="8dp"
-                android:layout_marginEnd="8dp"
                 android:layout_marginRight="8dp"
-                android:background="?attr/backgroundcolor"
-                android:hint="@string/enter_threes"
-                android:textColorHint="?attr/tintcolor"
-                app:counterEnabled="true"
-                app:counterMaxLength="45"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textTwo">
+                android:layout_marginBottom="8dp"
+                android:orientation="horizontal">
 
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/inputThree"
-                    android:layout_width="match_parent"
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/textThree"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:maxLength="45"
-                    android:textColor="?attr/textcolor" />
-            </com.google.android.material.textfield.TextInputLayout>
+                    android:layout_weight="5.5"
+                    android:background="?attr/backgroundcolor"
+                    android:hint="@string/enter_threes"
+                    android:textColorHint="?attr/tintcolor"
+                    app:counterEnabled="true"
+                    app:counterMaxLength="45"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/textTwo">
 
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/textFour"
-                android:layout_width="match_parent"
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/inputThree"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:maxLength="45"
+                        android:textColor="?attr/textcolor" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <View
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:layout_weight=".1" />
+
+                <TextView
+                    android:id="@+id/textView3"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_weight=".5"
+                    android:text="(t')=" />
+
+                <NumberPicker
+                    android:id="@+id/numberPickerThrees"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginRight="8dp"
+                    android:layout_weight=".8"
+                    android:background="@drawable/background_number_picker" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
+                android:layout_gravity="center"
                 android:layout_marginLeft="8dp"
-                android:layout_marginTop="8dp"
-                android:layout_marginEnd="8dp"
                 android:layout_marginRight="8dp"
-                android:background="?attr/backgroundcolor"
-                android:hint="@string/enter_fours"
-                android:textColorHint="?attr/tintcolor"
-                app:counterEnabled="true"
-                app:counterMaxLength="45"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textThree">
+                android:layout_marginBottom="8dp"
+                android:orientation="horizontal">
 
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/inputFour"
-                    android:layout_width="match_parent"
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/textFour"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:maxLength="45"
-                    android:textColor="?attr/textcolor" />
-            </com.google.android.material.textfield.TextInputLayout>
+                    android:layout_weight="5.5"
+                    android:background="?attr/backgroundcolor"
+                    android:hint="@string/enter_fours"
+                    android:textColorHint="?attr/tintcolor"
+                    app:counterEnabled="true"
+                    app:counterMaxLength="45"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/textThree">
 
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/textFive"
-                android:layout_width="match_parent"
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/inputFour"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:maxLength="45"
+                        android:textColor="?attr/textcolor" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <View
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:layout_weight=".1" />
+
+                <TextView
+                    android:id="@+id/textView4"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_weight=".5"
+                    android:text="(t')=" />
+
+                <NumberPicker
+                    android:id="@+id/numberPickerFours"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginRight="8dp"
+                    android:layout_weight=".8"
+                    android:background="@drawable/background_number_picker" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
+                android:layout_gravity="center"
                 android:layout_marginLeft="8dp"
-                android:layout_marginTop="8dp"
-                android:layout_marginEnd="8dp"
                 android:layout_marginRight="8dp"
-                android:background="?attr/backgroundcolor"
-                android:hint="@string/enter_fives"
-                android:textColorHint="?attr/tintcolor"
-                app:counterEnabled="true"
-                app:counterMaxLength="45"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textFour">
+                android:layout_marginBottom="8dp"
+                android:orientation="horizontal">
 
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/inputFive"
-                    android:layout_width="match_parent"
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/textFive"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:maxLength="45"
-                    android:textColor="?attr/textcolor" />
-            </com.google.android.material.textfield.TextInputLayout>
+                    android:layout_weight="5.5"
+                    android:background="?attr/backgroundcolor"
+                    android:hint="@string/enter_fives"
+                    android:textColorHint="?attr/tintcolor"
+                    app:counterEnabled="true"
+                    app:counterMaxLength="45"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/textFour">
 
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/textSix"
-                android:layout_width="match_parent"
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/inputFive"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:maxLength="45"
+                        android:textColor="?attr/textcolor" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <View
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:layout_weight=".1" />
+
+                <TextView
+                    android:id="@+id/textView5"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_weight=".5"
+                    android:text="(t')=" />
+
+                <NumberPicker
+                    android:id="@+id/numberPickerFives"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginRight="8dp"
+                    android:layout_weight=".8"
+                    android:background="@drawable/background_number_picker" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
+                android:layout_gravity="center"
                 android:layout_marginLeft="8dp"
-                android:layout_marginTop="8dp"
-                android:layout_marginEnd="8dp"
                 android:layout_marginRight="8dp"
-                android:background="?attr/backgroundcolor"
-                android:hint="@string/enter_sixes"
-                android:textColorHint="?attr/tintcolor"
-                app:counterEnabled="true"
-                app:counterMaxLength="45"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textFive">
+                android:layout_marginBottom="8dp"
+                android:orientation="horizontal">
 
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/inputSix"
-                    android:layout_width="match_parent"
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/textSix"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:maxLength="45"
-                    android:textColor="?attr/textcolor" />
-            </com.google.android.material.textfield.TextInputLayout>
+                    android:layout_weight="5.5"
+                    android:background="?attr/backgroundcolor"
+                    android:hint="@string/enter_sixes"
+                    android:textColorHint="?attr/tintcolor"
+                    app:counterEnabled="true"
+                    app:counterMaxLength="45"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/textFive">
 
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/textSeven"
-                android:layout_width="match_parent"
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/inputSix"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:maxLength="45"
+                        android:textColor="?attr/textcolor" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <View
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:layout_weight=".1" />
+
+                <TextView
+                    android:id="@+id/textView6"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_weight=".5"
+                    android:text="(t')=" />
+
+                <NumberPicker
+                    android:id="@+id/numberPickerSixes"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginRight="8dp"
+                    android:layout_weight=".8"
+                    android:background="@drawable/background_number_picker" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
+                android:layout_gravity="center"
                 android:layout_marginLeft="8dp"
-                android:layout_marginTop="8dp"
-                android:layout_marginEnd="8dp"
                 android:layout_marginRight="8dp"
-                android:background="?attr/backgroundcolor"
-                android:hint="@string/enter_sevens"
-                android:textColorHint="?attr/tintcolor"
-                app:counterEnabled="true"
-                app:counterMaxLength="45"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textSix">
+                android:layout_marginBottom="8dp"
+                android:orientation="horizontal">
 
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/inputSeven"
-                    android:layout_width="match_parent"
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/textSeven"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:maxLength="45"
-                    android:textColor="?attr/textcolor" />
-            </com.google.android.material.textfield.TextInputLayout>
+                    android:layout_weight="5.5"
+                    android:background="?attr/backgroundcolor"
+                    android:hint="@string/enter_sevens"
+                    android:textColorHint="?attr/tintcolor"
+                    app:counterEnabled="true"
+                    app:counterMaxLength="45"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/textSix">
 
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/textEight"
-                android:layout_width="match_parent"
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/inputSeven"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:maxLength="45"
+                        android:textColor="?attr/textcolor" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <View
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:layout_weight=".1" />
+
+                <TextView
+                    android:id="@+id/textView7"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_weight=".5"
+                    android:text="(t')=" />
+
+                <NumberPicker
+                    android:id="@+id/numberPickerSevens"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginRight="8dp"
+                    android:layout_weight=".8"
+                    android:background="@drawable/background_number_picker" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
+                android:layout_gravity="center"
                 android:layout_marginLeft="8dp"
-                android:layout_marginTop="8dp"
-                android:layout_marginEnd="8dp"
                 android:layout_marginRight="8dp"
-                android:background="?attr/backgroundcolor"
-                android:hint="@string/enter_eights"
-                android:textColorHint="?attr/tintcolor"
-                app:counterEnabled="true"
-                app:counterMaxLength="45"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textSeven">
+                android:layout_marginBottom="8dp"
+                android:orientation="horizontal">
 
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/inputEight"
-                    android:layout_width="match_parent"
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/textEight"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:maxLength="45"
-                    android:textColor="?attr/textcolor" />
-            </com.google.android.material.textfield.TextInputLayout>
+                    android:layout_weight="5.5"
+                    android:background="?attr/backgroundcolor"
+                    android:hint="@string/enter_eights"
+                    android:textColorHint="?attr/tintcolor"
+                    app:counterEnabled="true"
+                    app:counterMaxLength="45"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/textSeven">
 
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/textNine"
-                android:layout_width="match_parent"
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/inputEight"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:maxLength="45"
+                        android:textColor="?attr/textcolor" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <View
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:layout_weight=".1" />
+
+                <TextView
+                    android:id="@+id/textView8"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_weight=".5"
+                    android:text="(t')=" />
+
+                <NumberPicker
+                    android:id="@+id/numberPickerEights"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginRight="8dp"
+                    android:layout_weight=".8"
+                    android:background="@drawable/background_number_picker" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
+                android:layout_gravity="center"
                 android:layout_marginLeft="8dp"
-                android:layout_marginTop="8dp"
-                android:layout_marginEnd="8dp"
                 android:layout_marginRight="8dp"
-                android:background="?attr/backgroundcolor"
-                android:hint="@string/enter_nines"
-                android:textColorHint="?attr/tintcolor"
-                app:counterEnabled="true"
-                app:counterMaxLength="45"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textEight">
+                android:layout_marginBottom="8dp"
+                android:orientation="horizontal">
 
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/inputNine"
-                    android:layout_width="match_parent"
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/textNine"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:maxLength="45"
-                    android:textColor="?attr/textcolor" />
-            </com.google.android.material.textfield.TextInputLayout>
+                    android:layout_weight="5.5"
+                    android:background="?attr/backgroundcolor"
+                    android:hint="@string/enter_nines"
+                    android:textColorHint="?attr/tintcolor"
+                    app:counterEnabled="true"
+                    app:counterMaxLength="45"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/textEight">
 
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/textTen"
-                android:layout_width="match_parent"
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/inputNine"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:maxLength="45"
+                        android:textColor="?attr/textcolor" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <View
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:layout_weight=".1" />
+
+                <TextView
+                    android:id="@+id/textView9"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_weight=".5"
+                    android:text="(t')=" />
+
+                <NumberPicker
+                    android:id="@+id/numberPickerNines"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginRight="8dp"
+                    android:layout_weight=".8"
+                    android:background="@drawable/background_number_picker" />
+
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
+                android:layout_gravity="center"
                 android:layout_marginLeft="8dp"
-                android:layout_marginTop="8dp"
-                android:layout_marginEnd="8dp"
                 android:layout_marginRight="8dp"
-                android:background="?attr/backgroundcolor"
-                android:hint="@string/enter_tens"
-                android:textColorHint="?attr/tintcolor"
-                app:counterEnabled="true"
-                app:counterMaxLength="45"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textNine">
+                android:layout_marginBottom="8dp"
+                android:orientation="horizontal">
 
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/inputTen"
-                    android:layout_width="match_parent"
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/textTen"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:maxLength="45"
-                    android:textColor="?attr/textcolor" />
-            </com.google.android.material.textfield.TextInputLayout>
+                    android:layout_weight="5.5"
+                    android:background="?attr/backgroundcolor"
+                    android:hint="@string/enter_tens"
+                    android:textColorHint="?attr/tintcolor"
+                    app:counterEnabled="true"
+                    app:counterMaxLength="45"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/textNine">
 
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/textJack"
-                android:layout_width="match_parent"
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/inputTen"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:maxLength="45"
+                        android:textColor="?attr/textcolor" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <View
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:layout_weight=".1" />
+
+                <TextView
+                    android:id="@+id/textView10"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_weight=".5"
+                    android:text="(t')=" />
+
+                <NumberPicker
+                    android:id="@+id/numberPickerTens"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginRight="8dp"
+                    android:layout_weight=".8"
+                    android:background="@drawable/background_number_picker" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
+                android:layout_gravity="center"
                 android:layout_marginLeft="8dp"
-                android:layout_marginTop="8dp"
-                android:layout_marginEnd="8dp"
                 android:layout_marginRight="8dp"
-                android:background="?attr/backgroundcolor"
-                android:hint="@string/enter_jacks"
-                android:textColorHint="?attr/tintcolor"
-                app:counterEnabled="true"
-                app:counterMaxLength="45"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textTen">
+                android:layout_marginBottom="8dp"
+                android:orientation="horizontal">
 
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/inputJack"
-                    android:layout_width="match_parent"
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/textJack"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:maxLength="45"
-                    android:textColor="?attr/textcolor" />
-            </com.google.android.material.textfield.TextInputLayout>
+                    android:layout_weight="5.5"
+                    android:background="?attr/backgroundcolor"
+                    android:hint="@string/enter_jacks"
+                    android:textColorHint="?attr/tintcolor"
+                    app:counterEnabled="true"
+                    app:counterMaxLength="45"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/textTen">
 
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/textQueen"
-                android:layout_width="match_parent"
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/inputJack"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:maxLength="45"
+                        android:textColor="?attr/textcolor" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <View
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:layout_weight=".1" />
+
+                <TextView
+                    android:id="@+id/textViewJ"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_weight=".5"
+                    android:text="(t')=" />
+
+                <NumberPicker
+                    android:id="@+id/numberPickerJacks"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginRight="8dp"
+                    android:layout_weight=".8"
+                    android:background="@drawable/background_number_picker" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
+                android:layout_gravity="center"
                 android:layout_marginLeft="8dp"
-                android:layout_marginTop="8dp"
-                android:layout_marginEnd="8dp"
                 android:layout_marginRight="8dp"
-                android:background="?attr/backgroundcolor"
-                android:hint="@string/enter_queens"
-                android:textColorHint="?attr/tintcolor"
-                app:counterEnabled="true"
-                app:counterMaxLength="45"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textJack">
+                android:layout_marginBottom="8dp"
+                android:orientation="horizontal">
 
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/inputQueen"
-                    android:layout_width="match_parent"
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/textQueen"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:maxLength="45"
-                    android:textColor="?attr/textcolor" />
-            </com.google.android.material.textfield.TextInputLayout>
+                    android:layout_weight="5.5"
+                    android:background="?attr/backgroundcolor"
+                    android:hint="@string/enter_queens"
+                    android:textColorHint="?attr/tintcolor"
+                    app:counterEnabled="true"
+                    app:counterMaxLength="45"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/textJack">
 
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/textKing"
-                android:layout_width="match_parent"
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/inputQueen"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:maxLength="45"
+                        android:textColor="?attr/textcolor" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <View
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:layout_weight=".1" />
+
+                <TextView
+                    android:id="@+id/textViewQ"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_weight=".5"
+                    android:text="(t')=" />
+
+                <NumberPicker
+                    android:id="@+id/numberPickerQueens"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginRight="8dp"
+                    android:layout_weight=".8"
+                    android:background="@drawable/background_number_picker" />
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
+                android:layout_gravity="center"
                 android:layout_marginLeft="8dp"
-                android:layout_marginTop="8dp"
-                android:layout_marginEnd="8dp"
                 android:layout_marginRight="8dp"
-                android:background="?attr/backgroundcolor"
-                android:hint="@string/enter_kings"
-                android:textColorHint="?attr/tintcolor"
-                app:counterEnabled="true"
-                app:counterMaxLength="45"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textQueen">
+                android:layout_marginBottom="8dp"
+                android:orientation="horizontal">
 
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/inputKing"
-                    android:layout_width="match_parent"
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/textKing"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:maxLength="45"
-                    android:textColor="?attr/textcolor"
-                    android:textColorHint="?attr/tintcolor" />
-            </com.google.android.material.textfield.TextInputLayout>
+                    android:layout_weight="5.5"
+                    android:background="?attr/backgroundcolor"
+                    android:hint="@string/enter_kings"
+                    android:textColorHint="?attr/tintcolor"
+                    app:counterEnabled="true"
+                    app:counterMaxLength="45"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/textQueen">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/inputKing"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:maxLength="45"
+                        android:textColor="?attr/textcolor"
+                        android:textColorHint="?attr/tintcolor" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <View
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:layout_weight=".1" />
+
+                <TextView
+                    android:id="@+id/textViewK"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_weight=".5"
+                    android:text="(t')=" />
+
+                <NumberPicker
+                    android:id="@+id/numberPickerKings"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginRight="8dp"
+                    android:layout_weight=".8"
+                    android:background="@drawable/background_number_picker" />
+            </LinearLayout>
+
         </LinearLayout>
     </ScrollView>
 

@@ -19,19 +19,19 @@
     <string name="action_settings">Settings</string>
     <string name="cards_left">Cards left:</string>
     <string name="cards_left_52">Cards left:52</string>
-    <string name="enter_ones">Enter rule for aces</string>
-    <string name="enter_twos">Enter rule for twos</string>
-    <string name="enter_threes">Enter rule for threes</string>
-    <string name="enter_fours">Enter rule for fours</string>
-    <string name="enter_fives">Enter rule for fives</string>
-    <string name="enter_sixes">Enter rule for sixes</string>
-    <string name="enter_sevens">Enter rule for sevens</string>
-    <string name="enter_eights">Enter rule for eights</string>
-    <string name="enter_nines">Enter rule for nines</string>
-    <string name="enter_tens">Enter rule for tens</string>
-    <string name="enter_jacks">Enter rule for jacks</string>
-    <string name="enter_queens">Enter rule for queens</string>
-    <string name="enter_kings">Enter rule for kings</string>
+    <string name="enter_ones">Enter rule and time value for aces</string>
+    <string name="enter_twos">Enter rule and time value for twos</string>
+    <string name="enter_threes">Enter rule and time value for threes</string>
+    <string name="enter_fours">Enter rule and time value for fours</string>
+    <string name="enter_fives">Enter rule and time value for fives</string>
+    <string name="enter_sixes">Enter rule and time value for sixes</string>
+    <string name="enter_sevens">Enter rule and time value for sevens</string>
+    <string name="enter_eights">Enter rule and time value for eights</string>
+    <string name="enter_nines">Enter rule and time value for nines</string>
+    <string name="enter_tens">Enter rule and time value for tens</string>
+    <string name="enter_jacks">Enter rule and time value for jacks</string>
+    <string name="enter_queens">Enter rule and time value for queens</string>
+    <string name="enter_kings">Enter rule and time value for kings</string>
 
     <string name="sound">Sound [TextToSpeech]</string>
     <string name="game_features">Game Features</string>
@@ -59,7 +59,10 @@
     <string name="unable_to_save">Unable to save</string>
     <string name="general">General</string>
     <string name="new_game">New game</string>
-    <string name="murcielago_dev_commits">Murcielago Dev Commits</string>
+    <string name="murcielago_dev_commits">Murciélago Dev Commits</string>
+    <string name="stories_progress">Automatic card progress</string>
+    <string name="stories_progress_desc">Allows the user to draw cards automatically. Displays a progress bar on top of the unfolded card</string>
+    <string name="enter_custom_rule">Please, enter your custom rule</string>
 
     <string-array name="spinnerNames">
         <item>Default</item>
