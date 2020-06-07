@@ -60,8 +60,14 @@ class SettingsFragment : PreferenceFragment() {
                 }
 
                 if(revealEasterEgg <= 0) {
-                    triggerMurcielagoAnimation()
                     revealEasterEgg = 5
+//                    val intent= activity.packageManager.getLaunchIntentForPackage("com.devapp.drinkinggame.AndroidLauncher")
+                    val intent = Intent(activity, AndroidLauncher::class.java)
+                    if (intent != null) {
+                        startActivity(intent)
+                    } else {
+                        triggerMurcielagoAnimation()
+                    }
                 }else{
                     revealEasterEgg--
                 }
