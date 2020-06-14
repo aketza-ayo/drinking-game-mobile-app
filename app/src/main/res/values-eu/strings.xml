@@ -62,6 +62,7 @@
     <string name="stories_progress_desc">Erabiltzaileari karta automatikoki jolasteko aukera ematen dio. Aurreratze-barra ikusten du ateratako kartaren gainean</string>
     <string name="enter_custom_rule">Mesedez, sartu zure araua</string>
     <string name="drinking_game_app">Edateko Jokoa\n&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;app</string>
+    <string name="those_in_the_dark">Ilunpean daudenak jokoan aurrera egiteko gai dira</string>
 
     <string-array name="spinnerNames">
         <item>Betikoak</item>

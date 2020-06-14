@@ -69,6 +69,7 @@
     <string name="stories_progress_desc">Permite al usuario robar cartas automáticamente. Muestra una barra de progreso en la parte superior de la carta robada</string>
     <string name="enter_custom_rule">Por favor, introduzca regla</string>
     <string name="drinking_game_app">Drinking Game\n&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;app</string>
+    <string name="those_in_the_dark">Los que están en la oscuridad pueden jugar más en el juego.</string>
 
     <string-array name="spinnerNames">
         <item>Defecto</item>

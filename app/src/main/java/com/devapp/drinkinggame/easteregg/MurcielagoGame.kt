@@ -1,5 +1,6 @@
 package com.devapp.drinkinggame.easteregg
 
+import android.content.Context
 import com.badlogic.gdx.ApplicationAdapter
 import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.audio.Music

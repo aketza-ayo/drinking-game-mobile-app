@@ -63,7 +63,7 @@ class SettingsFragment : PreferenceFragment() {
                     revealEasterEgg = 5
 //                    val intent= activity.packageManager.getLaunchIntentForPackage("com.devapp.drinkinggame.AndroidLauncher")
                     val intent = Intent(activity, AndroidLauncher::class.java)
-                    if (intent != null) {
+                    if (intent != null && isDarkModeFeatureEnabled) {
                         startActivity(intent)
                     } else {
                         triggerMurcielagoAnimation()

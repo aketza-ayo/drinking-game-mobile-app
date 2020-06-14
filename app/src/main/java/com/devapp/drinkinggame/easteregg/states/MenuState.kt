@@ -7,8 +7,8 @@ import com.devapp.drinkinggame.easteregg.MurcielagoGame
 
 class MenuState : State {
 
-    private lateinit var background: Texture
-    private lateinit var playButton: Texture
+    private var background: Texture
+    private var playButton: Texture
 
     constructor(gameStateManager: GameStateManager) : super(gameStateManager) {
         camera.setToOrtho(false, MurcielagoGame.WIDTH.toFloat() / 2, MurcielagoGame.HEIGHT.toFloat() / 2)
@@ -42,6 +42,4 @@ class MenuState : State {
         System.out.println("Menu state disposed")
 
     }
-
-
 }

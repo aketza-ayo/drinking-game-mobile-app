@@ -14,6 +14,8 @@ class Murcielago {
         const val MOVEMENT = 100F
     }
 
+    var GROUND_LIMIT = 0F
+
     var position: Vector2
     var velocity: Vector2
 
@@ -26,7 +28,7 @@ class Murcielago {
         this.position = Vector2(x, y)
         this.velocity = Vector2(0F, 0F)
 
-        texture = Texture("birdanimation.png")
+        texture = Texture("murcielagoanimation2.png")
         murcielagoAnimation = Animation(TextureRegion(texture), 3, 0.5F)
         bounds = Rectangle(x, y, texture.width.toFloat() / 3, texture.height.toFloat())
         sound = Gdx.audio.newSound(Gdx.files.internal("sfx_wing.ogg"))
@@ -41,11 +43,16 @@ class Murcielago {
         velocity.scl(deltaTime)
         position.add(MOVEMENT * deltaTime, velocity.y)
 
-        if(position.y <= 0){
-            position.y = 0F
+        if(position.y <= GROUND_LIMIT){
+            position.y = GROUND_LIMIT
         }
+
         velocity.scl(1/deltaTime)
         bounds.setPosition(position.x, position.y)
+    }
+
+    public fun reposition(x: Float, y: Float){
+        position.set(x, y)
     }
 
     public fun jump(){

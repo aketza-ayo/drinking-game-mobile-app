@@ -2,19 +2,20 @@ package com.devapp.drinkinggame
 
 import android.app.DialogFragment
 import android.graphics.drawable.AnimationDrawable
+import android.media.AudioManager
 import android.media.MediaPlayer
-import android.media.SoundPool
+import android.media.ToneGenerator
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
+import android.widget.Toast
 
 
 class MurcielagoDialog : DialogFragment(){
 
-    private lateinit var mediaPlayer: MediaPlayer
+    private var beep = ToneGenerator(AudioManager.STREAM_MUSIC, 100);
 
     companion object{
         private var instance: MurcielagoDialog? = null
@@ -37,8 +38,8 @@ class MurcielagoDialog : DialogFragment(){
 
 
         imageViewMurcielago.setOnClickListener {
-           Log.d(Constants.APP_NAME,"Murcielago is clicked")
-            mediaPlayer.start()
+            Toast.makeText(activity,resources.getString(R.string.those_in_the_dark), Toast.LENGTH_SHORT).show()
+            beep.startTone(ToneGenerator.TONE_CDMA_PIP, 150);
         }
 
         return view
@@ -46,7 +47,6 @@ class MurcielagoDialog : DialogFragment(){
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        mediaPlayer = MediaPlayer.create(activity, R.raw.glitch_in_the_matrix)
 
         setStyle(DialogFragment.STYLE_NO_TITLE, R.style.MurcielagoDialog)
     }
