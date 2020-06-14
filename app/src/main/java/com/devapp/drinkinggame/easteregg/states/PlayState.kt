@@ -264,9 +264,8 @@ class PlayState: State {
 
     private fun collectFlask(increment: Int){
         healthCounter += increment
-        health += 0.2F
+        health += 0.05F
         soundHealth.play(0.5F)
-        System.out.println("healthCounter=$healthCounter")
     }
 
     private fun checkHighScore(){
