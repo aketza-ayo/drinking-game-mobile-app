@@ -29,7 +29,8 @@ class FinishState: State {
     private val displayText: String
 
     private val score: Int
-    private var highScore: Int
+    private var highScore = 0
+    private val preferences = Gdx.app.getPreferences("murcielago_game")
 
     constructor(gameStateManager: GameStateManager, text: String, score: Int) : super(gameStateManager) {
         camera.setToOrtho(false, MurcielagoGame.WIDTH.toFloat() / 2, MurcielagoGame.HEIGHT.toFloat() / 2)
@@ -38,13 +39,13 @@ class FinishState: State {
 
         //load and get highscore from file
         this.score = score
-        val preferences = Gdx.app.getPreferences("murcielago_game")
+
         this.highScore = preferences.getInteger("highscore", 0)
-        if(this.score > highScore){
+        if(this.score > this.highScore){
             preferences.putInteger("highscore", this.score)
             preferences.flush()
+            this.highScore = this.score
         }
-        this.highScore = preferences.getInteger("highscore", 0)
 
         this.murcielago = Murcielago(0F,150F)
         this.murcielago.velocity =  Vector2(0F, 0F)

@@ -25,7 +25,6 @@ class PlayState: State {
         const val COIN_TOTAL_COUNT = 4
         const val GROUND_Y_OFFSET = 0F //-50F
     }
-
     private var murcielago: Murcielago
     private var background: Texture
 
@@ -48,7 +47,8 @@ class PlayState: State {
     private var health = 0F // 0 = dead, 1 = full health
     private var blankHealth: Texture
 
-    var random: Random = Random()
+    private var random: Random = Random()
+    private val preferences = Gdx.app.getPreferences("murcielago_game")
 
     constructor(gameStateManager: GameStateManager) : super(gameStateManager){
         this.background = Texture("bg.png")
@@ -57,7 +57,8 @@ class PlayState: State {
 
         camera.setToOrtho(false, MurcielagoGame.WIDTH.toFloat() / 2, MurcielagoGame.HEIGHT.toFloat() / 2)
 
-        this.highScore = 0
+        this.highScore = preferences.getInteger("highscore", 0)
+
         this.score = 0
         this.coinCounter = 0
         this.healthCounter = 0
@@ -134,8 +135,8 @@ class PlayState: State {
             }
 
             if(tube.collides(murcielago.bounds)){
-                //check for highscore
-//                checkHighScore()
+                //check for coin highscore
+                saveHighScoreIfNeeded()
                 gameStateManager.set(PlayState(gameStateManager))
             }
 
@@ -268,11 +269,9 @@ class PlayState: State {
         soundHealth.play(0.5F)
     }
 
-    private fun checkHighScore(){
-        val preferences = Gdx.app.getPreferences("murcielago_game")
-        this.highScore = preferences.getInteger("highscore", 0)
-        if(this.score > highScore){
-            preferences.putInteger("highscore", this.score)
+    private fun saveHighScoreIfNeeded(){
+        if(this.coinCounter > this.highScore){
+            preferences.putInteger("highscore", this.coinCounter)
             preferences.flush()
         }
     }

@@ -20,8 +20,8 @@ android {
         applicationId "com.devapp.drinkinggame"
         minSdkVersion 16
         targetSdkVersion 29
-        versionCode 7
-        versionName "1.5"
+        versionCode 8
+        versionName "1.5.1"
         multiDexEnabled true
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
