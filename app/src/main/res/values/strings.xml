@@ -17,6 +17,7 @@
 
     <string name="action_rules_management">Rules Management</string>
     <string name="action_settings">Settings</string>
+    <string name="action_multiplayer">Multiplayer</string>
     <string name="cards_left">Cards left:</string>
     <string name="cards_left_52">Cards left:52</string>
     <string name="enter_ones">Enter rule and time value for aces</string>

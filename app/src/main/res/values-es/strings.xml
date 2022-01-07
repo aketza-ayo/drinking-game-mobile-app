@@ -18,6 +18,7 @@
 
     <string name="action_rules_management">Gestión de Reglas</string>
     <string name="action_settings">Configuraciones</string>
+    <string name="action_multiplayer">Multijugador</string>
     <string name="cards_left">Cartas restantes:</string>
     <string name="cards_left_52">Cartas restantes:52</string>
     <string name="enter_ones">Introduce regla y valor del tiempo para ases</string>

@@ -20,6 +20,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.core.view.MenuItemCompat
 import androidx.preference.PreferenceManager
+import com.devapp.drinkinggame.mutliplayer.MultiplayerActivity
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
@@ -81,6 +82,7 @@ class MainActivity : AppCompatActivity(), RightFragment.OnFragmentInteractionLis
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when(item.itemId){
             R.id.action_rules_management-> openRulesActivity()
+            R.id.action_multiplayer-> openMultiplayerActivity()
             R.id.action_settings -> openFragmentActivity()
             R.id.main_refresh -> createNewGame()
             else ->  super.onOptionsItemSelected(item)
@@ -425,6 +427,13 @@ class MainActivity : AppCompatActivity(), RightFragment.OnFragmentInteractionLis
         intent.putExtra("IS_CUSTOM_RULE_ON", switch.isChecked)
         startActivity(intent)
     }
+
+    private fun openMultiplayerActivity(){
+        val intent = Intent(this@MainActivity, MultiplayerActivity::class.java)
+//        intent.putExtra("IS_CUSTOM_RULE_ON", switch.isChecked)
+        startActivity(intent)
+    }
+
 
     private fun unfoldCardFromDeck(): CardItem{
         currentCardItem = mutableDeck.shuffled().take(1)[0]

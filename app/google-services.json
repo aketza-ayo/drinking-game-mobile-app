@@ -15,6 +15,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "1011947195328-2gn35tnivliqei97gp80l6aulp59j1tr.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.devapp.drinkinggame",
+            "certificate_hash": "d7cba2d1195806455b87c90007e8962ef4fa2604"
+          }
+        },
+        {
           "client_id": "1011947195328-n4fmm6r980kha9dqda84ln9mvslrjsrr.apps.googleusercontent.com",
           "client_type": 3
         }
