@@ -11,7 +11,9 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.preference.PreferenceManager
+import com.devapp.drinkinggame.MainActivity
 import com.devapp.drinkinggame.R
+import com.devapp.drinkinggame.SettingsActivity
 
 
 class MultiplayerActivity : AppCompatActivity(){
@@ -21,6 +23,7 @@ class MultiplayerActivity : AppCompatActivity(){
 
     private lateinit var buttonShare: Button
     private lateinit var buttonGenerate: Button
+    private lateinit var buttonJoin: Button
 
     companion object {
         private const val PREFERENCE_FEATURE_DARK_MODE = "prefDark"
@@ -57,7 +60,13 @@ class MultiplayerActivity : AppCompatActivity(){
     }
 
     private fun initButtons(){
-        buttonGenerate = this.findViewById<Button>(R.id.buttonGenerate)
+        buttonJoin = this.findViewById<Button>(R.id.buttonJoin)
+        buttonJoin.isEnabled = true
+        buttonJoin.setOnClickListener {
+            joinGameSession()
+        }
+
+        buttonGenerate = this.findViewById<Button>(R.id.buttonCreate)
         buttonGenerate.isEnabled = true
         buttonGenerate.setOnClickListener {
             generateGameSession()
@@ -68,6 +77,15 @@ class MultiplayerActivity : AppCompatActivity(){
             shareGameSession()
         }
         buttonShare.isEnabled = false
+    }
+
+    fun accepted(){
+        val intent = Intent(this, MainActivity::class.java)
+        startActivity(intent)
+    }
+
+    private fun joinGameSession(){
+        accepted()
     }
 
     private fun shareGameSession(){
@@ -86,8 +104,8 @@ class MultiplayerActivity : AppCompatActivity(){
         gameSession = "TRYUS23467-12345-AABB"
         Toast.makeText(this, gameSession, Toast.LENGTH_LONG).show()
 
-        val textGenerate = this.findViewById<TextView>(R.id.textGenerate)
-        textGenerate.text = gameSession
+        val textViewEnterCode = this.findViewById<TextView>(R.id.textViewEnterCode)
+        textViewEnterCode.text = gameSession
 
         buttonShare.isEnabled = true
     }
